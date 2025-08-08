@@ -53,6 +53,7 @@ const MakeRequest = () => {
                             <Controller
                                 name="type"
                                 control={control}
+                                defaultValue="non-monetary"
                                 render={({ field }) => (
                                     <Checkbox 
                                         {...field} 
