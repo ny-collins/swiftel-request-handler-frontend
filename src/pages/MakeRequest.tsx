@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { Input, Checkbox, Textarea } from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 interface RequestForm {
     title: string;
@@ -14,7 +14,7 @@ interface RequestForm {
 
 const MakeRequest = () => {
     const navigate = useNavigate();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<RequestForm>();
+    const { register, handleSubmit, watch, control, formState: { errors } } = useForm<RequestForm>();
     const isMonetary = watch("type") === 'monetary';
 
     const onSubmit = async (data: RequestForm) => {
