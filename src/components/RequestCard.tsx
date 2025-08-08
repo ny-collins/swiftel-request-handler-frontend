@@ -60,7 +60,7 @@ const RequestCard = ({ request, onDecision, onEditDecision }: RequestCardProps) 
       <div className="request-card-body">
         <p>{request.description}</p>
         <small>Submitted on: {formatDate(request.created_at)}</small>
-        {request.is_monetary && (
+        {request.type === 'monetary' && (
           <p>
             <strong>Amount: {formatAmount(request.amount)}</strong>
           </p>

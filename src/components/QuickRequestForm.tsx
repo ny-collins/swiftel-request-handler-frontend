@@ -16,7 +16,7 @@ const QuickRequestForm = () => {
 
     const mutation = useMutation({
         mutationFn: (newData: QuickRequestFormFields) => 
-            api.post('/requests', { ...newData, is_monetary: false }),
+            api.post('/requests', { ...newData, type: 'non-monetary' }),
         onSuccess: () => {
             toast.success('Quick request submitted!');
             reset();

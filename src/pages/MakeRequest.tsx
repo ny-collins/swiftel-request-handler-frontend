@@ -8,20 +8,20 @@ import { useForm } from 'react-hook-form';
 interface RequestForm {
     title: string;
     description: string;
-    is_monetary: boolean;
+    type: 'monetary' | 'non-monetary';
     amount?: number;
 }
 
 const MakeRequest = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, watch, formState: { errors } } = useForm<RequestForm>();
-    const isMonetary = watch("is_monetary");
+    const isMonetary = watch("type") === 'monetary';
 
     const onSubmit = async (data: RequestForm) => {
         try {
             const requestData = {
                 ...data,
-                amount: data.is_monetary ? Number(data.amount) : undefined,
+                amount: data.type === 'monetary' ? Number(data.amount) : undefined,
             };
             await api.post('/requests', requestData);
             toast.success('Request submitted successfully!');
@@ -50,7 +50,17 @@ const MakeRequest = () => {
                     </div>
                     <div className="form-group">
                         <label className="checkbox-label">
-                            <Checkbox {...register("is_monetary")} />
+                            <Controller
+                                name="type"
+                                control={control}
+                                render={({ field }) => (
+                                    <Checkbox 
+                                        {...field} 
+                                        checked={field.value === 'monetary'}
+                                        onChange={(e) => field.onChange(e.target.checked ? 'monetary' : 'non-monetary')}
+                                    />
+                                )}
+                            />
                             Is this a monetary request?
                         </label>
                     </div>

@@ -18,7 +18,7 @@ export interface Request {
     description: string;
     status: 'pending' | 'approved' | 'rejected';
     created_at: string;
-    is_monetary: boolean;
+    type: 'monetary' | 'non-monetary';
     amount?: number;
     employee_username?: string;
     decisions?: Decision[];
