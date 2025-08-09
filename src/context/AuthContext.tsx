@@ -17,7 +17,14 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+import { QueryClient } from '@tanstack/react-query';
+
+interface AuthProviderProps {
+    children: ReactNode;
+    queryClient: QueryClient;
+}
+
+export const AuthProvider = ({ children, queryClient }: AuthProviderProps) => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
@@ -47,6 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.removeItem('token');
         setUser(null);
         delete api.defaults.headers.common['Authorization'];
+        queryClient.clear();
         navigate('/login');
     };
 

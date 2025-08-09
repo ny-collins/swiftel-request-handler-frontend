@@ -14,6 +14,9 @@ import Account from './pages/Account';
 import NotFound from './pages/NotFound';
 
 
+import { useWebSocket } from './hooks/useWebSocket';
+
+
 type ScreenSize = 'small' | 'medium' | 'large';
 
 function getScreenSize(): ScreenSize {
@@ -23,6 +26,7 @@ function getScreenSize(): ScreenSize {
 }
 
 function App() {
+    useWebSocket();
     const { user } = useAuth();
     const [screenSize, setScreenSize] = useState<ScreenSize>(getScreenSize());
     const [isSidebarOpen, setIsSidebarOpen] = useState(getScreenSize() === 'large');
