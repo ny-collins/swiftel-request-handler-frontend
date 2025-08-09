@@ -11,7 +11,7 @@ export const useWebSocket = () => {
             const wsUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/^http/, 'ws');
             socketRef.current = new WebSocket(`${wsUrl}?token=${token}`);
 
-            socketRef.current.onmessage = (event) => {
+            socketRef.current.onmessage = () => {
                 queryClient.invalidateQueries({ queryKey: ['notifications'] });
             };
 
