@@ -12,7 +12,6 @@ export const useWebSocket = () => {
             socketRef.current = new WebSocket(`${wsUrl}?token=${token}`);
 
             socketRef.current.onmessage = (event) => {
-                const notification = JSON.parse(event.data);
                 queryClient.invalidateQueries({ queryKey: ['notifications'] });
             };
 
