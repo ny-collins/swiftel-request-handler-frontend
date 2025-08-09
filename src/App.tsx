@@ -12,7 +12,7 @@ import ViewRequests from './pages/ViewRequests';
 import Users from './pages/Users';
 import Account from './pages/Account';
 import NotFound from './pages/NotFound';
-import NotificationBell from './components/layout/NotificationBell';
+
 
 type ScreenSize = 'small' | 'medium' | 'large';
 
@@ -94,7 +94,6 @@ function App() {
                 toggleSidebar={toggleSidebar} // Pass the toggle function
             />
             <main className="main-content">
-                <NotificationBell />
                 <Routes>
                     <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     <Route path="/login" element={<Navigate to="/dashboard" replace />} />

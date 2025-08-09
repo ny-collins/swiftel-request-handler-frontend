@@ -304,10 +304,11 @@ html, body {
 
 .screen-large .main-content {
   margin-left: var(--sidebar-width-large);
+  margin-top: var(--top-navbar-height);
 }
 
 .screen-large .top-navbar {
-  display: none;
+    left: var(--sidebar-width-large);
 }
 
 /* --- MEDIUM SCREENS (768px - 1023px) --- */
