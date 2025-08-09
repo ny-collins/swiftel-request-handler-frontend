@@ -1,12 +1,12 @@
 /* General Styles */
 :root {
-  --primary-color: #6D28D9; /* A deep, modern purple */
-  --secondary-color: #EC4899; /* A vibrant pink for accents */
-  --accent-color: #F59E0B;   /* A warm amber for highlights */
-  --background-color: #F3F4F6; /* A slightly cooler light grey */
-  --text-color: #1F2937; /* A darker, more saturated text color */
-  --light-text-color: #6B7280; /* Muted grey for secondary info */
-  --border-color: #D1D5DB; /* A more defined border color */
+  --primary-color: #7C3AED; /* A softer, more modern purple */
+  --secondary-color: #F59E0B; /* A warm, inviting amber for accents */
+  --accent-color: #10B981;   /* A vibrant green for highlights */
+  --background-color: #F8FAFC; /* A very light, clean grey */
+  --text-color: #1E293B; /* A darker, more saturated text color */
+  --light-text-color: #64748B; /* Muted grey for secondary info */
+  --border-color: #E2E8F0; /* A more defined border color */
   --card-bg: #FFFFFF;
   --border-radius: 12px; /* A more rounded, modern radius */
   --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* A slightly deeper shadow */
@@ -42,6 +42,18 @@ html, body {
   transition: margin-left var(--transition-speed) ease-in-out;
   min-width: 0;
   box-sizing: border-box;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* --- Navbar --- */
@@ -377,7 +389,7 @@ html, body {
 .page-header {
   margin-bottom: 3rem;
   padding: 1.5rem 2rem;
-  background: linear-gradient(135deg, rgba(109, 40, 217, 0.05), rgba(236, 72, 153, 0.05));
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(245, 158, 11, 0.05));
   border-radius: var(--border-radius);
   border: 1px solid var(--border-color);
 }
@@ -428,7 +440,7 @@ html, body {
 }
 
 .btn-primary:hover {
-  background-color: #5B21B6; /* Darker purple */
+  background-color: #6D28D9; /* Darker purple */
 }
 
 .btn-secondary {
@@ -437,11 +449,11 @@ html, body {
 }
 
 .btn-secondary:hover {
-  background-color: #D946EF; /* Darker pink */
+  background-color: #D97706; /* Darker amber */
 }
 
 .btn-approve {
-  background-color: #10B981; /* A modern green */
+  background-color: var(--accent-color);
   color: white;
 }
 
@@ -487,7 +499,7 @@ html, body {
 
 .form-card {
   background: var(--card-bg);
-  padding: 2.5rem;
+  padding: 3rem;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   max-width: 450px;
@@ -503,7 +515,7 @@ html, body {
 }
 
 .form-group {
-  margin-bottom: 1.8rem;
+  margin-bottom: 2rem;
 }
 
 .form-group label {
@@ -523,18 +535,18 @@ html, body {
   transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
   font-size: 1rem;
   color: var(--text-color);
-  background-color: var(--background-color);
+  background-color: #F8FAFC;
 }
 
 .input-field:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.2);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
 }
 
@@ -556,9 +568,9 @@ html, body {
 }
 
 .stat-card-icon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   color: var(--primary-color);
-  background-color: rgba(109, 40, 217, 0.1);
+  background-color: #F3E8FF;
   padding: 1rem;
   border-radius: 50%;
   display: flex;
@@ -668,13 +680,13 @@ html, body {
 
 .filter-tab:hover {
   color: var(--primary-color);
-  background-color: rgba(109, 40, 217, 0.05);
+  background-color: rgba(124, 58, 237, 0.05);
 }
 
 .filter-tab.active {
   background: var(--primary-color);
   color: white;
-  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
   transform: translateY(-2px);
 }
 
@@ -686,7 +698,7 @@ html, body {
 }
 
 .decision-item svg:hover {
-  color: #D97706; /* Darker amber */
+  color: #059669; /* Darker green */
   transform: scale(1.2);
 }
 
@@ -914,7 +926,7 @@ html, body {
   position: absolute;
   top: 0px;
   right: 0px;
-  background-color: var(--secondary-color); /* Using the vibrant pink */
+  background-color: var(--secondary-color); /* Using the vibrant amber */
   color: white;
   border-radius: 50%;
   padding: 0.2em;
@@ -973,7 +985,7 @@ html, body {
 }
 
 .notification-item.unread {
-  background-color: rgba(109, 40, 217, 0.05); /* Light primary color background for unread */
+  background-color: rgba(124, 58, 237, 0.05); /* Light primary color background for unread */
   font-weight: 500;
 }
 
@@ -997,13 +1009,16 @@ html, body {
   background-color: var(--background-color);
 }
 
-.notification-footer a {
+.notification-footer button {
   color: var(--primary-color);
   text-decoration: none;
   font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-.notification-footer a:hover {
+.notification-footer button:hover {
   text-decoration: underline;
 }
 
@@ -1053,7 +1068,7 @@ html, body {
 
 .filter-dropdown-button:hover {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.1);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
 }
 
 .filter-dropdown-arrow {
@@ -1308,7 +1323,7 @@ html, body {
 }
 
 .carousel-nav-button:hover {
-  background-color: #5B21B6;
+  background-color: #6D28D9;
 }
 
 .carousel-dots {
