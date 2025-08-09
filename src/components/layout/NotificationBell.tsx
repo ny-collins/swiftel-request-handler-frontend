@@ -2,21 +2,32 @@ import { useState, useEffect, useRef } from 'react';
 import { FiBell } from 'react-icons/fi';
 import { useNotifications } from '../../hooks/useNotifications';
 import { formatDistanceToNow } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 const NotificationBell = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { notifications, unreadCount, markAsRead } = useNotifications();
+    const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const navigate = useNavigate();
 
     const handleToggle = () => {
         setIsOpen(prev => !prev);
     };
 
-    const handleMarkAsRead = (notificationId: number) => {
-        markAsRead(notificationId);
+    const handleNotificationClick = (notification: any) => {
+        if (!notification.is_read) {
+            markAsRead(notification.id);
+        }
+        if (notification.link) {
+            navigate(notification.link);
+        }
+        setIsOpen(false);
     };
 
-    // Close dropdown when clicking outside
+    const handleMarkAllAsRead = () => {
+        markAllAsRead();
+    };
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -49,7 +60,7 @@ const NotificationBell = () => {
                                 <li 
                                     key={notif.id} 
                                     className={`notification-item ${notif.is_read ? '' : 'unread'}`}
-                                    onClick={() => !notif.is_read && handleMarkAsRead(notif.id)}
+                                    onClick={() => handleNotificationClick(notif)}
                                 >
                                     <p>{notif.message}</p>
                                     <small>
@@ -59,9 +70,11 @@ const NotificationBell = () => {
                             ))}
                         </ul>
                     )}
-                     <div className="notification-footer">
-                        <a href="#" className="text-sm text-primary font-bold">View all notifications</a>
-                    </div>
+                    {unreadCount > 0 && (
+                        <div className="notification-footer">
+                            <button onClick={handleMarkAllAsRead} className="text-sm text-primary font-bold">Mark all as read</button>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

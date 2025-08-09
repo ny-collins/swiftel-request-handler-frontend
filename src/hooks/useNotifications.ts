@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getNotifications, markNotificationAsRead } from '../api';
+import { getNotifications, markNotificationAsRead, markAllNotificationsAsRead } from '../api';
 import toast from 'react-hot-toast';
 
 export const useNotifications = () => {
@@ -11,14 +11,23 @@ export const useNotifications = () => {
         staleTime: 1000 * 60 * 5, // 5 minutes
     });
 
-    const mutation = useMutation({
+    const markAsReadMutation = useMutation({
         mutationFn: markNotificationAsRead,
         onSuccess: () => {
-            // Invalidate and refetch the notifications query to get the updated list
             queryClient.invalidateQueries({ queryKey: ['notifications'] });
         },
         onError: () => {
             toast.error('Failed to mark notification as read.');
+        }
+    });
+
+    const markAllAsReadMutation = useMutation({
+        mutationFn: markAllNotificationsAsRead,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['notifications'] });
+        },
+        onError: () => {
+            toast.error('Failed to mark all notifications as read.');
         }
     });
 
@@ -28,6 +37,7 @@ export const useNotifications = () => {
         notifications,
         isLoading,
         unreadCount,
-        markAsRead: mutation.mutate,
+        markAsRead: markAsReadMutation.mutate,
+        markAllAsRead: markAllAsReadMutation.mutate,
     };
 };

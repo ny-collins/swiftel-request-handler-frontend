@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
-import NotificationBell from './NotificationBell';
+
 
 type ScreenSize = 'small' | 'medium' | 'large';
 
@@ -35,9 +35,7 @@ const TopNavbar = ({ toggleSidebar, isSidebarOpen, screenSize }: TopNavbarProps)
                 <h1 className="text-2xl font-bold text-primary">{pageTitle}</h1>
             </div>
 
-            <div className="flex items-center gap-6">
-                <NotificationBell />
-            </div>
+            
         </header>
     );
 };

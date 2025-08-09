@@ -25,5 +25,9 @@ export const markNotificationAsRead = async (notificationId: number): Promise<No
     return data;
 };
 
+export const markAllNotificationsAsRead = async (): Promise<void> => {
+    await api.put('/notifications/mark-all-read');
+};
+
 
 export default api;
