@@ -58,7 +58,8 @@ html, body {
 
 /* --- Navbar --- */
 .navbar {
-  background-color: var(--card-bg);
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
   box-shadow: var(--box-shadow);
   display: flex;
   flex-direction: column;
@@ -142,7 +143,8 @@ html, body {
   left: 0;
   right: 0;
   height: var(--top-navbar-height);
-  background-color: var(--card-bg);
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
   padding: 0 1.5rem;
   z-index: 1010;
   align-items: center;
@@ -762,8 +764,27 @@ html, body {
   }
 
   .stats-grid {
-    grid-template-columns: 1fr; /* Single column on small screens */
-    gap: 1rem; /* Reduced gap */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .stat-card-icon {
+    font-size: 2rem;
+  }
+
+  .stat-card-info p {
+    font-size: 2rem;
+  }
+
+  .users-list-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .form-card {
@@ -1359,8 +1380,8 @@ html, body {
   }
 
   .stats-grid {
-    grid-template-columns: 1fr; /* Single column on small screens */
-    gap: 1rem; /* Reduced gap */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .form-card {
