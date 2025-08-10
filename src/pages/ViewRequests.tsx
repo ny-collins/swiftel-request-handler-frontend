@@ -92,10 +92,7 @@ const ViewRequests = () => {
         }
     });
 
-    const handleOpenModal = (payload: EditDecisionPayload) => {
-        setModalPayload(payload);
-        setIsModalOpen(true);
-    };
+    
 
     const handleSaveChanges = (newDecision: Decision['decision']) => {
         if (!modalPayload) return;
