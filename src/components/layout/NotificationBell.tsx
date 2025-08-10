@@ -70,11 +70,12 @@ const NotificationBell = () => {
                             ))}
                         </ul>
                     )}
-                    {unreadCount > 0 && (
-                        <div className="notification-footer">
+                    <div className="notification-footer">
+                        {unreadCount > 0 && (
                             <button onClick={handleMarkAllAsRead} className="text-sm text-primary font-bold">Mark all as read</button>
-                        </div>
-                    )}
+                        )}
+                        <Link to="/notifications" onClick={() => setIsOpen(false)} className="text-sm text-primary font-bold">View All</Link>
+                    </div>
                 </div>
             )}
         </div>

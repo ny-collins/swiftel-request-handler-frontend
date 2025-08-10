@@ -9,10 +9,13 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import MakeRequest from './pages/MakeRequest';
 import ViewRequests from './pages/ViewRequests';
+import RequestDetails from './pages/RequestDetails';
 import Users from './pages/Users';
 import Account from './pages/Account';
 import NotFound from './pages/NotFound';
+import NotificationCenter from './pages/NotificationCenter';
 import { useWebSocket } from './hooks/useWebSocket';
+import FullScreenLoader from './components/ui/FullScreenLoader';
 
 type ScreenSize = 'small' | 'medium' | 'large';
 
@@ -24,7 +27,7 @@ function getScreenSize(): ScreenSize {
 
 function App() {
     useWebSocket();
-    const { user } = useAuth();
+    const { user, isLoading } = useAuth();
     const [screenSize, setScreenSize] = useState<ScreenSize>(getScreenSize());
     const [isSidebarOpen, setIsSidebarOpen] = useState(getScreenSize() !== 'small');
 
@@ -50,6 +53,10 @@ function App() {
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [isSidebarOpen, toggleSidebar]);
+
+    if (isLoading) {
+        return <FullScreenLoader />;
+    }
 
     if (!user) {
         return (
@@ -86,6 +93,7 @@ function App() {
                     {/* Common Routes */}
                     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                     <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+                    <Route path="/notifications" element={<ProtectedRoute><NotificationCenter /></ProtectedRoute>} />
 
                     {/* Employee Routes */}
                     <Route path="/make-request" element={<ProtectedRoute roles={['employee']}><MakeRequest /></ProtectedRoute>} />
@@ -93,6 +101,7 @@ function App() {
                     
                     {/* Board & Admin Routes */}
                     <Route path="/requests" element={<ProtectedRoute roles={['admin', 'board_member']}><ViewRequests /></ProtectedRoute>} />
+                    <Route path="/requests/:id" element={<ProtectedRoute roles={['admin', 'board_member']}><RequestDetails /></ProtectedRoute>} />
                     <Route path="/users" element={<ProtectedRoute roles={['admin', 'board_member']}><Users /></ProtectedRoute>} />
 
                     <Route path="*" element={<NotFound />} />

@@ -7,9 +7,11 @@ import EditDecisionModal from '../components/EditDecisionModal';
 import FilterDropdown from '../components/ui/FilterDropdown';
 import EmptyState from '../components/ui/EmptyState';
 import RequestCardSkeleton from '../components/ui/RequestCardSkeleton';
+import Button from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
 import { FiInbox } from 'react-icons/fi';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { Request as RequestType, Decision } from '../types';
 
 type StatusFilter = 'all' | 'pending' | 'approved' | 'rejected';
@@ -44,6 +46,7 @@ const ViewRequests = () => {
     const isEmployee = user?.role === 'employee';
     const isAdmin = user?.role === 'admin';
 
+    const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalPayload, setModalPayload] = useState<EditDecisionPayload | null>(null);
     const [screenSize, setScreenSize] = useState(getScreenSize());
@@ -117,9 +120,20 @@ const ViewRequests = () => {
     ];
 
     const filteredRequests = useMemo(() => {
-        if (filter === 'all') return requests;
-        return requests.filter(req => req.status === filter);
-    }, [requests, filter]);
+        let filtered = requests;
+
+        if (filter !== 'all') {
+            filtered = filtered.filter(req => req.status === filter);
+        }
+
+        if (searchTerm) {
+            filtered = filtered.filter(req => 
+                req.title.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        return filtered;
+    }, [requests, filter, searchTerm]);
 
     if (error) {
         toast.error('Failed to fetch requests.');
@@ -128,24 +142,31 @@ const ViewRequests = () => {
     const renderContent = () => {
         if (isLoading) {
             return (
-                <div>
+                <div className="content-area">
                     {[...Array(3)].map((_, i) => <RequestCardSkeleton key={i} />)}
                 </div>
             );
         }
 
         if (filteredRequests.length === 0) {
+            const emptyStateAction = isEmployee && filter === 'all' && !searchTerm ? (
+                <Link to="/make-request">
+                    <Button>Make Your First Request</Button>
+                </Link>
+            ) : undefined;
+
             return (
                 <EmptyState 
                     icon={<FiInbox />}
-                    title="No Requests Found"
-                    message={`There are no requests in the "${filter}" category.`}
+                    title={searchTerm ? "No Requests Match Search" : "No Requests Found"}
+                    message={`There are no requests in the "${filter}" category ${searchTerm ? `matching "${searchTerm}"` : ''}.`}
+                    action={emptyStateAction}
                 />
             );
         }
 
         return (
-            <div>
+            <div className="content-area">
                 {filteredRequests.map(req => (
                     <RequestCard 
                         key={req.id} 
@@ -162,6 +183,18 @@ const ViewRequests = () => {
         <div>
             <div className="page-header">
                 <h1>{isEmployee ? 'My Requests' : 'All Employee Requests'}</h1>
+            </div>
+
+            <div className="page-controls">
+                {!isEmployee && (
+                    <Input 
+                        type="text"
+                        placeholder="Search by title..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ maxWidth: '350px' }}
+                    />
+                )}
             </div>
 
             {screenSize === 'small' ? (
