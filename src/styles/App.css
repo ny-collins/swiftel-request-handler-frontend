@@ -414,6 +414,13 @@ a:hover {
   gap: 1.5rem;
 }
 
+@media (max-width: 767px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
 .stat-card {
   background: var(--card-bg);
   padding: 1.5rem;
@@ -482,6 +489,24 @@ a:hover {
   font-weight: bold;
   font-size: 0.8rem;
   text-transform: uppercase;
+}
+
+.decision-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.decision-text .decision-approved {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.decision-text .decision-rejected {
+  color: var(--danger-color);
+  font-weight: bold;
 }
 .status-pending { background-color: var(--secondary-color); color: white; }
 .status-approved { background-color: var(--accent-color); color: white; }

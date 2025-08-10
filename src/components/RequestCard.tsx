@@ -77,9 +77,9 @@ const RequestCard = ({ request, onDecision, onEditDecision }: RequestCardProps) 
                 <li
                   key={d.board_member_id}
                   className={`decision-item decision-${d.decision}`}>
-                  <span>
+                  <span className="decision-text">
                     {d.username}:{' '}
-                    <strong>{d.decision.toUpperCase()}</strong>
+                    <strong className={`decision-${d.decision}`}>{d.decision.toUpperCase()}</strong>
                   </span>
                   {(canAdminEdit || (canEditOwnDecision && d.board_member_id === user?.id)) && (
                     <FiEdit
