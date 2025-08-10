@@ -5,7 +5,11 @@ import toast from 'react-hot-toast';
 import RequestCard from '../components/RequestCard';
 import EditDecisionModal from '../components/EditDecisionModal';
 import FilterDropdown from '../components/ui/FilterDropdown';
+import EmptyState from '../components/ui/EmptyState';
+import RequestCardSkeleton from '../components/ui/RequestCardSkeleton';
+import { FiInbox } from 'react-icons/fi';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 import { Request as RequestType, Decision } from '../types';
 
 type StatusFilter = 'all' | 'pending' | 'approved' | 'rejected';
@@ -30,18 +34,34 @@ const makeDecision = async (params: { requestId: number, decision: Decision['dec
 
 function getScreenSize() {
     if (window.innerWidth < 768) return 'small';
-    return 'large'; // Treat medium and large screens the same for this component
+    return 'large';
 }
 
 const ViewRequests = () => {
     const { user } = useAuth();
     const queryClient = useQueryClient();
+    const [searchParams, setSearchParams] = useSearchParams();
     const isEmployee = user?.role === 'employee';
     const isAdmin = user?.role === 'admin';
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalPayload, setModalPayload] = useState<EditDecisionPayload | null>(null);
     const [screenSize, setScreenSize] = useState(getScreenSize());
+
+    const getInitialFilter = (): StatusFilter => {
+        const status = searchParams.get('status');
+        if (status === 'pending' || status === 'approved' || status === 'rejected' || status === 'all') {
+            return status;
+        }
+        return isEmployee ? 'all' : 'pending';
+    };
+
+    const [filter, setFilter] = useState<StatusFilter>(getInitialFilter);
+
+    const handleFilterChange = (newFilter: StatusFilter) => {
+        setFilter(newFilter);
+        setSearchParams({ status: newFilter });
+    };
 
     const handleResize = useCallback(() => {
         setScreenSize(getScreenSize());
@@ -89,9 +109,6 @@ const ViewRequests = () => {
         mutation.mutate(payload);
     };
 
-    const defaultFilter: StatusFilter = isEmployee ? 'all' : 'pending';
-    const [filter, setFilter] = useState<StatusFilter>(defaultFilter);
-
     const filterOptions = [
         { value: 'all', label: 'All' },
         { value: 'pending', label: 'Pending' },
@@ -108,6 +125,39 @@ const ViewRequests = () => {
         toast.error('Failed to fetch requests.');
     }
 
+    const renderContent = () => {
+        if (isLoading) {
+            return (
+                <div>
+                    {[...Array(3)].map((_, i) => <RequestCardSkeleton key={i} />)}
+                </div>
+            );
+        }
+
+        if (filteredRequests.length === 0) {
+            return (
+                <EmptyState 
+                    icon={<FiInbox />}
+                    title="No Requests Found"
+                    message={`There are no requests in the "${filter}" category.`}
+                />
+            );
+        }
+
+        return (
+            <div>
+                {filteredRequests.map(req => (
+                    <RequestCard 
+                        key={req.id} 
+                        request={req} 
+                        onDecision={(requestId, decision) => mutation.mutate({ requestId, decision })} 
+                        onEditDecision={handleOpenModal}
+                    />
+                ))}
+            </div>
+        );
+    };
+
     return (
         <div>
             <div className="page-header">
@@ -117,32 +167,19 @@ const ViewRequests = () => {
             {screenSize === 'small' ? (
                 <FilterDropdown 
                     currentFilter={filter}
-                    onFilterChange={(value) => setFilter(value as StatusFilter)}
+                    onFilterChange={(value) => handleFilterChange(value as StatusFilter)}
                     options={filterOptions}
                 />
             ) : (
                 <div className="filter-tabs">
-                    <button onClick={() => setFilter('all')} className={`filter-tab ${filter === 'all' ? 'active' : ''}`}>All</button>
-                    <button onClick={() => setFilter('pending')} className={`filter-tab ${filter === 'pending' ? 'active' : ''}`}>Pending</button>
-                    <button onClick={() => setFilter('approved')} className={`filter-tab ${filter === 'approved' ? 'active' : ''}`}>Approved</button>
-                    <button onClick={() => setFilter('rejected')} className={`filter-tab ${filter === 'rejected' ? 'active' : ''}`}>Rejected</button>
+                    <button onClick={() => handleFilterChange('all')} className={`filter-tab ${filter === 'all' ? 'active' : ''}`}>All</button>
+                    <button onClick={() => handleFilterChange('pending')} className={`filter-tab ${filter === 'pending' ? 'active' : ''}`}>Pending</button>
+                    <button onClick={() => handleFilterChange('approved')} className={`filter-tab ${filter === 'approved' ? 'active' : ''}`}>Approved</button>
+                    <button onClick={() => handleFilterChange('rejected')} className={`filter-tab ${filter === 'rejected' ? 'active' : ''}`}>Rejected</button>
                 </div>
             )}
             
-            {isLoading && <p>Loading requests...</p>}
-            
-            {!isLoading && filteredRequests.length === 0 && (
-                <p>No requests found for this category.</p>
-            )}
-
-            {!isLoading && filteredRequests.map(req => (
-                <RequestCard 
-                    key={req.id} 
-                    request={req} 
-                    onDecision={(requestId, decision) => mutation.mutate({ requestId, decision })} 
-                    onEditDecision={handleOpenModal}
-                />
-            ))}
+            {renderContent()}
 
             {isModalOpen && modalPayload && (
                 <EditDecisionModal 

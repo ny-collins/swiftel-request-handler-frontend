@@ -1,6 +1,7 @@
-import { useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
 import NotificationBell from './NotificationBell';
+import Breadcrumbs from './Breadcrumbs';
+import UserMenu from './UserMenu';
 
 type ScreenSize = 'small' | 'medium' | 'large';
 
@@ -10,33 +11,25 @@ interface TopNavbarProps {
     screenSize: ScreenSize;
 }
 
-// Helper to get a user-friendly title from the pathname
-const getPageTitle = (pathname: string) => {
-    const title = pathname.split('/').pop()?.replace(/-/g, ' ') || 'Dashboard';
-    return title.charAt(0).toUpperCase() + title.slice(1);
-};
-
 const TopNavbar = ({ toggleSidebar, isSidebarOpen, screenSize }: TopNavbarProps) => {
-    const location = useLocation();
-    const pageTitle = getPageTitle(location.pathname);
-
     const showToggleButton = screenSize !== 'large';
 
     return (
         <header className="top-navbar">
-            <div className="flex items-center gap-4">
+            <div className="top-navbar-left">
                 {showToggleButton ? (
                     <button onClick={toggleSidebar} className="hamburger-menu">
                         {isSidebarOpen ? <FiX /> : <FiMenu />}
                     </button>
                 ) : (
-                    <div className="w-8"></div> // Placeholder for alignment
+                    <div style={{ width: '2rem' }} /> // Placeholder for alignment
                 )}
-                <h1 className="text-2xl font-bold text-primary">{pageTitle}</h1>
+                <Breadcrumbs />
             </div>
 
-            <div className="flex items-center gap-6">
+            <div className="top-navbar-right">
                 <NotificationBell />
+                <UserMenu />
             </div>
         </header>
     );
