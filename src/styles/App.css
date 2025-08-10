@@ -842,13 +842,10 @@ a:hover {
 }
 
 .dashboard-main-content {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 2rem;
   margin-top: 2.5rem;
-}
-
-.dashboard-main-content > * {
-  flex: 1;
 }
 
 .chart-container-card {
