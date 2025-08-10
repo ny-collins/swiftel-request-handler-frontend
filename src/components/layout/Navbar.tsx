@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { FiGrid, FiPlusSquare, FiEye, FiUsers, FiUser, FiPower } from 'react-icons/fi';
-import Button from '../ui/Button';
+import { FiGrid, FiPlusSquare, FiEye, FiUsers, FiUser } from 'react-icons/fi';
+
 
 type ScreenSize = 'small' | 'medium' | 'large';
 
@@ -12,7 +12,7 @@ interface NavbarProps {
 }
 
 const Navbar = ({ isSidebarOpen, screenSize, toggleSidebar }: NavbarProps) => {
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
 
     const showLabels = isSidebarOpen || screenSize === 'small';
 
