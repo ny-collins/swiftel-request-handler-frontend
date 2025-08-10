@@ -7,15 +7,6 @@ interface DashboardChartsProps {
   role: 'employee' | 'admin' | 'board_member';
 }
 
-interface PieLabelRenderProps {
-    cx: number;
-    cy: number;
-    midAngle: number;
-    innerRadius: number;
-    outerRadius: number;
-    percent: number;
-}
-
 const COLORS = {
   approved: '#10B981', // accent-color
   pending: '#F59E0B',  // secondary-color
@@ -23,7 +14,7 @@ const COLORS = {
 };
 
 const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: PieLabelRenderProps) => {
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
