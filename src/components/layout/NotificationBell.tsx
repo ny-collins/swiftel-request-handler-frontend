@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FiBell } from 'react-icons/fi';
 import { useNotifications } from '../../hooks/useNotifications';
 import { formatDistanceToNow } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const NotificationBell = () => {
     const [isOpen, setIsOpen] = useState(false);

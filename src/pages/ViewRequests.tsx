@@ -171,8 +171,6 @@ const ViewRequests = () => {
                     <RequestCard 
                         key={req.id} 
                         request={req} 
-                        onDecision={(requestId, decision) => mutation.mutate({ requestId, decision })} 
-                        onEditDecision={handleOpenModal}
                     />
                 ))}
             </div>

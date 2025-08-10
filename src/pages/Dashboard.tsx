@@ -33,7 +33,7 @@ const Dashboard = () => {
         queryFn: fetchStats,
     });
 
-    const { data: requests, isLoading: isLoadingRequests } = useQuery<Request[], Error>({
+    const { data: requests } = useQuery<Request[], Error>({
         queryKey: ['requests', isEmployee],
         queryFn: () => fetchRequests(isEmployee),
         enabled: !!user, // Only fetch requests if user is loaded

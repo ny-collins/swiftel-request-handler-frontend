@@ -2,7 +2,7 @@ import { useNotifications } from '../hooks/useNotifications';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
-import EmptyState from './ui/EmptyState';
+import EmptyState from '../components/ui/EmptyState';
 import { FiBell } from 'react-icons/fi';
 
 const NotificationCenter = () => {
