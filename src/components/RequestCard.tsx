@@ -84,6 +84,7 @@ const RequestCard = ({ request, onDecision, onEditDecision }: RequestCardProps) 
                   {(canAdminEdit || (canEditOwnDecision && d.board_member_id === user?.id)) && (
                     <FiEdit
                       cursor="pointer"
+                      className="edit-decision-icon"
                       onClick={() => handleEditClick(d.board_member_id, d.decision)}
                     />
                   )}

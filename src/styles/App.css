@@ -64,7 +64,19 @@ a {
 }
 a:hover {
   color: var(--primary-color-dark);
-  text-decoration: underline;
+}
+
+.stats-grid a {
+  text-decoration: none;
+}
+
+.stats-grid a:hover .stat-card {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05), 0 0 15px 2px var(--primary-color-light);
+}
+
+.stats-grid a:hover {
+  text-decoration: none;
 }
 
 /* --- Z-INDEX HIERARCHY --- */
@@ -471,9 +483,9 @@ a:hover {
   font-size: 0.8rem;
   text-transform: uppercase;
 }
-.status-pending { background-color: #FEF3C7; color: #92400E; }
-.status-approved { background-color: #D1FAE5; color: #065F46; }
-.status-rejected { background-color: #FEE2E2; color: #991B1B; }
+.status-pending { background-color: var(--secondary-color); color: white; }
+.status-approved { background-color: var(--accent-color); color: white; }
+.status-rejected { background-color: var(--danger-color); color: white; }
 
 .request-card-body p { margin: 0 0 1rem 0; line-height: 1.7; }
 .request-card-footer {
@@ -653,6 +665,12 @@ a:hover {
 }
 .breadcrumbs svg {
   color: var(--grey-300);
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .user-menu { position: relative; }
@@ -855,5 +873,15 @@ a:hover {
 }
 .mt-2 {
     margin-top: 0.5rem;
+}
+
+.edit-decision-icon {
+    color: var(--light-text-color);
+    transition: all var(--transition-speed) ease;
+}
+
+.edit-decision-icon:hover {
+    color: var(--primary-color);
+    transform: scale(1.2);
 }
 

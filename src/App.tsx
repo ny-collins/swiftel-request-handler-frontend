@@ -12,10 +12,7 @@ import ViewRequests from './pages/ViewRequests';
 import Users from './pages/Users';
 import Account from './pages/Account';
 import NotFound from './pages/NotFound';
-
-
 import { useWebSocket } from './hooks/useWebSocket';
-
 
 type ScreenSize = 'small' | 'medium' | 'large';
 
@@ -29,17 +26,14 @@ function App() {
     useWebSocket();
     const { user } = useAuth();
     const [screenSize, setScreenSize] = useState<ScreenSize>(getScreenSize());
-    const [isSidebarOpen, setIsSidebarOpen] = useState(getScreenSize() === 'large');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(getScreenSize() !== 'small');
 
     const handleResize = useCallback(() => {
-        const newScreenSize = getScreenSize();
-        setScreenSize(newScreenSize);
-        // Adjust sidebar state based on screen size changes
-        if (newScreenSize === 'large') {
-            setIsSidebarOpen(true); // Always open on large screens
-        } else {
-            setIsSidebarOpen(false); // Default to closed on medium/small
-        }
+        setScreenSize(getScreenSize());
+    }, []);
+
+    const toggleSidebar = useCallback(() => {
+        setIsSidebarOpen(prevState => !prevState);
     }, []);
 
     useEffect(() => {
@@ -48,27 +42,14 @@ function App() {
     }, [handleResize]);
 
     useEffect(() => {
-        if (user && screenSize !== 'large') {
-            setIsSidebarOpen(false);
-        }
-    }, [user, screenSize]);
-
-    const toggleSidebar = useCallback(() => {
-        // Sidebar cannot be closed on large screens
-        if (screenSize !== 'large') {
-            setIsSidebarOpen(prevState => !prevState);
-        }
-    }, [screenSize]);
-
-    useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape' && screenSize !== 'large' && isSidebarOpen) {
+            if (e.key === 'Escape' && isSidebarOpen) {
                 toggleSidebar();
             }
         };
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [isSidebarOpen, screenSize, toggleSidebar]);
+    }, [isSidebarOpen, toggleSidebar]);
 
     if (!user) {
         return (
@@ -76,7 +57,7 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="*" element={<Login />} />
+                    <Route path="*" element={<Navigate to="/login" replace />} />
                 </Routes>
             </div>
         );
@@ -86,7 +67,7 @@ function App() {
 
     return (
         <div className={appContainerClasses}>
-            <div className="mobile-overlay" onClick={toggleSidebar}></div>
+            {isSidebarOpen && screenSize !== 'large' && <div className="mobile-overlay" onClick={toggleSidebar}></div>}
             <TopNavbar 
                 toggleSidebar={toggleSidebar} 
                 isSidebarOpen={isSidebarOpen}

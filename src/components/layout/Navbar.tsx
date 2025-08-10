@@ -46,12 +46,6 @@ const Navbar = ({ isSidebarOpen, screenSize, toggleSidebar }: NavbarProps) => {
                 
                 <li onClick={handleLinkClick}><NavLink to="/account"><FiUser />{showLabels && <span>My Account</span>}</NavLink></li>
             </ul>
-            <div className="navbar-footer">
-                <Button onClick={logout} variant="secondary" className={!showLabels ? 'btn-icon-only' : ''}>
-                    <FiPower />
-                    {showLabels && <span>Logout</span>}
-                </Button>
-            </div>
         </nav>
     );
 };

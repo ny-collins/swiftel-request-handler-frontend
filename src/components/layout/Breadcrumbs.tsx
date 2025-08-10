@@ -10,15 +10,19 @@ const Breadcrumbs = () => {
         return str.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     };
 
+    if (pathnames.length === 0) {
+        return <nav className="breadcrumbs" aria-label="breadcrumb"><span>Dashboard</span></nav>;
+    }
+
     return (
         <nav className="breadcrumbs" aria-label="breadcrumb">
-            <Link to="/dashboard">Dashboard</Link>
             {pathnames.map((name, index) => {
                 const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
                 const isLast = index === pathnames.length - 1;
+
                 return (
-                    <span key={name}>
-                        <FiChevronRight />
+                    <span key={name} className="breadcrumb-item">
+                        {index > 0 && <FiChevronRight />}
                         {isLast ? (
                             <span aria-current="page">{formatCrumb(name)}</span>
                         ) : (
