@@ -3,34 +3,21 @@ import { useAuth } from '../hooks/useAuth';
 import api from '../api';
 import toast from 'react-hot-toast';
 import RequestCard from '../components/RequestCard';
-import EditDecisionModal from '../components/EditDecisionModal';
 import FilterDropdown from '../components/ui/FilterDropdown';
 import EmptyState from '../components/ui/EmptyState';
 import RequestCardSkeleton from '../components/ui/RequestCardSkeleton';
 import Button from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { FiInbox } from 'react-icons/fi';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Request as RequestType, Decision } from '../types';
+import { Request as RequestType } from '../types';
 
 type StatusFilter = 'all' | 'pending' | 'approved' | 'rejected';
-
-interface EditDecisionPayload {
-    requestId: number;
-    boardMemberId: number;
-    currentDecision: Decision['decision'];
-}
 
 const fetchRequests = async (isEmployee: boolean) => {
     const url = isEmployee ? '/requests/my-requests' : '/requests';
     const { data } = await api.get<RequestType[]>(url);
-    return data;
-};
-
-const makeDecision = async (params: { requestId: number, decision: Decision['decision'], boardMemberId?: number }) => {
-    const { requestId, ...payload } = params;
-    const { data } = await api.post(`/requests/${requestId}/decide`, payload);
     return data;
 };
 
@@ -41,14 +28,10 @@ function getScreenSize() {
 
 const ViewRequests = () => {
     const { user } = useAuth();
-    const queryClient = useQueryClient();
     const [searchParams, setSearchParams] = useSearchParams();
     const isEmployee = user?.role === 'employee';
-    const isAdmin = user?.role === 'admin';
 
     const [searchTerm, setSearchTerm] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalPayload, setModalPayload] = useState<EditDecisionPayload | null>(null);
     const [screenSize, setScreenSize] = useState(getScreenSize());
 
     const getInitialFilter = (): StatusFilter => {
@@ -79,35 +62,6 @@ const ViewRequests = () => {
         queryKey: ['requests', isEmployee],
         queryFn: () => fetchRequests(isEmployee),
     });
-
-    const mutation = useMutation({ 
-        mutationFn: makeDecision,
-        onSuccess: () => {
-            toast.success('Decision submitted successfully!');
-            queryClient.invalidateQueries({ queryKey: ['requests'] });
-            setIsModalOpen(false);
-        },
-        onError: (error: any) => {
-            toast.error(error.response?.data?.message || 'Failed to submit decision.');
-        }
-    });
-
-    
-
-    const handleSaveChanges = (newDecision: Decision['decision']) => {
-        if (!modalPayload) return;
-
-        const payload: { requestId: number, decision: Decision['decision'], boardMemberId?: number } = {
-            requestId: modalPayload.requestId,
-            decision: newDecision,
-        };
-
-        if (isAdmin) {
-            payload.boardMemberId = modalPayload.boardMemberId;
-        }
-        
-        mutation.mutate(payload);
-    };
 
     const filterOptions = [
         { value: 'all', label: 'All' },
@@ -209,14 +163,6 @@ const ViewRequests = () => {
             
             {renderContent()}
 
-            {isModalOpen && modalPayload && (
-                <EditDecisionModal 
-                    payload={modalPayload}
-                    onClose={() => setIsModalOpen(false)}
-                    onSave={handleSaveChanges}
-                    isSaving={mutation.isPending}
-                />
-            )}
         </div>
     );
 };
