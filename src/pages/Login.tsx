@@ -2,8 +2,6 @@ import { useAuth } from '../hooks/useAuth';
 import api from '../api';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { Input, Checkbox } from '../components/ui/Input';
-import Button from '../components/ui/Button';
 import { useForm } from 'react-hook-form';
 import { getErrorMessage } from '../utils/error.utils';
 
@@ -28,30 +26,32 @@ const Login = () => {
     };
 
     return (
-        <div className="form-card">
-            <h2>Login to Swiftel</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <Input type="email" id="email" {...register("email", { required: "Email is required" })} />
-                    {errors.email && <p className="error-text">{errors.email.message}</p>}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <Input type="password" id="password" {...register("password", { required: "Password is required" })} />
-                    {errors.password && <p className="error-text">{errors.password.message}</p>}
-                </div>
-                <div className="form-group">
-                   <label className="checkbox-label">
-                     <Checkbox {...register("rememberMe")} />
-                     Remember Me
-                   </label>
-                </div>
-                <Button type="submit" className="w-full">Login</Button>
-            </form>
-            <p className="text-center mt-4">
-                No account? <Link to="/register" className="text-purple-600 hover:underline">Register here</Link>
-            </p>
+        <div className="form-container">
+            <div className="form-card">
+                <h2>Login to Swiftel</h2>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" className="input-field" {...register("email", { required: "Email is required" })} />
+                        {errors.email && <p className="error-text">{errors.email.message}</p>}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input type="password" id="password" className="input-field" {...register("password", { required: "Password is required" })} />
+                        {errors.password && <p className="error-text">{errors.password.message}</p>}
+                    </div>
+                    <div className="form-group">
+                       <label className="checkbox-label">
+                         <input type="checkbox" {...register("rememberMe")} />
+                         Remember Me
+                       </label>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Login</button>
+                </form>
+                <p className="text-center mt-1">
+                    No account? <Link to="/register" className="link">Register here</Link>
+                </p>
+            </div>
         </div>
     );
 };

@@ -11,7 +11,7 @@ const MyRecentRequestStatus = ({ latestRequest }: MyRecentRequestStatusProps) =>
 
   if (!latestRequest) {
     return (
-        <div className="quick-request-form-card">
+        <div className="card">
             <h3>My Latest Request</h3>
             <EmptyState 
                 icon={<FiHelpCircle />}
@@ -23,15 +23,15 @@ const MyRecentRequestStatus = ({ latestRequest }: MyRecentRequestStatusProps) =>
   }
 
   return (
-    <div className="quick-request-form-card">
+    <div className="card">
         <h3>My Latest Request</h3>
-        <div className="latest-request-status-widget">
-            <div className={`status-icon-background status-${latestRequest.status}`}>
+        <div className="latest-request-widget">
+            <div className={`status-icon-bg ${latestRequest.status}`}>
                 <FiFileText className="status-icon"/>
             </div>
-            <div className="request-details">
+            <div className="request-widget-details">
                 <h4>{latestRequest.title}</h4>
-                <p>Status: <span className={`request-status-text status-${latestRequest.status}`}>{latestRequest.status}</span></p>
+                <p>Status: <span className={`request-status-text ${latestRequest.status}`}>{latestRequest.status}</span></p>
             </div>
             <Link to="/my-requests" className="btn btn-secondary btn-sm">View All</Link>
         </div>

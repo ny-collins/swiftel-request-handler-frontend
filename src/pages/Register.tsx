@@ -1,8 +1,6 @@
 import api from '../api';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import { Input } from '../components/ui/Input';
-import Button from '../components/ui/Button';
 import { useForm } from 'react-hook-form';
 import { getErrorMessage } from '../utils/error.utils';
 
@@ -27,29 +25,31 @@ const Register = () => {
     };
 
     return (
-        <div className="form-card">
-            <h2>Create an Account</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-group">
-                    <label htmlFor="username">Name</label>
-                    <Input type="text" id="username" {...register("username", { required: "Username is required" })} />
-                    {errors.username && <p className="error-text">{errors.username.message}</p>}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <Input type="email" id="email" {...register("email", { required: "Email is required" })} />
-                    {errors.email && <p className="error-text">{errors.email.message}</p>}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <Input type="password" id="password" {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })} />
-                    {errors.password && <p className="error-text">{errors.password.message}</p>}
-                </div>
-                <Button type="submit" className="w-full">Register</Button>
-            </form>
-            <p className="text-center mt-4">
-                Already have an account? <Link to="/login" className="text-purple-600 hover:underline">Login here</Link>
-            </p>
+        <div className="form-container">
+            <div className="form-card">
+                <h2>Create an Account</h2>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="form-group">
+                        <label htmlFor="username">Name</label>
+                        <input type="text" id="username" className="input-field" {...register("username", { required: "Username is required" })} />
+                        {errors.username && <p className="error-text">{errors.username.message}</p>}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" className="input-field" {...register("email", { required: "Email is required" })} />
+                        {errors.email && <p className="error-text">{errors.email.message}</p>}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input type="password" id="password" className="input-field" {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })} />
+                        {errors.password && <p className="error-text">{errors.password.message}</p>}
+                    </div>
+                    <button type="submit" className="btn btn-primary">Register</button>
+                </form>
+                <p className="text-center mt-1">
+                    Already have an account? <Link to="/login" className="link">Login here</Link>
+                </p>
+            </div>
         </div>
     );
 };

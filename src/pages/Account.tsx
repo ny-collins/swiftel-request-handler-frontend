@@ -1,7 +1,5 @@
 import api from '../api';
 import toast from 'react-hot-toast';
-import { Input } from '../components/ui/Input';
-import Button from '../components/ui/Button';
 import { useForm } from 'react-hook-form';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { User } from '../types';
@@ -61,32 +59,37 @@ const Account = () => {
             </div>
             {isLoading && <p>Loading account details...</p>}
             {user && (
-                <div className="form-card" style={{ maxWidth: '600px' }}>
+                <div className="card account-form-card">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-group">
                             <label>Username</label>
-                            <Input {...register("username", { required: "Username is required" })} />
+                            <input className="input-field" {...register("username", { required: "Username is required" })} />
                             {errors.username && <p className="error-text">{errors.username.message}</p>}
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <Input type="email" {...register("email", { required: "Email is required" })} />
+                            <input type="email" className="input-field" {...register("email", { required: "Email is required" })} />
                             {errors.email && <p className="error-text">{errors.email.message}</p>}
                         </div>
-                        <hr className="my-8" />
-                        <p className="mb-4">Update Password (leave blank to keep current password)</p>
+                        
+                        <hr className="form-divider" />
+                        
+                        <p className="form-divider-text">Update Password (leave blank to keep current password)</p>
+                        
                         <div className="form-group">
                             <label>New Password</label>
-                            <Input type="password" {...register("password")} />
+                            <input type="password" className="input-field" {...register("password")} />
                         </div>
                          <div className="form-group">
                             <label>Confirm New Password</label>
-                            <Input type="password" {...register("confirmPassword", { 
+                            <input type="password" className="input-field" {...register("confirmPassword", { 
                                 validate: value => value === watch('password') || "Passwords do not match"
                             })} />
                             {errors.confirmPassword && <p className="error-text">{errors.confirmPassword.message}</p>}
                         </div>
-                        <Button type="submit" disabled={mutation.isPending} className="w-full">Update Account</Button>
+                        <button type="submit" className="btn btn-primary" disabled={mutation.isPending}>
+                            {mutation.isPending ? 'Updating...' : 'Update Account'}
+                        </button>
                     </form>
                 </div>
             )}

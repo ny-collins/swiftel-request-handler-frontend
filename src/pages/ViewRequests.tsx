@@ -3,11 +3,8 @@ import { useAuth } from '../hooks/useAuth';
 import api from '../api';
 import toast from 'react-hot-toast';
 import RequestCard from '../components/RequestCard';
-import FilterDropdown from '../components/ui/FilterDropdown';
 import EmptyState from '../components/ui/EmptyState';
 import RequestCardSkeleton from '../components/ui/RequestCardSkeleton';
-import Button from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
 import { FiInbox } from 'react-icons/fi';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams, Link } from 'react-router-dom';
@@ -48,13 +45,6 @@ const ViewRequests = () => {
         queryFn: () => fetchRequests(isEmployee),
     });
 
-    const filterOptions = [
-        { value: 'all', label: 'All' },
-        { value: 'pending', label: 'Pending' },
-        { value: 'approved', label: 'Approved' },
-        { value: 'rejected', label: 'Rejected' },
-    ];
-
     const filteredRequests = useMemo(() => {
         let filtered = requests;
 
@@ -78,7 +68,7 @@ const ViewRequests = () => {
     const renderContent = () => {
         if (isLoading) {
             return (
-                <div className="content-area">
+                <div className="requests-grid">
                     {[...Array(3)].map((_, i) => <RequestCardSkeleton key={i} />)}
                 </div>
             );
@@ -86,9 +76,7 @@ const ViewRequests = () => {
 
         if (filteredRequests.length === 0) {
             const emptyStateAction = isEmployee && filter === 'all' && !searchTerm ? (
-                <Link to="/make-request">
-                    <Button>Make Your First Request</Button>
-                </Link>
+                <Link to="/make-request" className="btn btn-primary">Make Your First Request</Link>
             ) : undefined;
 
             return (
@@ -102,7 +90,7 @@ const ViewRequests = () => {
         }
 
         return (
-            <div className="content-area">
+            <div className="requests-grid">
                 {filteredRequests.map(req => (
                     <RequestCard 
                         key={req.id} 
@@ -120,11 +108,12 @@ const ViewRequests = () => {
             </div>
 
             <div className="page-controls">
-                <Input 
+                <input 
                     type="text"
                     placeholder="Search by title..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    className="input-field"
                 />
             </div>
 
@@ -135,11 +124,6 @@ const ViewRequests = () => {
                     <button onClick={() => handleFilterChange('approved')} className={`filter-tab ${filter === 'approved' ? 'active' : ''}`}>Approved</button>
                     <button onClick={() => handleFilterChange('rejected')} className={`filter-tab ${filter === 'rejected' ? 'active' : ''}`}>Rejected</button>
                 </div>
-                <FilterDropdown 
-                    currentFilter={filter}
-                    onFilterChange={(value) => handleFilterChange(value as StatusFilter)}
-                    options={filterOptions}
-                />
             </div>
             
             {renderContent()}

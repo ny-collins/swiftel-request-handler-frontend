@@ -8,9 +8,9 @@ interface DashboardChartsProps {
 }
 
 const COLORS = {
-  approved: '#10B981', // accent-color
-  pending: '#F59E0B',  // secondary-color
-  rejected: '#EF4444',  // danger-color
+  approved: '#10B981', 
+  pending: '#F59E0B',  
+  rejected: '#EF4444', 
 };
 
 const RADIAN = Math.PI / 180;
@@ -46,9 +46,9 @@ const DashboardCharts = ({ stats, role }: DashboardChartsProps) => {
   }
 
   return (
-    <div className="chart-container-card">
+    <div className="card chart-container-card">
         <h3>Request Status Overview</h3>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height="100%">
             <PieChart>
                 <Pie
                     data={filteredData}

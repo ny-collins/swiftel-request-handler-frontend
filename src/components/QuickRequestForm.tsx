@@ -2,8 +2,6 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../api';
 import toast from 'react-hot-toast';
-import { Input, Textarea } from './ui/Input';
-import Button from './ui/Button';
 
 interface QuickRequestFormFields {
     title: string;
@@ -33,22 +31,22 @@ const QuickRequestForm = () => {
     };
 
     return (
-        <div className="quick-request-form-card">
+        <div className="card">
             <h3>Make a Quick (Non-Monetary) Request</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <label>Title</label>
-                    <Input {...register('title', { required: 'Title is required' })} />
+                    <input className="input-field" {...register('title', { required: 'Title is required' })} />
                     {errors.title && <p className="error-text">{errors.title.message}</p>}
                 </div>
                 <div className="form-group">
                     <label>Description</label>
-                    <Textarea {...register('description', { required: 'Description is required' })} />
+                    <textarea className="input-field" {...register('description', { required: 'Description is required' })} />
                     {errors.description && <p className="error-text">{errors.description.message}</p>}
                 </div>
-                <Button type="submit" disabled={mutation.isPending} className="w-full">
+                <button type="submit" className="btn btn-primary" disabled={mutation.isPending}>
                     {mutation.isPending ? 'Submitting...' : 'Submit Quick Request'}
-                </Button>
+                </button>
             </form>
         </div>
     );

@@ -1,8 +1,5 @@
 import { useForm, Controller } from 'react-hook-form';
 import { User } from '../types';
-import Button from './ui/Button';
-import { Input } from './ui/Input';
-import Select from './ui/Select';
 
 interface EditUserModalProps {
   user: User;
@@ -23,15 +20,15 @@ const EditUserModal = ({ user, onClose, onSave, isSaving }: EditUserModalProps) 
     <div className="modal-backdrop">
       <div className="modal-content">
         <h2>Edit User: {user.username}</h2>
-        <form onSubmit={handleSubmit(onSave)} className="user-edit-form">
+        <form onSubmit={handleSubmit(onSave)}>
             <div className="form-group">
                 <label>Username</label>
-                <Input {...register("username", { required: "Username is required" })} />
+                <input className="input-field" {...register("username", { required: "Username is required" })} />
                 {errors.username && <p className="error-text">{errors.username.message}</p>}
             </div>
             <div className="form-group">
                 <label>Email</label>
-                <Input type="email" {...register("email", { required: "Email is required" })} />
+                <input type="email" className="input-field" {...register("email", { required: "Email is required" })} />
                 {errors.email && <p className="error-text">{errors.email.message}</p>}
             </div>
             <div className="form-group">
@@ -41,17 +38,17 @@ const EditUserModal = ({ user, onClose, onSave, isSaving }: EditUserModalProps) 
                     control={control}
                     rules={{ required: 'Role is required' }}
                     render={({ field }) => (
-                        <Select 
-                            options={roleOptions} 
-                            value={field.value || ''} 
-                            onChange={field.onChange} 
-                        />
+                        <select className="input-field" value={field.value || ''} onChange={field.onChange}>
+                            {roleOptions.map(opt => (
+                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                            ))}
+                        </select>
                     )}
                 />
             </div>
             <div className="modal-actions">
-                <Button variant="secondary" onClick={onClose} disabled={isSaving}>Cancel</Button>
-                <Button type="submit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save Changes'}</Button>
+                <button type="button" className="btn btn-secondary" onClick={onClose} disabled={isSaving}>Cancel</button>
+                <button type="submit" className="btn btn-primary" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save Changes'}</button>
             </div>
         </form>
       </div>

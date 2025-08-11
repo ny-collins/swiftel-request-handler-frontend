@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Request } from '../types';
 import { FiInbox } from 'react-icons/fi';
-import Button from './ui/Button';
 import EmptyState from './ui/EmptyState';
 
 interface RecentRequestsListProps {
@@ -11,7 +10,7 @@ interface RecentRequestsListProps {
 const RecentRequestsList = ({ requests }: RecentRequestsListProps) => {
   if (requests.length === 0) {
     return (
-      <div className="recent-requests-card">
+      <div className="card">
         <h3>Pending Review</h3>
         <EmptyState 
             icon={<FiInbox />}
@@ -23,23 +22,19 @@ const RecentRequestsList = ({ requests }: RecentRequestsListProps) => {
   }
 
   return (
-    <div className="recent-requests-card">
-      <div className="recent-requests-header">
+    <div className="card">
+      <div className="list-card-header">
         <h3>Pending Review</h3>
-        <Link to="/requests?status=pending">
-          <Button variant="secondary" className="btn-sm">View All</Button>
-        </Link>
+        <Link to="/requests?status=pending" className="btn btn-secondary btn-sm">View All</Link>
       </div>
-      <ul className="recent-requests-list">
+      <ul className="list-card-list">
         {requests.map(request => (
-          <li key={request.id} className="recent-request-item">
-            <div className="request-info">
-              <span className="request-title">{request.title}</span>
-              <span className="request-user">by {request.employee_username}</span>
+          <li key={request.id} className="list-card-item">
+            <div className="list-card-info">
+              <span className="item-title">{request.title}</span>
+              <span className="item-user">by {request.employee_username}</span>
             </div>
-            <Link to={`/requests/${request.id}`}>
-                <Button className="btn-sm">Review</Button>
-            </Link>
+            <Link to={`/requests/${request.id}`} className="btn btn-primary btn-sm">Review</Link>
           </li>
         ))}
       </ul>

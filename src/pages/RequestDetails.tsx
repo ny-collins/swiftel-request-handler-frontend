@@ -4,7 +4,6 @@ import api from '../api';
 import { Request as RequestType } from '../types';
 import toast from 'react-hot-toast';
 import { useAuth } from '../hooks/useAuth';
-import Button from '../components/ui/Button';
 import { FiCheck, FiX } from 'react-icons/fi';
 
 const fetchRequestById = async (id: string) => {
@@ -93,33 +92,35 @@ const RequestDetails = () => {
                     <div className="request-actions">
                         <p>This request is pending. Please cast your vote.</p>
                         <div className="decision-buttons">
-                            <Button variant="approve" onClick={() => handleDecision('approved')} disabled={mutation.isPending}>
+                            <button className="btn btn-approve" onClick={() => handleDecision('approved')} disabled={mutation.isPending}>
                                 <FiCheck /> Approve
-                            </Button>
-                            <Button variant="reject" onClick={() => handleDecision('rejected')} disabled={mutation.isPending}>
+                            </button>
+                            <button className="btn btn-reject" onClick={() => handleDecision('rejected')} disabled={mutation.isPending}>
                                 <FiX /> Reject
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 )}
 
-                <div className="request-card-header">
+                <div className="request-details-header">
                     <div>
                         <h3>{request.title}</h3>
                         <small>By: {request.employee_username}</small>
                     </div>
-                    <span className={`request-status status-${request.status}`}>
-                        {request.status.toUpperCase()}
+                    <span className={`request-status-badge ${request.status}`}>
+                        {request.status}
                     </span>
                 </div>
                 <div className="request-details-body">
                     <p><strong>Submitted On:</strong> {formatDate(request.created_at)}</p>
-                    <p><strong>Type:</strong> <span className="capitalize">{request.type}</span></p>
+                    <p><strong>Type:</strong> <span style={{textTransform: 'capitalize'}}>{request.type}</span></p>
                     {request.type === 'monetary' && (
                         <p><strong>Amount:</strong> {formatAmount(request.amount)}</p>
                     )}
-                    <p className="description-section"><strong>Description:</strong></p>
-                    <p>{request.description}</p>
+                    <div className="description-section">
+                        <p><strong>Description:</strong></p>
+                        <p>{request.description}</p>
+                    </div>
                 </div>
 
                 {request.decisions && (
@@ -128,10 +129,8 @@ const RequestDetails = () => {
                         {request.decisions.length > 0 ? (
                             <ul>
                                 {request.decisions.map((d) => (
-                                    <li key={d.board_member_id} className={`decision-item decision-${d.decision}`}>
-                                        <span className="decision-text">
-                                            {d.username}: <strong className={`decision-${d.decision}`}>{d.decision.toUpperCase()}</strong>
-                                        </span>
+                                    <li key={d.board_member_id} className={`decision-item`}>
+                                        {d.username}: <strong className={`decision-${d.decision}`}>{d.decision.toUpperCase()}</strong>
                                     </li>
                                 ))}
                             </ul>

@@ -20,10 +20,23 @@ import FullScreenLoader from './components/ui/FullScreenLoader';
 function App() {
     useWebSocket();
     const { user, isLoading } = useAuth();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
 
     const toggleSidebar = useCallback(() => {
         setIsSidebarOpen(prevState => !prevState);
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 1024) {
+                setIsSidebarOpen(false);
+            } else {
+                setIsSidebarOpen(true);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initial check
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     useEffect(() => {
@@ -32,13 +45,10 @@ function App() {
                 e.preventDefault();
                 toggleSidebar();
             }
-            if (e.key === 'Escape' && isSidebarOpen) {
-                toggleSidebar();
-            }
         };
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [isSidebarOpen, toggleSidebar]);
+    }, [toggleSidebar]);
 
     if (isLoading) {
         return <FullScreenLoader />;
@@ -46,27 +56,25 @@ function App() {
 
     if (!user) {
         return (
-            <div className="bg-gray-50">
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="*" element={<Navigate to="/login" replace />} />
-                </Routes>
-            </div>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="*" element={<Navigate to="/login" replace />} />
+            </Routes>
         );
     }
 
     return (
-        <div className="bg-gray-50 text-gray-800">
+        <div className="app-layout">
             {isSidebarOpen && window.innerWidth < 1024 && 
                 <div 
-                    className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+                    className="mobile-overlay"
                     onClick={toggleSidebar}
                 ></div>
             }
-            <TopNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
             <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-            <main className={`transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 mt-16 ${isSidebarOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
+            <TopNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+            <main className="main-content">
                 <Routes>
                     <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     <Route path="/login" element={<Navigate to="/dashboard" replace />} />

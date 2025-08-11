@@ -8,7 +8,6 @@ import EditUserModal from '../components/EditUserModal';
 import UserItemSkeleton from '../components/ui/UserItemSkeleton';
 import EmptyState from '../components/ui/EmptyState';
 import { FiUsers } from 'react-icons/fi';
-import { Input } from '../components/ui/Input';
 
 const fetchUsers = async () => {
     const { data } = await api.get<User[]>('/users');
@@ -87,7 +86,7 @@ const Users = () => {
                 <EmptyState 
                     icon={<FiUsers />}
                     title={searchTerm ? "No Users Found" : "No Users Yet"}
-                    message={searchTerm ? `No users match the search term \"${searchTerm}\".` : "When new users register, they will appear here."}
+                    message={searchTerm ? `No users match the search term "${searchTerm}".` : "When new users register, they will appear here."}
                 />
             );
         }
@@ -107,16 +106,16 @@ const Users = () => {
                 <h1>User Management</h1>
             </div>
             <div className="page-controls">
-                 <Input 
+                 <input 
                     type="text"
                     placeholder="Search by name or email..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    className="input-field"
                 />
             </div>
-            <div className="content-area">
-                {renderContent()}
-            </div>
+            
+            {renderContent()}
 
             {isModalOpen && selectedUser && (
                 <EditUserModal 
@@ -131,3 +130,4 @@ const Users = () => {
 };
 
 export default Users;
+
