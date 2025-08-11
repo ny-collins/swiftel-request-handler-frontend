@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import RequestCard from '../components/RequestCard';
 import EmptyState from '../components/ui/EmptyState';
 import RequestCardSkeleton from '../components/ui/RequestCardSkeleton';
-import { FiInbox } from 'react-icons/fi';
+import { FiInbox, FiSearch } from 'react-icons/fi';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Request as RequestType } from '../types';
@@ -108,25 +108,28 @@ const ViewRequests = () => {
             </div>
 
             <div className="page-controls">
-                <input 
-                    type="text"
-                    placeholder="Search by title..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="input-field"
-                />
-            </div>
-
-            <div className="filter-controls">
-                <div className="filter-tabs">
-                    <button onClick={() => handleFilterChange('all')} className={`filter-tab ${filter === 'all' ? 'active' : ''}`}>All</button>
-                    <button onClick={() => handleFilterChange('pending')} className={`filter-tab ${filter === 'pending' ? 'active' : ''}`}>Pending</button>
-                    <button onClick={() => handleFilterChange('approved')} className={`filter-tab ${filter === 'approved' ? 'active' : ''}`}>Approved</button>
-                    <button onClick={() => handleFilterChange('rejected')} className={`filter-tab ${filter === 'rejected' ? 'active' : ''}`}>Rejected</button>
+                <div className="search-input-container">
+                    <FiSearch className="search-input-icon" />
+                    <input 
+                        type="text"
+                        placeholder="Search by title..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="input-field with-icon"
+                    />
                 </div>
             </div>
+
+            <div className="filter-tabs">
+                <button onClick={() => handleFilterChange('all')} className={`filter-tab ${filter === 'all' ? 'active' : ''}`}>All</button>
+                <button onClick={() => handleFilterChange('pending')} className={`filter-tab ${filter === 'pending' ? 'active' : ''}`}>Pending</button>
+                <button onClick={() => handleFilterChange('approved')} className={`filter-tab ${filter === 'approved' ? 'active' : ''}`}>Approved</button>
+                <button onClick={() => handleFilterChange('rejected')} className={`filter-tab ${filter === 'rejected' ? 'active' : ''}`}>Rejected</button>
+            </div>
             
-            {renderContent()}
+            <div className="content-area">
+                {renderContent()}
+            </div>
 
         </div>
     );
