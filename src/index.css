@@ -384,7 +384,7 @@ h4 { font-size: 1rem; }
 .page-header-welcome .btn:hover { background-color: var(--color-primary-light); }
 
 .stat-item { display: flex; align-items: center; gap: 1rem; transition: var(--transition); border: 1px solid transparent; }
-.stat-item-icon-wrapper { padding: 1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; }
+.stat-item-icon-wrapper { padding: 1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
 .stat-item-info h4 { font-size: 1rem; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.25rem; }
 .stat-item-info p { font-size: 2rem; font-weight: 700; color: var(--color-gray-900); line-height: 1; }
 .dashboard-stats-grid a { text-decoration: none; }
@@ -901,6 +901,142 @@ h4 { font-size: 1rem; }
     font-size: 0.875rem;
 }
 
+/* User Menu Dropdown */
+.user-menu {
+    position: relative;
+}
+
+.user-avatar-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border: 2px solid var(--color-primary-light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.user-avatar-button:hover {
+    transform: scale(1.1);
+}
+
+.user-menu-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background-color: var(--color-card-background);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 280px;
+    z-index: 1010;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+}
+
+.user-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: var(--color-gray-50);
+}
+
+.user-avatar-large {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.user-menu-header .user-info strong {
+    font-weight: 600;
+    color: var(--color-text-heading);
+}
+
+.user-menu-header .user-info small {
+    color: var(--color-text-secondary);
+    text-transform: capitalize;
+}
+
+.user-menu-list {
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.user-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-md);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    transition: var(--transition);
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.user-menu-item:hover {
+    background-color: var(--color-gray-100);
+    color: var(--color-text-heading);
+    text-decoration: none;
+}
+
+/* Account Page */
+.account-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .account-form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.account-form-grid .card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.account-form-grid .card .card-header svg {
+    color: var(--color-primary);
+}
+
+.form-hint {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.account-form-footer {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+}
+
 
 /* 9. Responsive Design
 ---------------------------------------------------- */
@@ -951,5 +1087,12 @@ h4 { font-size: 1rem; }
   }
   .page-header h1 {
     font-size: 1.5rem;
+  }
+
+  .notification-dropdown,
+  .user-menu-dropdown {
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 2rem);
   }
 }

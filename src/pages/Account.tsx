@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { User } from '../types';
+import { FiUser, FiLock, FiSave } from 'react-icons/fi';
 
 interface AccountForm {
     username?: string;
@@ -36,7 +37,7 @@ const Account = () => {
         mutationFn: updateAccount,
         onSuccess: () => {
             toast.success("Account updated successfully!");
-            reset();
+            reset({ password: '', confirmPassword: '' });
             queryClient.invalidateQueries({ queryKey: ['account'] });
         },
         onError: (error: any) => {
@@ -52,15 +53,23 @@ const Account = () => {
         mutation.mutate(updateData);
     };
 
+    if (isLoading) {
+        return <p>Loading account details...</p>;
+    }
+
     return (
         <div>
             <div className="page-header">
                 <h1>My Account</h1>
+                <p>Manage your profile details and password.</p>
             </div>
-            {isLoading && <p>Loading account details...</p>}
-            {user && (
-                <div className="card form-card-lg">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className="account-form-grid">
+                <div className="card">
+                    <div className="card-header">
+                        <FiUser />
+                        <h3>Profile Information</h3>
+                    </div>
+                    <div className="card-body">
                         <div className="form-group">
                             <label>Username</label>
                             <input className="input-field" {...register("username", { required: "Username is required" })} />
@@ -71,11 +80,16 @@ const Account = () => {
                             <input type="email" className="input-field" {...register("email", { required: "Email is required" })} />
                             {errors.email && <p className="error-text">{errors.email.message}</p>}
                         </div>
-                        
-                        <hr className="form-divider" />
-                        
-                        <p className="form-divider-text">Update Password (leave blank to keep current password)</p>
-                        
+                    </div>
+                </div>
+
+                <div className="card">
+                    <div className="card-header">
+                        <FiLock />
+                        <h3>Change Password</h3>
+                    </div>
+                    <div className="card-body">
+                        <p className="form-hint">Leave fields blank to keep your current password.</p>
                         <div className="form-group">
                             <label>New Password</label>
                             <input type="password" className="input-field" {...register("password")} />
@@ -87,12 +101,16 @@ const Account = () => {
                             })} />
                             {errors.confirmPassword && <p className="error-text">{errors.confirmPassword.message}</p>}
                         </div>
-                        <button type="submit" className="btn btn-primary" disabled={mutation.isPending}>
-                            {mutation.isPending ? 'Updating...' : 'Update Account'}
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            )}
+
+                <div className="account-form-footer">
+                    <button type="submit" className="btn btn-primary" disabled={mutation.isPending}>
+                        <FiSave />
+                        {mutation.isPending ? 'Saving Changes...' : 'Save Changes'}
+                    </button>
+                </div>
+            </form>
         </div>
     );
 };
