@@ -645,6 +645,34 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
 }
 
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-item-icon-wrapper {
+    padding: 0.75rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-item-info h4 {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.stat-item-info p {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+
 
 /* 9. Responsive Design
 ---------------------------------------------------- */
