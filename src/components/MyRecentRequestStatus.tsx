@@ -31,7 +31,7 @@ const MyRecentRequestStatus = ({ latestRequest }: MyRecentRequestStatusProps) =>
             </div>
             <div className="request-widget-details">
                 <h4>{latestRequest.title}</h4>
-                <p>Status: <span className={`request-status-text ${latestRequest.status}`}>{latestRequest.status}</span></p>
+                <p>Status: <span className={`request-status-badge ${latestRequest.status}`}>{latestRequest.status}</span></p>
             </div>
             <Link to="/my-requests" className="btn btn-secondary btn-sm">View All</Link>
         </div>

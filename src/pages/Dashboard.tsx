@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { EmployeeStats, Stats, Request } from '../types';
 import FullScreenLoader from '../components/ui/FullScreenLoader';
 import EmptyState from '../components/ui/EmptyState';
+import StatItemSkeleton from '../components/ui/StatItemSkeleton';
 
 const fetchDashboardData = async (isEmployee: boolean) => {
     const statsPromise = api.get('/requests/stats');
@@ -41,7 +42,17 @@ const Dashboard = () => {
     }
 
     if (isLoading) {
-        return <FullScreenLoader />;
+        return (
+            <div className="space-y-8">
+                <div className="page-header-welcome">
+                    <h1>Welcome back...</h1>
+                    <p>Loading your dashboard...</p>
+                </div>
+                <div className="dashboard-stats-grid">
+                    {[...Array(4)].map((_, i) => <StatItemSkeleton key={i} />)}
+                </div>
+            </div>
+        );
     }
 
     if (!data) {
