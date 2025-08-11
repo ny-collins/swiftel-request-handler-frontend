@@ -59,7 +59,7 @@ const Account = () => {
             </div>
             {isLoading && <p>Loading account details...</p>}
             {user && (
-                <div className="card account-form-card">
+                <div className="card form-card-lg">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-group">
                             <label>Username</label>

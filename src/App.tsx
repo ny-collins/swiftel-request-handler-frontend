@@ -63,20 +63,20 @@ function App() {
 
     return (
         <div className="app-layout">
-            {isSidebarOpen && window.innerWidth < 1024 && 
-                <div 
+            {isSidebarOpen && window.innerWidth < 1024 &&
+                <div
                     className="mobile-overlay"
                     onClick={toggleSidebar}
                 ></div>
             }
             <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-            <div className={isSidebarOpen ? '' : 'sidebar-collapsed'}>
+            <div className="main-content-wrapper">
                 <TopNavbar toggleSidebar={toggleSidebar} />
                 <main className="main-content">
                     <Routes>
                         <Route path="/" element={<Navigate to="/dashboard" replace />} />
                         <Route path="/login" element={<Navigate to="/dashboard" replace />} />
-                        
+
                         {/* Common Routes */}
                         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                         <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
@@ -85,7 +85,7 @@ function App() {
                         {/* Employee Routes */}
                         <Route path="/make-request" element={<ProtectedRoute roles={['employee']}><MakeRequest /></ProtectedRoute>} />
                         <Route path="/my-requests" element={<ProtectedRoute roles={['employee']}><ViewRequests /></ProtectedRoute>} />
-                        
+
                         {/* Board & Admin Routes */}
                         <Route path="/requests" element={<ProtectedRoute roles={['admin', 'board_member']}><ViewRequests /></ProtectedRoute>} />
                         <Route path="/requests/:id" element={<ProtectedRoute roles={['admin', 'board_member']}><RequestDetails /></ProtectedRoute>} />

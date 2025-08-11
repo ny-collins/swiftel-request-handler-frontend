@@ -19,7 +19,7 @@ const NavItem = ({ to, icon, label, toggleSidebar, isSidebarOpen }: any) => {
             <NavLink 
                 to={to} 
                 onClick={handleLinkClick}
-                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                className={({ isActive }) => `nav-item group ${isActive ? 'active' : ''}`}
             >
                 <span className="nav-item-icon">{icon}</span>
                 <span className="nav-item-label">{label}</span>
@@ -30,7 +30,7 @@ const NavItem = ({ to, icon, label, toggleSidebar, isSidebarOpen }: any) => {
 
 const Navbar = ({ isSidebarOpen, toggleSidebar }: NavbarProps) => {
     const { user } = useAuth();
-    const sidebarClasses = `sidebar ${isSidebarOpen ? 'open' : 'collapsed'}`;
+    const sidebarClasses = `sidebar ${!isSidebarOpen ? 'collapsed' : ''}`;
 
     return (
         <aside className={sidebarClasses}>

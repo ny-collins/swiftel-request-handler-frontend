@@ -91,8 +91,8 @@ const Dashboard = () => {
 
     return (
         <div className="space-y-8">
-            <div>
-                <h1 className="page-header">Dashboard</h1>
+            <div className="page-header">
+                <h1>Dashboard</h1>
                 <p>Welcome back, {user?.username || 'Guest'}!</p>
             </div>
 

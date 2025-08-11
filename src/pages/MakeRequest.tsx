@@ -34,7 +34,7 @@ const MakeRequest = () => {
             <div className="page-header">
                 <h1>Make a New Request</h1>
             </div>
-            <div className="card make-request-card">
+            <div className="card form-card-lg">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group">
                         <label htmlFor="title">Request Title</label>
