@@ -1,0 +1,45 @@
+/* --- AUTH & FORM STYLES --- */
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  padding: 1rem;
+}
+
+.form-card {
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-lg);
+  max-width: 450px;
+  width: 100%;
+  border: 1px solid var(--border-color);
+}
+
+.form-card h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--heading-color);
+  font-size: 1.75rem;
+}
+
+.form-group { margin-bottom: 1.25rem; }
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}

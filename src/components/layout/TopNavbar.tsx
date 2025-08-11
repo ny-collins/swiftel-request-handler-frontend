@@ -1,29 +1,19 @@
-import { FiMenu, FiX } from 'react-icons/fi';
+import { FiMenu } from 'react-icons/fi';
 import NotificationBell from './NotificationBell';
 import Breadcrumbs from './Breadcrumbs';
 import UserMenu from './UserMenu';
 
-type ScreenSize = 'small' | 'medium' | 'large';
-
 interface TopNavbarProps {
     toggleSidebar: () => void;
-    isSidebarOpen: boolean;
-    screenSize: ScreenSize;
 }
 
-const TopNavbar = ({ toggleSidebar, isSidebarOpen, screenSize }: TopNavbarProps) => {
-    const showToggleButton = screenSize !== 'large';
-
+const TopNavbar = ({ toggleSidebar }: TopNavbarProps) => {
     return (
         <header className="top-navbar">
             <div className="top-navbar-left">
-                {showToggleButton ? (
-                    <button onClick={toggleSidebar} className="hamburger-menu">
-                        {isSidebarOpen ? <FiX /> : <FiMenu />}
-                    </button>
-                ) : (
-                    <div style={{ width: '2rem' }} /> // Placeholder for alignment
-                )}
+                <button onClick={toggleSidebar} className="hamburger-menu" aria-label="Toggle sidebar">
+                    <FiMenu />
+                </button>
                 <Breadcrumbs />
             </div>
 

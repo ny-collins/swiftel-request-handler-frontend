@@ -17,35 +17,21 @@ import NotificationCenter from './pages/NotificationCenter';
 import { useWebSocket } from './hooks/useWebSocket';
 import FullScreenLoader from './components/ui/FullScreenLoader';
 
-type ScreenSize = 'small' | 'medium' | 'large';
-
-function getScreenSize(): ScreenSize {
-    if (window.innerWidth < 768) return 'small';
-    if (window.innerWidth < 1024) return 'medium';
-    return 'large';
-}
-
 function App() {
     useWebSocket();
     const { user, isLoading } = useAuth();
-    const [screenSize, setScreenSize] = useState<ScreenSize>(getScreenSize());
-    const [isSidebarOpen, setIsSidebarOpen] = useState(getScreenSize() !== 'small');
-
-    const handleResize = useCallback(() => {
-        setScreenSize(getScreenSize());
-    }, []);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     const toggleSidebar = useCallback(() => {
         setIsSidebarOpen(prevState => !prevState);
     }, []);
 
     useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [handleResize]);
-
-    useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'b' && (e.metaKey || e.ctrlKey)) {
+                e.preventDefault();
+                toggleSidebar();
+            }
             if (e.key === 'Escape' && isSidebarOpen) {
                 toggleSidebar();
             }
@@ -70,20 +56,17 @@ function App() {
         );
     }
     
-    const appContainerClasses = `app-container screen-${screenSize} ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`;
+    const appContainerClasses = `app-container ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`;
 
     return (
         <div className={appContainerClasses}>
-            {isSidebarOpen && screenSize !== 'large' && <div className="mobile-overlay" onClick={toggleSidebar}></div>}
+            {isSidebarOpen && window.innerWidth < 1024 && <div className="mobile-overlay" onClick={toggleSidebar}></div>}
             <TopNavbar 
                 toggleSidebar={toggleSidebar} 
-                isSidebarOpen={isSidebarOpen}
-                screenSize={screenSize}
             />
             <Navbar 
                 isSidebarOpen={isSidebarOpen}
-                screenSize={screenSize}
-                toggleSidebar={toggleSidebar} // Pass the toggle function
+                toggleSidebar={toggleSidebar}
             />
             <main className="main-content">
                 <Routes>

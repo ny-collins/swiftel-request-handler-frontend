@@ -1,8 +1,8 @@
 import { useAuth } from '../hooks/useAuth';
 import api from '../api';
-import StatCard from '../components/ui/StatCard';
+import StatItem from '../components/ui/StatItem';
 import QuickRequestForm from '../components/QuickRequestForm';
-import StatCardSkeleton from '../components/ui/StatCardSkeleton';
+import StatItemSkeleton from '../components/ui/StatItemSkeleton';
 import DashboardCharts from '../components/DashboardCharts';
 import RecentRequestsList from '../components/RecentRequestsList';
 import MyRecentRequestStatus from '../components/MyRecentRequestStatus';
@@ -54,36 +54,36 @@ const Dashboard = () => {
     const renderStats = () => {
         if (isLoadingStats) {
             return (
-                <div className="stats-grid">
+                <div className="stats-container">
                     {[...Array(4)].map((_, index) => (
-                        <StatCardSkeleton key={index} />
+                        <StatItemSkeleton key={index} />
                     ))}
                 </div>
             );
         }
 
         if (!stats) {
-            return <p>No dashboard statistics available.</p>;
+            return null;
         }
 
         if (user?.role === 'employee') {
             const requestPath = '/my-requests';
             return (
-                <div className="stats-grid">
-                    <Link to={`${requestPath}?status=all`}><StatCard title="Total Requests" value={stats.totalRequests} icon={<FiArchive />} /></Link>
-                    <Link to={`${requestPath}?status=approved`}><StatCard title="Approved" value={stats.approved} icon={<FiCheckCircle />} /></Link>
-                    <Link to={`${requestPath}?status=rejected`}><StatCard title="Rejected" value={stats.rejected} icon={<FiXCircle />} /></Link>
-                    <Link to={`${requestPath}?status=pending`}><StatCard title="Pending" value={stats.pending} icon={<FiClock />} /></Link>
+                <div className="stats-container">
+                    <Link to={`${requestPath}?status=all`} className="stat-item"><StatItem title="Total Requests" value={stats.totalRequests} icon={<FiArchive />} /></Link>
+                    <Link to={`${requestPath}?status=approved`} className="stat-item"><StatItem title="Approved" value={stats.approved} icon={<FiCheckCircle />} /></Link>
+                    <Link to={`${requestPath}?status=rejected`} className="stat-item"><StatItem title="Rejected" value={stats.rejected} icon={<FiXCircle />} /></Link>
+                    <Link to={`${requestPath}?status=pending`} className="stat-item"><StatItem title="Pending" value={stats.pending} icon={<FiClock />} /></Link>
                 </div>
             );
         } else {
             const requestPath = '/requests';
             return (
-                 <div className="stats-grid">
-                    <Link to={`${requestPath}?status=all`}><StatCard title="Total Requests" value={stats.totalRequests} icon={<FiArchive />} /></Link>
-                    <Link to={`${requestPath}?status=pending`}><StatCard title="Pending Review" value={stats.pendingRequests} icon={<FiClock />} /></Link>
-                    <Link to="/users"><StatCard title="Total Employees" value={stats.totalEmployees} icon={<FiUsers />} /></Link>
-                    <Link to={`${requestPath}?status=approved`}><StatCard title="Approved" value={stats.approvedRequests} icon={<FiCheckCircle />} /></Link>
+                 <div className="stats-container">
+                    <Link to={`${requestPath}?status=all`} className="stat-item"><StatItem title="Total Requests" value={stats.totalRequests} icon={<FiArchive />} /></Link>
+                    <Link to={`${requestPath}?status=pending`} className="stat-item"><StatItem title="Pending Review" value={stats.pendingRequests} icon={<FiClock />} /></Link>
+                    <Link to="/users" className="stat-item"><StatItem title="Total Employees" value={stats.totalEmployees} icon={<FiUsers />} /></Link>
+                    <Link to={`${requestPath}?status=approved`} className="stat-item"><StatItem title="Approved" value={stats.approvedRequests} icon={<FiCheckCircle />} /></Link>
                 </div>
             );
         }

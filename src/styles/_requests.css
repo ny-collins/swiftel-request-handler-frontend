@@ -1,0 +1,199 @@
+/* --- REQUESTS LIST & DETAILS --- */
+
+.request-card {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-speed) ease;
+  border-left: 5px solid var(--grey-200);
+}
+
+.request-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-lg);
+  border-color: var(--primary-color-light);
+}
+
+.request-card.status-pending {
+  border-left-color: var(--secondary-color);
+}
+.request-card.status-approved {
+  border-left-color: var(--accent-color);
+}
+.request-card.status-rejected {
+  border-left-color: var(--danger-color);
+}
+
+.request-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.request-card-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+    margin: 0.75rem 0;
+}
+
+.request-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.request-card-header h3 { 
+  font-size: 1.1rem; 
+  color: var(--heading-color);
+  font-weight: 600;
+}
+
+.request-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pending { background-color: var(--secondary-color); color: white; }
+.status-approved { background-color: var(--accent-color); color: white; }
+.status-rejected { background-color: var(--danger-color); color: white; }
+
+.request-card-body small {
+  color: var(--light-text-color);
+  font-size: 0.85rem;
+}
+
+/* Filter/Tabs */
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.filter-tab {
+  padding: 0.75rem 1.25rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-color);
+  transition: all var(--transition-speed) ease-in-out;
+  font-size: 0.9rem;
+  border-bottom: 3px solid transparent;
+}
+.filter-tab:hover {
+  color: var(--primary-color);
+}
+.filter-tab.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.page-controls {
+    margin-bottom: 1.5rem;
+    max-width: 400px;
+}
+
+.content-area {
+    margin-top: 1.5rem;
+}
+
+.request-card-skeleton {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+.request-card-skeleton-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+.skeleton.skeleton-status {
+    width: 80px;
+    height: 24px;
+    border-radius: 20px;
+}
+
+/* --- Filter Dropdown (Mobile) --- */
+.filter-dropdown-container { /* ... styles remain the same ... */ }
+
+/* Request Details Page */
+.request-details-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+}
+
+.request-details-body {
+    padding: 1.5rem 0;
+}
+
+.request-details-body p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.request-details-body .description-section {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.decisions-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.decisions-section h4 {
+  font-size: 1.2rem;
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+}
+
+.decisions-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.decision-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: var(--grey-50);
+}
+
+.decision-text strong {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.decision-approved {
+  color: var(--accent-color-dark);
+}
+
+.decision-rejected {
+  color: var(--danger-color-dark);
+}
