@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, ReactNode, SelectHTMLAttributes } from 'react';
+import { useState, useRef, useEffect, ButtonHTMLAttributes } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 
 interface Option {
@@ -6,7 +6,7 @@ interface Option {
   label: string;
 }
 
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
   options: Option[];
   value: string;
   onChange: (value: string) => void;
@@ -39,7 +39,7 @@ const Select = ({ options, value, onChange, placeholder = 'Select an option', ..
         type="button" 
         className="custom-select-value" 
         onClick={() => setIsOpen(!isOpen)}
-        disabled={props.disabled}
+        {...props}
       >
         <span>{selectedOption?.label || placeholder}</span>
         <FiChevronDown className={`custom-select-arrow ${isOpen ? 'open' : ''}`} />
