@@ -69,7 +69,7 @@ const ViewRequests = () => {
         if (isLoading) {
             return (
                 <div className="requests-grid">
-                    {[...Array(3)].map((_, i) => <RequestCardSkeleton key={i} />)}
+                    {[...Array(6)].map((_, i) => <RequestCardSkeleton key={i} />)}
                 </div>
             );
         }
@@ -80,12 +80,14 @@ const ViewRequests = () => {
             ) : undefined;
 
             return (
-                <EmptyState 
-                    icon={<FiInbox />}
-                    title={searchTerm ? "No Requests Match Search" : "No Requests Found"}
-                    message={`There are no requests in the "${filter}" category ${searchTerm ? `matching "${searchTerm}"` : ''}.`}
-                    action={emptyStateAction}
-                />
+                <div className="card">
+                    <EmptyState 
+                        icon={<FiInbox />}
+                        title={searchTerm ? "No Requests Match Search" : "No Requests Found"}
+                        message={`There are no requests in the "${filter}" category ${searchTerm ? `matching "${searchTerm}"` : ''}.`}
+                        action={emptyStateAction}
+                    />
+                </div>
             );
         }
 
@@ -107,7 +109,7 @@ const ViewRequests = () => {
                 <h1>{isEmployee ? 'My Requests' : 'All Employee Requests'}</h1>
             </div>
 
-            <div className="page-controls">
+            <div className="page-controls-card">
                 <div className="search-input-container">
                     <FiSearch className="search-input-icon" />
                     <input 
@@ -118,13 +120,12 @@ const ViewRequests = () => {
                         className="input-field with-icon"
                     />
                 </div>
-            </div>
-
-            <div className="filter-tabs">
-                <button onClick={() => handleFilterChange('all')} className={`filter-tab ${filter === 'all' ? 'active' : ''}`}>All</button>
-                <button onClick={() => handleFilterChange('pending')} className={`filter-tab ${filter === 'pending' ? 'active' : ''}`}>Pending</button>
-                <button onClick={() => handleFilterChange('approved')} className={`filter-tab ${filter === 'approved' ? 'active' : ''}`}>Approved</button>
-                <button onClick={() => handleFilterChange('rejected')} className={`filter-tab ${filter === 'rejected' ? 'active' : ''}`}>Rejected</button>
+                <div className="filter-tabs">
+                    <button onClick={() => handleFilterChange('all')} className={`filter-tab ${filter === 'all' ? 'active' : ''}`}>All</button>
+                    <button onClick={() => handleFilterChange('pending')} className={`filter-tab ${filter === 'pending' ? 'active' : ''}`}>Pending</button>
+                    <button onClick={() => handleFilterChange('approved')} className={`filter-tab ${filter === 'approved' ? 'active' : ''}`}>Approved</button>
+                    <button onClick={() => handleFilterChange('rejected')} className={`filter-tab ${filter === 'rejected' ? 'active' : ''}`}>Rejected</button>
+                </div>
             </div>
             
             <div className="content-area">

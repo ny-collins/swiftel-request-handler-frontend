@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { User } from '../types';
+import { FiEdit } from 'react-icons/fi';
 
 interface UserItemProps {
     user: User;
@@ -11,16 +12,33 @@ const UserItem: React.FC<UserItemProps> = ({ user, onEdit }) => {
     const { user: currentUser } = useAuth();
     const role = user.role?.replace('_', ' ') || 'N/A';
 
+    const getInitials = (name: string) => {
+        if (!name) return '?';
+        const names = name.split(' ');
+        if (names.length > 1) {
+            return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase();
+        }
+        return name.substring(0, 2).toUpperCase();
+    };
+
     return (
         <div className="card user-item-card">
-            <div className="user-details">
-                <h3>{user.username}</h3>
-                <p className="user-email">{user.email}</p>
-                <span className={`user-role ${user.role}`}>{role}</span>
+            <div className="user-item-header">
+                <div className="user-avatar">{getInitials(user.username)}</div>
+                <div className="user-info">
+                    <h3 className="user-name">{user.username}</h3>
+                    <p className="user-email">{user.email}</p>
+                </div>
             </div>
-            {currentUser?.role === 'admin' && user.role !== 'admin' && (
-                <button onClick={() => onEdit(user)} className="btn btn-secondary btn-sm">Edit</button>
-            )}
+            <div className="user-item-footer">
+                <span className={`user-role-badge role-${user.role}`}>{role}</span>
+                {currentUser?.role === 'admin' && user.role !== 'admin' && (
+                    <button onClick={() => onEdit(user)} className="btn btn-secondary btn-sm edit-btn">
+                        <FiEdit />
+                        <span>Edit</span>
+                    </button>
+                )}
+            </div>
         </div>
     );
 };

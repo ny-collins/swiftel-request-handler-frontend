@@ -606,6 +606,301 @@ h4 { font-size: 1rem; }
     gap: 1.5rem;
 }
 
+/* Notification Bell */
+.notification-bell {
+    position: relative;
+}
+
+.notification-bell-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-gray-500);
+    font-size: 1.5rem;
+    position: relative;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-bell-button:hover {
+    color: var(--color-primary);
+}
+
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--color-danger);
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-card-background);
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background-color: var(--color-card-background);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 360px;
+    z-index: 1010;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+}
+
+.notification-dropdown-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-dropdown-header h3 {
+    font-size: 1.1rem;
+}
+
+.mark-all-read-btn {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.notification-dropdown-content {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-empty-state {
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
+.notification-empty-state svg {
+    margin-bottom: 0.5rem;
+    color: var(--color-gray-400);
+}
+
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.notification-item:hover {
+    background-color: var(--color-gray-50);
+}
+
+.notification-item.unread {
+    background-color: var(--color-primary-light);
+}
+
+.unread-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+}
+
+.notification-message p {
+    margin: 0 0 0.25rem 0;
+    font-weight: 500;
+    color: var(--color-gray-800);
+}
+
+.notification-message small {
+    color: var(--color-text-secondary);
+}
+
+.notification-footer {
+    padding: 0.75rem;
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-gray-50);
+}
+
+.notification-footer a {
+    font-weight: 600;
+}
+
+/* Notification Center Page */
+.notification-center-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-center-list .notification-item {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.notification-center-list .notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item-skeleton {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* View Requests Page */
+.page-controls-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    background-color: var(--color-card-background);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 2rem;
+    border: 1px solid var(--color-border);
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background-color: var(--color-gray-100);
+    padding: 0.5rem;
+    border-radius: var(--border-radius-md);
+}
+
+.filter-tab {
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--color-text-secondary);
+}
+
+.filter-tab:hover {
+    color: var(--color-primary);
+}
+
+.filter-tab.active {
+    background-color: var(--color-card-background);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.requests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.content-area {
+    margin-top: 1.5rem;
+}
+
+/* User Item Card */
+.user-item-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.user-item-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.user-info .user-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-heading);
+    margin-bottom: 0.1rem;
+}
+
+.user-info .user-email {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.user-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.user-role-badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 9999px;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+}
+
+.user-role-badge.role-admin {
+    background-color: var(--color-accent-light, #fbcfe8);
+    color: var(--color-accent-dark, #831843);
+}
+
+.user-role-badge.role-board_member {
+    background-color: var(--color-info-light, #dbeafe);
+    color: var(--color-info-dark, #1e40af);
+}
+
+.user-role-badge.role-employee {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-700);
+}
+
+.edit-btn {
+    font-size: 0.875rem;
+}
+
 
 /* 9. Responsive Design
 ---------------------------------------------------- */

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FiBell } from 'react-icons/fi';
+import { FiBell, FiCheck } from 'react-icons/fi';
 import { useNotifications } from '../../hooks/useNotifications';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate, Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { Notification } from '../../types';
 
 const NotificationBell = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+    const { notifications, unreadCount, markAsRead, markAllAsRead, isLoading } = useNotifications();
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const NotificationBell = () => {
     return (
         <div className="notification-bell" ref={dropdownRef}>
             <button onClick={handleToggle} className="notification-bell-button" aria-label={`Notifications (${unreadCount} unread)`}>
-                <FiBell className="notification-bell-icon" />
+                <FiBell />
                 {unreadCount > 0 && (
                     <span className="notification-badge">
                         {unreadCount > 9 ? '9+' : unreadCount}
@@ -53,33 +53,42 @@ const NotificationBell = () => {
 
             {isOpen && (
                 <div className="notification-dropdown">
-                    <div className="notification-dropdown-header">Notifications</div>
-                    {notifications.length === 0 ? (
-                        <p className="notification-empty-state">You're all caught up!</p>
-                    ) : (
-                        <ul className="notification-list">
-                            {notifications.slice(0, 10).map(notif => (
-                                <li 
-                                    key={notif.id} 
-                                    className={`notification-item ${notif.is_read ? 'read' : 'unread'}`}
-                                    onClick={() => handleNotificationClick(notif)}
-                                >
-                                    <div className="dot"></div>
-                                    <div className="notification-message">
-                                        <p>{notif.message}</p>
-                                        <small>
-                                            {formatDistanceToNow(new Date(notif.created_at), { addSuffix: true })}
-                                        </small>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                    <div className="notification-footer">
+                    <div className="notification-dropdown-header">
+                        <h3>Notifications</h3>
                         {unreadCount > 0 && (
-                            <button onClick={handleMarkAllAsRead}>Mark all as read</button>
+                            <button onClick={handleMarkAllAsRead} className="mark-all-read-btn">Mark all as read</button>
                         )}
-                        <Link to="/notifications" onClick={() => setIsOpen(false)}>View All</Link>
+                    </div>
+                    <div className="notification-dropdown-content">
+                        {isLoading ? (
+                            <p className="notification-empty-state">Loading...</p>
+                        ) : notifications.length === 0 ? (
+                            <div className="notification-empty-state">
+                                <FiCheck size={24} />
+                                <p>You're all caught up!</p>
+                            </div>
+                        ) : (
+                            <ul className="notification-list">
+                                {notifications.slice(0, 5).map(notif => (
+                                    <li 
+                                        key={notif.id} 
+                                        className={`notification-item ${notif.is_read ? 'read' : 'unread'}`}
+                                        onClick={() => handleNotificationClick(notif)}
+                                    >
+                                        {!notif.is_read && <div className="unread-dot"></div>}
+                                        <div className="notification-message">
+                                            <p>{notif.message}</p>
+                                            <small>
+                                                {formatDistanceToNow(new Date(notif.created_at), { addSuffix: true })}
+                                            </small>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                    <div className="notification-footer">
+                        <Link to="/notifications" onClick={() => setIsOpen(false)}>View All Notifications</Link>
                     </div>
                 </div>
             )}
