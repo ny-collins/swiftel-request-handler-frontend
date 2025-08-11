@@ -5,7 +5,6 @@ import UserMenu from './UserMenu';
 
 interface TopNavbarProps {
     toggleSidebar: () => void;
-    isSidebarOpen: boolean;
 }
 
 const TopNavbar = ({ toggleSidebar }: TopNavbarProps) => {

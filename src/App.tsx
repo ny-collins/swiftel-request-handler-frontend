@@ -30,12 +30,9 @@ function App() {
         const handleResize = () => {
             if (window.innerWidth < 1024) {
                 setIsSidebarOpen(false);
-            } else {
-                setIsSidebarOpen(true);
             }
         };
         window.addEventListener('resize', handleResize);
-        handleResize(); // Initial check
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
@@ -73,29 +70,31 @@ function App() {
                 ></div>
             }
             <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-            <TopNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-            <main className="main-content">
-                <Routes>
-                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                    <Route path="/login" element={<Navigate to="/dashboard" replace />} />
-                    
-                    {/* Common Routes */}
-                    <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                    <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
-                    <Route path="/notifications" element={<ProtectedRoute><NotificationCenter /></ProtectedRoute>} />
+            <div className={isSidebarOpen ? '' : 'sidebar-collapsed'}>
+                <TopNavbar toggleSidebar={toggleSidebar} />
+                <main className="main-content">
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                        <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+                        
+                        {/* Common Routes */}
+                        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                        <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+                        <Route path="/notifications" element={<ProtectedRoute><NotificationCenter /></ProtectedRoute>} />
 
-                    {/* Employee Routes */}
-                    <Route path="/make-request" element={<ProtectedRoute roles={['employee']}><MakeRequest /></ProtectedRoute>} />
-                    <Route path="/my-requests" element={<ProtectedRoute roles={['employee']}><ViewRequests /></ProtectedRoute>} />
-                    
-                    {/* Board & Admin Routes */}
-                    <Route path="/requests" element={<ProtectedRoute roles={['admin', 'board_member']}><ViewRequests /></ProtectedRoute>} />
-                    <Route path="/requests/:id" element={<ProtectedRoute roles={['admin', 'board_member']}><RequestDetails /></ProtectedRoute>} />
-                    <Route path="/users" element={<ProtectedRoute roles={['admin', 'board_member']}><Users /></ProtectedRoute>} />
+                        {/* Employee Routes */}
+                        <Route path="/make-request" element={<ProtectedRoute roles={['employee']}><MakeRequest /></ProtectedRoute>} />
+                        <Route path="/my-requests" element={<ProtectedRoute roles={['employee']}><ViewRequests /></ProtectedRoute>} />
+                        
+                        {/* Board & Admin Routes */}
+                        <Route path="/requests" element={<ProtectedRoute roles={['admin', 'board_member']}><ViewRequests /></ProtectedRoute>} />
+                        <Route path="/requests/:id" element={<ProtectedRoute roles={['admin', 'board_member']}><RequestDetails /></ProtectedRoute>} />
+                        <Route path="/users" element={<ProtectedRoute roles={['admin', 'board_member']}><Users /></ProtectedRoute>} />
 
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </main>
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </main>
+            </div>
         </div>
     );
 }

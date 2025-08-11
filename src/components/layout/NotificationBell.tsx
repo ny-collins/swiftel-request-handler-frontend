@@ -41,7 +41,7 @@ const NotificationBell = () => {
     }, []);
 
     return (
-        <div className="notification-bell-container" ref={dropdownRef}>
+        <div className="notification-bell" ref={dropdownRef}>
             <button onClick={handleToggle} className="notification-bell-button" aria-label={`Notifications (${unreadCount} unread)`}>
                 <FiBell className="notification-bell-icon" />
                 {unreadCount > 0 && (
@@ -55,7 +55,7 @@ const NotificationBell = () => {
                 <div className="notification-dropdown">
                     <div className="notification-dropdown-header">Notifications</div>
                     {notifications.length === 0 ? (
-                        <p className="p-6 text-center text-sm text-gray-500">You're all caught up!</p>
+                        <p className="notification-empty-state">You're all caught up!</p>
                     ) : (
                         <ul className="notification-list">
                             {notifications.slice(0, 10).map(notif => (
