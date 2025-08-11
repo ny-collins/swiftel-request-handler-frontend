@@ -46,7 +46,7 @@ function App() {
 
     if (!user) {
         return (
-            <div className="auth-container">
+            <div className="bg-gray-50">
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
@@ -55,20 +55,18 @@ function App() {
             </div>
         );
     }
-    
-    const appContainerClasses = `app-container ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`;
 
     return (
-        <div className={appContainerClasses}>
-            {isSidebarOpen && window.innerWidth < 1024 && <div className="mobile-overlay" onClick={toggleSidebar}></div>}
-            <TopNavbar 
-                toggleSidebar={toggleSidebar} 
-            />
-            <Navbar 
-                isSidebarOpen={isSidebarOpen}
-                toggleSidebar={toggleSidebar}
-            />
-            <main className="main-content">
+        <div className="bg-gray-50 text-gray-800">
+            {isSidebarOpen && window.innerWidth < 1024 && 
+                <div 
+                    className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+                    onClick={toggleSidebar}
+                ></div>
+            }
+            <TopNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+            <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+            <main className={`transition-all duration-300 ease-in-out p-4 sm:p-6 lg:p-8 mt-16 ${isSidebarOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
                 <Routes>
                     <Route path="/" element={<Navigate to="/dashboard" replace />} />
                     <Route path="/login" element={<Navigate to="/dashboard" replace />} />

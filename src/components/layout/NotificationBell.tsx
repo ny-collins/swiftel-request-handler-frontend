@@ -55,7 +55,7 @@ const NotificationBell = () => {
                 <div className="notification-dropdown">
                     <div className="notification-dropdown-header">Notifications</div>
                     {notifications.length === 0 ? (
-                        <p style={{ padding: '1.5rem', textAlign: 'center', color: 'var(--text-color)' }}>You're all caught up!</p>
+                        <p className="p-6 text-center text-sm text-gray-500">You're all caught up!</p>
                     ) : (
                         <ul className="notification-list">
                             {notifications.slice(0, 10).map(notif => (

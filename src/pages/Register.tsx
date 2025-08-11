@@ -47,8 +47,8 @@ const Register = () => {
                 </div>
                 <Button type="submit" className="w-full">Register</Button>
             </form>
-            <p style={{ textAlign: 'center', marginTop: '1rem' }}>
-                Already have an account? <Link to="/login">Login here</Link>
+            <p className="text-center mt-4">
+                Already have an account? <Link to="/login" className="text-purple-600 hover:underline">Login here</Link>
             </p>
         </div>
     );

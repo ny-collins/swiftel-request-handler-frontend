@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+body {
+  @apply bg-gray-50 text-gray-800;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Component Styles */
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-500;
+  }
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-500;
+  }
+  .btn-approve {
+    @apply bg-green-500 text-white hover:bg-green-600 focus:ring-green-500;
+  }
+  .btn-reject {
+    @apply bg-red-500 text-white hover:bg-red-600 focus:ring-red-500;
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs rounded-md;
+  }
+  .btn-flex-grow {
+    @apply flex-grow;
+  }
+
+  /* Forms & Inputs */
+  .form-card {
+    @apply bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-md mx-auto;
+  }
+  .form-card h2 {
+    @apply text-2xl font-bold text-center mb-6 text-gray-800;
+  }
+  .form-group {
+    @apply mb-5;
+  }
+  .form-group label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+  .input-wrapper {
+    @apply relative;
+  }
+  .input-field {
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent sm:text-sm;
+  }
+  .textarea-field {
+    @apply min-h-[100px];
+  }
+  .password-toggle-icon {
+    @apply absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500 hover:text-gray-700;
+  }
+  .error-text {
+    @apply text-red-600 text-sm mt-1.5;
+  }
+  .checkbox-label {
+    @apply flex items-center gap-2 text-sm text-gray-700 cursor-pointer;
+  }
+
+  /* Layout & Cards */
+  .page-header {
+    @apply flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4;
+  }
+  .page-header h1 {
+    @apply text-2xl sm:text-3xl font-bold text-gray-900;
+  }
+  .page-controls {
+    @apply flex items-center gap-4 mb-6;
+  }
+  .content-area {
+    @apply space-y-6;
+  }
+  .users-list-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6;
+  }
+  .card {
+    @apply bg-white p-6 rounded-xl border border-gray-200 shadow-md transition-shadow hover:shadow-lg;
+  }
+
+  /* Request Card */
+  .request-card-link {
+    @apply block;
+  }
+  .request-card {
+    @apply card;
+  }
+  .request-card-header {
+    @apply flex justify-between items-start mb-3;
+  }
+  .request-card-header h3 {
+    @apply text-lg font-bold text-gray-800;
+  }
+  .request-card-header small {
+    @apply text-xs text-gray-500;
+  }
+  .request-status {
+    @apply px-2.5 py-1 text-xs font-semibold rounded-full capitalize;
+  }
+  .status-pending { @apply bg-yellow-100 text-yellow-800; }
+  .status-approved { @apply bg-green-100 text-green-800; }
+  .status-rejected { @apply bg-red-100 text-red-800; }
+  .request-card-description {
+    @apply text-sm text-gray-600 mb-4 line-clamp-2;
+  }
+  .request-card-body p {
+    @apply text-sm;
+  }
+
+  /* User Item Card */
+  .user-item-card {
+    @apply card flex items-center justify-between;
+  }
+  .user-details h3 {
+    @apply text-lg font-bold text-gray-800;
+  }
+  .user-email {
+    @apply text-sm text-gray-500;
+  }
+  .user-role {
+    @apply mt-2 inline-block px-2 py-0.5 text-xs font-semibold rounded-full;
+  }
+  .role-admin { @apply bg-purple-100 text-purple-800; }
+  .role-board_member { @apply bg-blue-100 text-blue-800; }
+  .role-employee { @apply bg-gray-100 text-gray-800; }
+
+  /* Skeletons */
+  .request-card-skeleton {
+    @apply card space-y-4;
+  }
+  .skeleton {
+    @apply bg-gray-200 rounded animate-pulse;
+  }
+  .skeleton-title { @apply h-6 w-3/4; }
+  .skeleton-status { @apply h-6 w-20; }
+  .skeleton-text { @apply h-4 w-full; }
+  .skeleton-text-short { @apply w-5/6; }
+
+  /* Modals */
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+  }
+  .modal-content {
+    @apply bg-white rounded-xl shadow-2xl p-8 w-full max-w-md m-4;
+  }
+  .modal-content h2 {
+    @apply text-xl font-bold mb-4;
+  }
+  .modal-actions {
+    @apply flex justify-end gap-4 mt-6;
+  }
+
+  /* Notifications */
+  .notification-bell-container { @apply relative; }
+  .notification-bell-button { @apply relative p-2 rounded-full hover:bg-gray-200 transition-colors; }
+  .notification-bell-icon { @apply h-6 w-6 text-gray-600; }
+  .notification-badge { @apply absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center; }
+  .notification-dropdown { @apply absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50; }
+  .notification-dropdown-header { @apply p-3 font-bold border-b; }
+  .notification-list { @apply max-h-96 overflow-y-auto; }
+  .notification-item { @apply flex items-center p-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100; }
+  .notification-item.unread { @apply font-semibold; }
+  .notification-item .dot { @apply h-2 w-2 rounded-full mr-3; }
+  .notification-item.unread .dot { @apply bg-purple-500; }
+  .notification-message p { @apply text-sm text-gray-800; }
+  .notification-message small { @apply text-xs text-gray-500; }
+  .notification-footer { @apply p-2 text-center border-t; }
+  .notification-footer a, .notification-footer button { @apply text-sm text-purple-600 hover:underline; }
+
+  /* User Menu */
+  .user-menu { @apply relative; }
+  .user-avatar { @apply h-10 w-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold cursor-pointer; }
+  .user-menu-dropdown { @apply absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl border border-gray-200 z-50; }
+  .user-menu-header { @apply p-3 border-b; }
+  .user-menu-header strong { @apply block text-sm font-semibold; }
+  .user-menu-header small { @apply block text-xs text-gray-500 capitalize; }
+  .user-menu-dropdown ul li a, .user-menu-dropdown ul li button { @apply w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100; }
+
+  /* Fullscreen Loader */
+  .fullscreen-loader {
+    @apply fixed inset-0 bg-white flex items-center justify-center z-50;
+  }
+  .spinner {
+    @apply h-12 w-12 border-4 border-t-purple-600 border-r-purple-600 border-b-gray-200 border-l-gray-200 rounded-full animate-spin;
+  }
+}

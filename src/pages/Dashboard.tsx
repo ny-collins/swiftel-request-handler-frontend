@@ -54,7 +54,7 @@ const Dashboard = () => {
     const renderStats = () => {
         if (isLoadingStats) {
             return (
-                <div className="stats-container">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {[...Array(4)].map((_, index) => (
                         <StatItemSkeleton key={index} />
                     ))}
@@ -69,50 +69,57 @@ const Dashboard = () => {
         if (user?.role === 'employee') {
             const requestPath = '/my-requests';
             return (
-                <div className="stats-container">
-                    <Link to={`${requestPath}?status=all`} className="stat-item"><StatItem title="Total Requests" value={stats.totalRequests} icon={<FiArchive />} /></Link>
-                    <Link to={`${requestPath}?status=approved`} className="stat-item"><StatItem title="Approved" value={stats.approved} icon={<FiCheckCircle />} /></Link>
-                    <Link to={`${requestPath}?status=rejected`} className="stat-item"><StatItem title="Rejected" value={stats.rejected} icon={<FiXCircle />} /></Link>
-                    <Link to={`${requestPath}?status=pending`} className="stat-item"><StatItem title="Pending" value={stats.pending} icon={<FiClock />} /></Link>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <Link to={`${requestPath}?status=all`}><StatItem title="Total Requests" value={stats.totalRequests} icon={<FiArchive />} /></Link>
+                    <Link to={`${requestPath}?status=approved`}><StatItem title="Approved" value={stats.approved} icon={<FiCheckCircle />} /></Link>
+                    <Link to={`${requestPath}?status=rejected`}><StatItem title="Rejected" value={stats.rejected} icon={<FiXCircle />} /></Link>
+                    <Link to={`${requestPath}?status=pending`}><StatItem title="Pending" value={stats.pending} icon={<FiClock />} /></Link>
                 </div>
             );
         } else {
             const requestPath = '/requests';
             return (
-                 <div className="stats-container">
-                    <Link to={`${requestPath}?status=all`} className="stat-item"><StatItem title="Total Requests" value={stats.totalRequests} icon={<FiArchive />} /></Link>
-                    <Link to={`${requestPath}?status=pending`} className="stat-item"><StatItem title="Pending Review" value={stats.pendingRequests} icon={<FiClock />} /></Link>
-                    <Link to="/users" className="stat-item"><StatItem title="Total Employees" value={stats.totalEmployees} icon={<FiUsers />} /></Link>
-                    <Link to={`${requestPath}?status=approved`} className="stat-item"><StatItem title="Approved" value={stats.approvedRequests} icon={<FiCheckCircle />} /></Link>
+                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <Link to={`${requestPath}?status=all`}><StatItem title="Total Requests" value={stats.totalRequests} icon={<FiArchive />} /></Link>
+                    <Link to={`${requestPath}?status=pending`}><StatItem title="Pending Review" value={stats.pendingRequests} icon={<FiClock />} /></Link>
+                    <Link to="/users"><StatItem title="Total Employees" value={stats.totalEmployees} icon={<FiUsers />} /></Link>
+                    <Link to={`${requestPath}?status=approved`}><StatItem title="Approved" value={stats.approvedRequests} icon={<FiCheckCircle />} /></Link>
                 </div>
             );
         }
     };
 
     return (
-        <div>
-            <div className="page-header">
-                <h1>Dashboard</h1>
-                <p>Welcome back, {user?.username || 'Guest'}!</p>
+        <div className="space-y-8">
+            <div>
+                <h1 className="text-3xl font-bold">Dashboard</h1>
+                <p className="text-gray-500">Welcome back, {user?.username || 'Guest'}!</p>
             </div>
 
             {renderStats()}
 
-            <div className="dashboard-main-content">
-                {user?.role === 'employee' ? (
-                    <>
-                        <MyRecentRequestStatus latestRequest={latestEmployeeRequest} />
-                        <QuickRequestForm />
-                    </>
-                ) : (
-                    <>
-                        {stats && user?.role && <DashboardCharts stats={stats} role={user.role} />}
-                        {recentPendingRequests && <RecentRequestsList requests={recentPendingRequests} />}
-                    </>
-                )}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2 space-y-8">
+                    {user?.role === 'employee' ? (
+                        <>
+                            <MyRecentRequestStatus latestRequest={latestEmployeeRequest} />
+                            <QuickRequestForm />
+                        </>
+                    ) : (
+                        <>
+                            {stats && user?.role && <DashboardCharts stats={stats} role={user.role} />}
+                        </>
+                    )}
+                </div>
+                <div className="lg:col-span-1">
+                    {user?.role !== 'employee' && recentPendingRequests && <RecentRequestsList requests={recentPendingRequests} />}
+                </div>
             </div>
         </div>
     );
 };
+
+export default Dashboard;
+
 
 export default Dashboard;

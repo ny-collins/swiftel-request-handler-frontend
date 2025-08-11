@@ -73,8 +73,8 @@ const Account = () => {
                             <Input type="email" {...register("email", { required: "Email is required" })} />
                             {errors.email && <p className="error-text">{errors.email.message}</p>}
                         </div>
-                        <hr style={{ margin: '2rem 0' }} />
-                        <p>Update Password (leave blank to keep current password)</p>
+                        <hr className="my-8" />
+                        <p className="mb-4">Update Password (leave blank to keep current password)</p>
                         <div className="form-group">
                             <label>New Password</label>
                             <Input type="password" {...register("password")} />

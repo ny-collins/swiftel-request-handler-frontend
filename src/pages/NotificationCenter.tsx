@@ -40,22 +40,24 @@ const NotificationCenter = () => {
                     message="Important updates and mentions will appear here."
                 />
             ) : (
-                <div className="notification-center-list">
-                    {notifications.map(notif => (
-                        <div 
-                            key={notif.id} 
-                            className={`notification-center-item ${notif.is_read ? 'read' : 'unread'}`}
-                            onClick={() => handleNotificationClick(notif)}
-                        >
-                            <div className="notification-dot"></div>
-                            <div className="notification-content">
-                                <p>{notif.message}</p>
-                                <small>
-                                    {formatDistanceToNow(new Date(notif.created_at), { addSuffix: true })}
-                                </small>
-                            </div>
-                        </div>
-                    ))}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-md">
+                    <ul className="divide-y divide-gray-200">
+                        {notifications.map(notif => (
+                            <li 
+                                key={notif.id} 
+                                className={`notification-item ${notif.is_read ? 'read' : 'unread'}`}
+                                onClick={() => handleNotificationClick(notif)}
+                            >
+                                <div className="notification-dot"></div>
+                                <div className="notification-content">
+                                    <p>{notif.message}</p>
+                                    <small>
+                                        {formatDistanceToNow(new Date(notif.created_at), { addSuffix: true })}
+                                    </small>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             )}
         </div>

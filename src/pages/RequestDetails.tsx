@@ -114,7 +114,7 @@ const RequestDetails = () => {
                 </div>
                 <div className="request-details-body">
                     <p><strong>Submitted On:</strong> {formatDate(request.created_at)}</p>
-                    <p><strong>Type:</strong> <span style={{textTransform: 'capitalize'}}>{request.type}</span></p>
+                    <p><strong>Type:</strong> <span className="capitalize">{request.type}</span></p>
                     {request.type === 'monetary' && (
                         <p><strong>Amount:</strong> {formatAmount(request.amount)}</p>
                     )}
