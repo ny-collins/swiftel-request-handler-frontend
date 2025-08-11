@@ -1,13 +1,25 @@
-import { FiMenu } from 'react-icons/fi';
+import { useState, useEffect } from 'react';
+import { FiMenu, FiX } from 'react-icons/fi';
 import NotificationBell from './NotificationBell';
 import Breadcrumbs from './Breadcrumbs';
 import UserMenu from './UserMenu';
 
 interface TopNavbarProps {
     toggleSidebar: () => void;
+    isSidebarOpen: boolean;
 }
 
-const TopNavbar = ({ toggleSidebar }: TopNavbarProps) => {
+const TopNavbar = ({ toggleSidebar, isSidebarOpen }: TopNavbarProps) => {
+    const [showToggleButton, setShowToggleButton] = useState(window.innerWidth < 1024);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setShowToggleButton(window.innerWidth < 1024);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <header className="top-navbar">
             <div className="top-navbar-left-section">
@@ -16,13 +28,15 @@ const TopNavbar = ({ toggleSidebar }: TopNavbarProps) => {
                         {isSidebarOpen ? <FiX /> : <FiMenu />}
                     </button>
                 ) : (
-                    <div className="top-navbar-placeholder"></div> // Placeholder for alignment
+                    // This placeholder is important for alignment when the button is hidden
+                    <div className="top-navbar-placeholder"></div>
                 )}
-                <h1 className="top-navbar-title">{pageTitle}</h1>
+                <Breadcrumbs />
             </div>
 
             <div className="top-navbar-right-section">
                 <NotificationBell />
+                <UserMenu />
             </div>
         </header>
     );

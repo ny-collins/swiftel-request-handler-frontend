@@ -1,64 +1,76 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { FiGrid, FiPlusSquare, FiEye, FiUsers, FiUser, FiLogIn } from 'react-icons/fi';
+import { FiGrid, FiPlusSquare, FiEye, FiUsers, FiUser, FiLogOut, FiSettings } from 'react-icons/fi';
+
+interface NavItemProps {
+    to: string;
+    icon: React.ReactNode;
+    label: string;
+    toggleSidebar: () => void;
+}
+
+const NavItem = ({ to, icon, label, toggleSidebar }: NavItemProps) => {
+    const handleLinkClick = () => {
+        // Close sidebar on item click only on mobile
+        if (window.innerWidth < 1024) {
+            toggleSidebar();
+        }
+    };
+
+    return (
+        <NavLink
+            to={to}
+            onClick={handleLinkClick}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+        >
+            <span className="nav-item-icon">{icon}</span>
+            <span className="nav-item-label">{label}</span>
+        </NavLink>
+    );
+};
 
 interface NavbarProps {
     isSidebarOpen: boolean;
     toggleSidebar: () => void;
 }
 
-const NavItem = ({ to, icon, label, toggleSidebar, isSidebarOpen }: any) => {
-    const handleLinkClick = () => {
-        if (window.innerWidth < 1024 && isSidebarOpen) {
-            toggleSidebar();
-        }
-    };
-
-    return (
-        <li>
-            <NavLink 
-                to={to} 
-                onClick={handleLinkClick}
-                className={({ isActive }) => `nav-item group ${isActive ? 'active' : ''}`}
-            >
-                <span className="nav-item-icon">{icon}</span>
-                <span className="nav-item-label">{label}</span>
-            </NavLink>
-        </li>
-    );
-};
-
 const Navbar = ({ isSidebarOpen, toggleSidebar }: NavbarProps) => {
-    const { user } = useAuth();
-    const sidebarClasses = `sidebar ${!isSidebarOpen ? 'collapsed' : ''}`;
+    const { user, logout } = useAuth();
+    const sidebarClasses = `sidebar ${!isSidebarOpen ? 'collapsed' : 'open'}`;
 
     return (
         <aside className={sidebarClasses}>
             <div className="sidebar-header">
-                <FiLogIn className="sidebar-logo-icon" />
+                <FiSettings className="sidebar-logo-icon" />
                 <h1 className="sidebar-logo-text">Swiftel</h1>
             </div>
             <nav className="sidebar-nav">
                 <ul>
-                    <NavItem to="/dashboard" icon={<FiGrid />} label="Dashboard" toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                    <NavItem to="/dashboard" icon={<FiGrid />} label="Dashboard" toggleSidebar={toggleSidebar} />
                     
                     {user?.role === 'employee' && (
                         <>
-                            <NavItem to="/make-request" icon={<FiPlusSquare />} label="Make Request" toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-                            <NavItem to="/my-requests" icon={<FiEye />} label="My Requests" toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                            <NavItem to="/make-request" icon={<FiPlusSquare />} label="Make Request" toggleSidebar={toggleSidebar} />
+                            <NavItem to="/my-requests" icon={<FiEye />} label="My Requests" toggleSidebar={toggleSidebar} />
                         </>
                     )}
 
                     {(user?.role === 'admin' || user?.role === 'board_member') && (
                         <>
-                            <NavItem to="/requests" icon={<FiEye />} label="All Requests" toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-                            <NavItem to="/users" icon={<FiUsers />} label="Users" toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                            <NavItem to="/requests" icon={<FiEye />} label="All Requests" toggleSidebar={toggleSidebar} />
+                            <NavItem to="/users" icon={<FiUsers />} label="Users" toggleSidebar={toggleSidebar} />
                         </>
                     )}
                     
-                    <NavItem to="/account" icon={<FiUser />} label="My Account" toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                    <NavItem to="/account" icon={<FiUser />} label="My Account" toggleSidebar={toggleSidebar} />
                 </ul>
             </nav>
+            <div className="sidebar-footer">
+                 <button onClick={logout} className="nav-item logout-btn">
+                    <span className="nav-item-icon"><FiLogOut /></span>
+                    <span className="nav-item-label">Logout</span>
+                </button>
+            </div>
         </aside>
     );
 };

@@ -20,22 +20,29 @@ import FullScreenLoader from './components/ui/FullScreenLoader';
 function App() {
     useWebSocket();
     const { user, isLoading } = useAuth();
+    // Default sidebar to open on large screens, closed on smaller screens
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
 
     const toggleSidebar = useCallback(() => {
         setIsSidebarOpen(prevState => !prevState);
     }, []);
 
+    // Adjust sidebar visibility on resize
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 1024) {
+            if (window.innerWidth >= 1024) {
+                setIsSidebarOpen(true);
+            } else {
                 setIsSidebarOpen(false);
             }
         };
         window.addEventListener('resize', handleResize);
+        // Initial check
+        handleResize();
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // Keyboard shortcut for sidebar toggle
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'b' && (e.metaKey || e.ctrlKey)) {
@@ -61,17 +68,16 @@ function App() {
         );
     }
 
+    const isMobile = window.innerWidth < 1024;
+
     return (
-        <div className="app-layout">
-            {isSidebarOpen && window.innerWidth < 1024 &&
-                <div
-                    className="mobile-overlay"
-                    onClick={toggleSidebar}
-                ></div>
-            }
+        <div className={`app-layout ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+            {isSidebarOpen && isMobile && (
+                <div className="mobile-overlay" onClick={toggleSidebar}></div>
+            )}
             <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
             <div className="main-content-wrapper">
-                <TopNavbar toggleSidebar={toggleSidebar} />
+                <TopNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
                 <main className="main-content">
                     <Routes>
                         <Route path="/" element={<Navigate to="/dashboard" replace />} />

@@ -7,7 +7,7 @@ import UserItem from '../components/UserItem';
 import EditUserModal from '../components/EditUserModal';
 import UserItemSkeleton from '../components/ui/UserItemSkeleton';
 import EmptyState from '../components/ui/EmptyState';
-import { FiUsers } from 'react-icons/fi';
+import { FiUsers, FiSearch } from 'react-icons/fi';
 
 const fetchUsers = async () => {
     const { data } = await api.get<User[]>('/users');
@@ -106,13 +106,16 @@ const Users = () => {
                 <h1>User Management</h1>
             </div>
             <div className="page-controls">
-                 <input 
-                    type="text"
-                    placeholder="Search by name or email..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="input-field"
-                />
+                <div className="search-input-container">
+                    <FiSearch className="search-input-icon" />
+                    <input 
+                        type="text"
+                        placeholder="Search by name or email..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="input-field with-icon"
+                    />
+                </div>
             </div>
             
             {renderContent()}

@@ -2,7 +2,9 @@ import api from '../api';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
 import { getErrorMessage } from '../utils/error.utils';
+import { FiLoader } from 'react-icons/fi';
 
 interface RegisterForm {
     username: string;
@@ -10,18 +12,28 @@ interface RegisterForm {
     password: string;
 }
 
+const registerUser = async (userData: RegisterForm) => {
+    const { data } = await api.post('/auth/register', userData);
+    return data;
+};
+
 const Register = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>();
 
-    const onSubmit = async (data: RegisterForm) => {
-        try {
-            await api.post('/auth/register', data);
+    const mutation = useMutation({
+        mutationFn: registerUser,
+        onSuccess: () => {
             toast.success('Registration successful! Please log in.');
             navigate('/login');
-        } catch (error: any) {
+        },
+        onError: (error) => {
             toast.error(getErrorMessage(error));
         }
+    });
+
+    const onSubmit = (data: RegisterForm) => {
+        mutation.mutate(data);
     };
 
     return (
@@ -44,9 +56,12 @@ const Register = () => {
                         <input type="password" id="password" className="input-field" {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })} />
                         {errors.password && <p className="error-text">{errors.password.message}</p>}
                     </div>
-                    <button type="submit" className="btn btn-primary">Register</button>
+                    <button type="submit" className="btn btn-primary w-full" disabled={mutation.isPending}>
+                        {mutation.isPending && <FiLoader className="animate-spin" />}
+                        {mutation.isPending ? 'Registering...' : 'Register'}
+                    </button>
                 </form>
-                <p className="text-center mt-1">
+                <p className="text-center mt-4">
                     Already have an account? <Link to="/login" className="link">Login here</Link>
                 </p>
             </div>

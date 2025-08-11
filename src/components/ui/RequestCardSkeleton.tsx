@@ -1,13 +1,12 @@
-
 const RequestCardSkeleton = () => {
   return (
-    <div className="request-card-skeleton">
-      <div className="request-card-skeleton-header">
-        <div className="skeleton skeleton-text skeleton-title"></div>
-        <div className="skeleton skeleton-text skeleton-status"></div>
+    <div className="card request-card-skeleton">
+      <div className="skeleton-header">
+        <div className="skeleton skeleton-text skeleton-title" style={{ width: '70%' }}></div>
+        <div className="skeleton skeleton-badge" style={{ width: '80px' }}></div>
       </div>
-      <div className="skeleton skeleton-text"></div>
-      <div className="skeleton skeleton-text skeleton-text-short"></div>
+      <div className="skeleton skeleton-text" style={{ width: '90%' }}></div>
+      <div className="skeleton skeleton-text" style={{ width: '60%' }}></div>
     </div>
   );
 };
