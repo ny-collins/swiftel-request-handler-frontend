@@ -10,16 +10,19 @@ interface TopNavbarProps {
 const TopNavbar = ({ toggleSidebar }: TopNavbarProps) => {
     return (
         <header className="top-navbar">
-            <div className="top-navbar-left">
-                <button onClick={toggleSidebar} className="sidebar-toggle" aria-label="Toggle sidebar">
-                    <FiMenu size={24} />
-                </button>
-                <Breadcrumbs />
+            <div className="top-navbar-left-section">
+                {showToggleButton ? (
+                    <button onClick={toggleSidebar} className="hamburger-menu">
+                        {isSidebarOpen ? <FiX /> : <FiMenu />}
+                    </button>
+                ) : (
+                    <div className="top-navbar-placeholder"></div> // Placeholder for alignment
+                )}
+                <h1 className="top-navbar-title">{pageTitle}</h1>
             </div>
 
-            <div className="top-navbar-right">
+            <div className="top-navbar-right-section">
                 <NotificationBell />
-                <UserMenu />
             </div>
         </header>
     );
