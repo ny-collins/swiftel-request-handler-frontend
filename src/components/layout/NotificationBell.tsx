@@ -3,6 +3,7 @@ import { FiBell } from 'react-icons/fi';
 import { useNotifications } from '../../hooks/useNotifications';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate, Link } from 'react-router-dom';
+import { Notification } from '../../types';
 
 const NotificationBell = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +15,7 @@ const NotificationBell = () => {
         setIsOpen(prev => !prev);
     };
 
-    const handleNotificationClick = (notification: any) => {
+    const handleNotificationClick = (notification: Notification) => {
         if (!notification.is_read) {
             markAsRead(notification.id);
         }
@@ -24,7 +25,8 @@ const NotificationBell = () => {
         setIsOpen(false);
     };
 
-    const handleMarkAllAsRead = () => {
+    const handleMarkAllAsRead = (e: React.MouseEvent) => {
+        e.stopPropagation();
         markAllAsRead();
     };
 
@@ -40,11 +42,11 @@ const NotificationBell = () => {
 
     return (
         <div className="notification-bell-container" ref={dropdownRef}>
-            <button onClick={handleToggle} className="notification-bell-button">
+            <button onClick={handleToggle} className="notification-bell-button" aria-label={`Notifications (${unreadCount} unread)`}>
                 <FiBell className="notification-bell-icon" />
                 {unreadCount > 0 && (
                     <span className="notification-badge">
-                        {unreadCount}
+                        {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                 )}
             </button>
@@ -53,28 +55,31 @@ const NotificationBell = () => {
                 <div className="notification-dropdown">
                     <div className="notification-dropdown-header">Notifications</div>
                     {notifications.length === 0 ? (
-                        <p className="p-4 text-sm text-gray-500">No new notifications.</p>
+                        <p style={{ padding: '1.5rem', textAlign: 'center', color: 'var(--text-color)' }}>You're all caught up!</p>
                     ) : (
                         <ul className="notification-list">
-                            {notifications.map(notif => (
+                            {notifications.slice(0, 10).map(notif => (
                                 <li 
                                     key={notif.id} 
-                                    className={`notification-item ${notif.is_read ? '' : 'unread'}`}
+                                    className={`notification-item ${notif.is_read ? 'read' : 'unread'}`}
                                     onClick={() => handleNotificationClick(notif)}
                                 >
-                                    <p>{notif.message}</p>
-                                    <small>
-                                        {formatDistanceToNow(new Date(notif.created_at), { addSuffix: true })}
-                                    </small>
+                                    <div className="dot"></div>
+                                    <div className="notification-message">
+                                        <p>{notif.message}</p>
+                                        <small>
+                                            {formatDistanceToNow(new Date(notif.created_at), { addSuffix: true })}
+                                        </small>
+                                    </div>
                                 </li>
                             ))}
                         </ul>
                     )}
                     <div className="notification-footer">
                         {unreadCount > 0 && (
-                            <button onClick={handleMarkAllAsRead} className="text-sm text-primary font-bold">Mark all as read</button>
+                            <button onClick={handleMarkAllAsRead}>Mark all as read</button>
                         )}
-                        <Link to="/notifications" onClick={() => setIsOpen(false)} className="text-sm text-primary font-bold">View All</Link>
+                        <Link to="/notifications" onClick={() => setIsOpen(false)}>View All</Link>
                     </div>
                 </div>
             )}

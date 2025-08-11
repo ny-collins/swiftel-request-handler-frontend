@@ -20,7 +20,7 @@ const RequestCard = ({ request }: RequestCardProps) => {
 
   return (
     <Link to={`/requests/${request.id}`} className="request-card-link">
-        <div className={`request-card status-${request.status}`}>
+        <div className="request-card">
             <div className="request-card-header">
                 <div>
                     <h3>{request.title}</h3>
@@ -30,7 +30,8 @@ const RequestCard = ({ request }: RequestCardProps) => {
                     </small>
                 </div>
                 <span className={`request-status status-${request.status}`}>
-                    {request.status}
+                    <span className="status-dot"></span>
+                    <span>{request.status}</span>
                 </span>
             </div>
 

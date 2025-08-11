@@ -1,7 +1,8 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { User } from '../types';
 import Button from './ui/Button';
 import { Input } from './ui/Input';
+import Select from './ui/Select';
 
 interface EditUserModalProps {
   user: User;
@@ -10,12 +11,17 @@ interface EditUserModalProps {
   isSaving: boolean;
 }
 
+const roleOptions = [
+    { value: 'employee', label: 'Employee' },
+    { value: 'board_member', label: 'Board Member' },
+];
+
 const EditUserModal = ({ user, onClose, onSave, isSaving }: EditUserModalProps) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<User>({ defaultValues: user });
+  const { register, handleSubmit, control, formState: { errors } } = useForm<User>({ defaultValues: user });
 
   return (
     <div className="modal-backdrop">
-      <div className="modal-content" style={{ textAlign: 'left' }}>
+      <div className="modal-content">
         <h2>Edit User: {user.username}</h2>
         <form onSubmit={handleSubmit(onSave)} className="user-edit-form">
             <div className="form-group">
@@ -30,12 +36,20 @@ const EditUserModal = ({ user, onClose, onSave, isSaving }: EditUserModalProps) 
             </div>
             <div className="form-group">
                 <label>Role</label>
-                <select className="input-field" {...register("role", { required: "Role is required" })}>
-                    <option value="employee">Employee</option>
-                    <option value="board_member">Board Member</option>
-                </select>
+                <Controller
+                    name="role"
+                    control={control}
+                    rules={{ required: 'Role is required' }}
+                    render={({ field }) => (
+                        <Select 
+                            options={roleOptions} 
+                            value={field.value || ''} 
+                            onChange={field.onChange} 
+                        />
+                    )}
+                />
             </div>
-            <div className="modal-actions" style={{ justifyContent: 'flex-end' }}>
+            <div className="modal-actions">
                 <Button variant="secondary" onClick={onClose} disabled={isSaving}>Cancel</Button>
                 <Button type="submit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save Changes'}</Button>
             </div>

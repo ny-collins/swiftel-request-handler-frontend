@@ -8,23 +8,12 @@
   margin-bottom: 1.5rem;
   border: 1px solid var(--border-color);
   transition: all var(--transition-speed) ease;
-  border-left: 5px solid var(--grey-200);
 }
 
 .request-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--box-shadow-lg);
   border-color: var(--primary-color-light);
-}
-
-.request-card.status-pending {
-  border-left-color: var(--secondary-color);
-}
-.request-card.status-approved {
-  border-left-color: var(--accent-color);
-}
-.request-card.status-rejected {
-  border-left-color: var(--danger-color);
 }
 
 .request-card-link {
@@ -56,17 +45,30 @@
 }
 
 .request-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-weight: 600;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 0.8rem;
+  text-transform: capitalize;
 }
 
-.status-pending { background-color: var(--secondary-color); color: white; }
-.status-approved { background-color: var(--accent-color); color: white; }
-.status-rejected { background-color: var(--danger-color); color: white; }
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-pending .status-dot { background-color: var(--secondary-color); }
+.status-approved .status-dot { background-color: var(--accent-color); }
+.status-rejected .status-dot { background-color: var(--danger-color); }
+
+.status-pending { background-color: var(--secondary-color-dark-alpha); color: var(--secondary-color-dark); }
+.status-approved { background-color: var(--accent-color-dark-alpha); color: var(--accent-color-dark); }
+.status-rejected { background-color: var(--danger-color-dark-alpha); color: var(--danger-color-dark); }
+
 
 .request-card-body small {
   color: var(--light-text-color);
@@ -138,6 +140,28 @@
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     border: 1px solid var(--border-color);
+}
+
+.request-actions {
+    background-color: var(--primary-color-light);
+    margin: -2rem -2rem 2rem -2rem;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.request-actions p {
+    font-weight: 500;
+    color: var(--primary-color-dark);
+}
+
+.decision-buttons {
+    display: flex;
+    gap: 1rem;
 }
 
 .request-details-body {

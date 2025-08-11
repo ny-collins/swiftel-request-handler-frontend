@@ -1,22 +1,52 @@
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../api';
 import { Request as RequestType } from '../types';
 import toast from 'react-hot-toast';
+import { useAuth } from '../hooks/useAuth';
+import Button from '../components/ui/Button';
+import { FiCheck, FiX } from 'react-icons/fi';
 
 const fetchRequestById = async (id: string) => {
     const { data } = await api.get<RequestType>(`/requests/${id}`);
     return data;
 };
 
+const makeDecision = async ({ id, decision }: { id: string, decision: 'approved' | 'rejected' }) => {
+    const { data } = await api.post(`/requests/${id}/decide`, { decision });
+    return data;
+};
+
 const RequestDetails = () => {
     const { id } = useParams<{ id: string }>();
+    const { user } = useAuth();
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const { data: request, isLoading, error } = useQuery<RequestType, Error>({
         queryKey: ['request', id],
         queryFn: () => fetchRequestById(id!),
         enabled: !!id,
     });
+
+    const mutation = useMutation({ 
+        mutationFn: makeDecision,
+        onSuccess: () => {
+            toast.success("Decision recorded successfully!");
+            queryClient.invalidateQueries({ queryKey: ['request', id] });
+            queryClient.invalidateQueries({ queryKey: ['requests'] });
+            queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
+            navigate('/requests');
+        },
+        onError: (error: any) => {
+            toast.error(error.response?.data?.message || "Failed to record decision.");
+        }
+    });
+
+    const handleDecision = (decision: 'approved' | 'rejected') => {
+        if (!id) return;
+        mutation.mutate({ id, decision });
+    };
 
     if (isLoading) {
         return <div>Loading request details...</div>; // Replace with a proper skeleton loader later
@@ -30,6 +60,8 @@ const RequestDetails = () => {
     if (!request) {
         return <div>Request not found.</div>;
     }
+
+    const canDecide = (user?.role === 'admin' || user?.role === 'board_member') && request.status === 'pending';
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleString('en-KE', {
@@ -57,6 +89,20 @@ const RequestDetails = () => {
                 <h1>Request Details</h1>
             </div>
             <div className="request-details-card">
+                {canDecide && (
+                    <div className="request-actions">
+                        <p>This request is pending. Please cast your vote.</p>
+                        <div className="decision-buttons">
+                            <Button variant="approve" onClick={() => handleDecision('approved')} disabled={mutation.isPending}>
+                                <FiCheck /> Approve
+                            </Button>
+                            <Button variant="reject" onClick={() => handleDecision('rejected')} disabled={mutation.isPending}>
+                                <FiX /> Reject
+                            </Button>
+                        </div>
+                    </div>
+                )}
+
                 <div className="request-card-header">
                     <div>
                         <h3>{request.title}</h3>
