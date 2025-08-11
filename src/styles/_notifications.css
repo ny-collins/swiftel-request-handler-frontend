@@ -171,8 +171,9 @@
 /* Responsive fix for dropdown */
 @media (max-width: 480px) {
   .notification-dropdown {
-    width: 95vw;
-    right: 50%;
-    transform: translateX(50%);
+    width: auto;
+    left: 1rem;
+    right: 1rem;
+    transform: none;
   }
 }

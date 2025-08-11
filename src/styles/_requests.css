@@ -1,5 +1,11 @@
 /* --- REQUESTS LIST & DETAILS --- */
 
+:root {
+    --accent-color-dark-alpha: rgba(5, 150, 105, 0.1);
+    --secondary-color-dark-alpha: rgba(217, 119, 6, 0.1);
+    --danger-color-dark-alpha: rgba(220, 38, 38, 0.1);
+}
+
 .request-card {
   background: var(--card-bg);
   padding: 1.5rem;
@@ -48,27 +54,25 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.25rem 0.75rem;
+  padding: 0.35rem 0.85rem;
   border-radius: 20px;
   font-weight: 600;
   font-size: 0.8rem;
   text-transform: capitalize;
 }
 
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+.status-pending {
+    background-color: var(--secondary-color-dark-alpha);
+    color: var(--secondary-color-dark);
 }
-
-.status-pending .status-dot { background-color: var(--secondary-color); }
-.status-approved .status-dot { background-color: var(--accent-color); }
-.status-rejected .status-dot { background-color: var(--danger-color); }
-
-.status-pending { background-color: var(--secondary-color-dark-alpha); color: var(--secondary-color-dark); }
-.status-approved { background-color: var(--accent-color-dark-alpha); color: var(--accent-color-dark); }
-.status-rejected { background-color: var(--danger-color-dark-alpha); color: var(--danger-color-dark); }
-
+.status-approved {
+    background-color: var(--accent-color-dark-alpha);
+    color: var(--accent-color-dark);
+}
+.status-rejected {
+    background-color: var(--danger-color-dark-alpha);
+    color: var(--danger-color-dark);
+}
 
 .request-card-body small {
   color: var(--light-text-color);

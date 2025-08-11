@@ -30,8 +30,7 @@ const RequestCard = ({ request }: RequestCardProps) => {
                     </small>
                 </div>
                 <span className={`request-status status-${request.status}`}>
-                    <span className="status-dot"></span>
-                    <span>{request.status}</span>
+                    {request.status}
                 </span>
             </div>
 

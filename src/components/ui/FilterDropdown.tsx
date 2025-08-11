@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { FiChevronDown } from 'react-icons/fi';
 
 interface FilterDropdownProps {
   currentFilter: string;
@@ -10,18 +11,13 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ currentFilter, onFilter
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const selectedOptionLabel = options.find(option => option.value === currentFilter)?.label || '';
-
-  const handleToggle = () => {
-    setIsOpen(prev => !prev);
-  };
+  const selectedOption = options.find(option => option.value === currentFilter);
 
   const handleOptionClick = (value: string) => {
     onFilterChange(value);
     setIsOpen(false);
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -33,18 +29,22 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({ currentFilter, onFilter
   }, []);
 
   return (
-    <div className="filter-dropdown-container" ref={dropdownRef}>
-      <button type="button" className="filter-dropdown-button" onClick={handleToggle}>
-        {selectedOptionLabel}
-        <span className="filter-dropdown-arrow">&#9660;</span> {/* Down arrow */}
+    <div className="custom-select-container" ref={dropdownRef}>
+      <button 
+        type="button" 
+        className="custom-select-value"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>Filter: {selectedOption?.label || ''}</span>
+        <FiChevronDown className={`custom-select-arrow ${isOpen ? 'open' : ''}`} />
       </button>
 
       {isOpen && (
-        <ul className="filter-dropdown-list">
+        <ul className="custom-select-options">
           {options.map((option) => (
             <li
               key={option.value}
-              className={`filter-dropdown-item ${option.value === currentFilter ? 'active' : ''}`}
+              className={`custom-select-option ${option.value === currentFilter ? 'selected' : ''}`}
               onClick={() => handleOptionClick(option.value)}
             >
               {option.label}
