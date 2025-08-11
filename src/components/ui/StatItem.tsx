@@ -16,7 +16,7 @@ const StatItem = ({ title, value, icon, color }: StatItemProps) => {
     };
 
     return (
-        <div className="stat-item">
+        <div className="card stat-item">
             <div className="stat-item-icon-wrapper" style={colorClasses[color]}>
                 {icon}
             </div>
