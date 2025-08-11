@@ -75,7 +75,7 @@ const Users = () => {
     const renderContent = () => {
         if (isLoading) {
             return (
-                <div className="users-list-grid">
+                <div className="users-grid">
                     {[...Array(6)].map((_, i) => <UserItemSkeleton key={i} />)}
                 </div>
             );
@@ -92,7 +92,7 @@ const Users = () => {
         }
 
         return (
-            <div className="users-list-grid">
+            <div className="users-grid">
                 {filteredUsers.map(user => (
                     <UserItem key={user.id} user={user} onEdit={handleEditClick} />
                 ))}

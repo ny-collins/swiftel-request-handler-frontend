@@ -600,6 +600,12 @@ h4 { font-size: 1rem; }
     color: var(--color-text-secondary);
 }
 
+.users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
 
 /* 9. Responsive Design
 ---------------------------------------------------- */

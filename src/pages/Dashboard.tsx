@@ -10,7 +10,6 @@ import { FiArchive, FiCheckCircle, FiXCircle, FiClock, FiUsers, FiPlus } from 'r
 import toast from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
 import { EmployeeStats, Stats, Request } from '../types';
-import FullScreenLoader from '../components/ui/FullScreenLoader';
 import EmptyState from '../components/ui/EmptyState';
 import StatItemSkeleton from '../components/ui/StatItemSkeleton';
 
