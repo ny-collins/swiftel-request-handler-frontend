@@ -54,6 +54,12 @@
   color: var(--light-text-color);
 }
 
+.stat-item-icon svg {
+    width: 20px;
+    height: 20px;
+    color: var(--grey-400);
+}
+
 .stat-item-value {
   font-size: 2.5rem;
   font-weight: 700;

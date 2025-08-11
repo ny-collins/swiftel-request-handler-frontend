@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import api from '../api';
 import toast from 'react-hot-toast';
@@ -21,18 +21,12 @@ const fetchRequests = async (isEmployee: boolean) => {
     return data;
 };
 
-function getScreenSize() {
-    if (window.innerWidth < 768) return 'small';
-    return 'large';
-}
-
 const ViewRequests = () => {
     const { user } = useAuth();
     const [searchParams, setSearchParams] = useSearchParams();
     const isEmployee = user?.role === 'employee';
 
     const [searchTerm, setSearchTerm] = useState('');
-    const [screenSize, setScreenSize] = useState(getScreenSize());
 
     const getInitialFilter = (): StatusFilter => {
         const status = searchParams.get('status');
@@ -48,15 +42,6 @@ const ViewRequests = () => {
         setFilter(newFilter);
         setSearchParams({ status: newFilter });
     };
-
-    const handleResize = useCallback(() => {
-        setScreenSize(getScreenSize());
-    }, []);
-
-    useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [handleResize]);
 
     const { data: requests = [], isLoading, error } = useQuery<RequestType[], Error>({
         queryKey: ['requests', isEmployee],
@@ -135,31 +120,27 @@ const ViewRequests = () => {
             </div>
 
             <div className="page-controls">
-                {!isEmployee && (
-                    <Input 
-                        type="text"
-                        placeholder="Search by title..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        style={{ maxWidth: '350px' }}
-                    />
-                )}
+                <Input 
+                    type="text"
+                    placeholder="Search by title..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
             </div>
 
-            {screenSize === 'small' ? (
-                <FilterDropdown 
-                    currentFilter={filter}
-                    onFilterChange={(value) => handleFilterChange(value as StatusFilter)}
-                    options={filterOptions}
-                />
-            ) : (
+            <div className="filter-controls">
                 <div className="filter-tabs">
                     <button onClick={() => handleFilterChange('all')} className={`filter-tab ${filter === 'all' ? 'active' : ''}`}>All</button>
                     <button onClick={() => handleFilterChange('pending')} className={`filter-tab ${filter === 'pending' ? 'active' : ''}`}>Pending</button>
                     <button onClick={() => handleFilterChange('approved')} className={`filter-tab ${filter === 'approved' ? 'active' : ''}`}>Approved</button>
                     <button onClick={() => handleFilterChange('rejected')} className={`filter-tab ${filter === 'rejected' ? 'active' : ''}`}>Rejected</button>
                 </div>
-            )}
+                <FilterDropdown 
+                    currentFilter={filter}
+                    onFilterChange={(value) => handleFilterChange(value as StatusFilter)}
+                    options={filterOptions}
+                />
+            </div>
             
             {renderContent()}
 
