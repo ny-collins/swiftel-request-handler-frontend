@@ -29,13 +29,13 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 
 const DashboardCharts = ({ stats, role }: DashboardChartsProps) => {
   const data = role === 'employee' ? [
-    { name: 'Approved', value: stats.approved, color: COLORS.approved },
-    { name: 'Pending', value: stats.pending, color: COLORS.pending },
-    { name: 'Rejected', value: stats.rejected, color: COLORS.rejected },
+    { name: 'Approved', value: stats.approved ?? 0, color: COLORS.approved },
+    { name: 'Pending', value: stats.pending ?? 0, color: COLORS.pending },
+    { name: 'Rejected', value: stats.rejected ?? 0, color: COLORS.rejected },
   ] : [
-    { name: 'Approved', value: stats.approvedRequests, color: COLORS.approved },
-    { name: 'Pending', value: stats.pendingRequests, color: COLORS.pending },
-    { name: 'Rejected', value: stats.rejectedRequests, color: COLORS.rejected },
+    { name: 'Approved', value: stats.approvedRequests ?? 0, color: COLORS.approved },
+    { name: 'Pending', value: stats.pendingRequests ?? 0, color: COLORS.pending },
+    { name: 'Rejected', value: stats.rejectedRequests ?? 0, color: COLORS.rejected },
   ];
 
   const filteredData = data.filter(item => item.value > 0);
