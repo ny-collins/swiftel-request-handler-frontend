@@ -38,7 +38,7 @@ const RequestCard = ({ request, role }: RequestCardProps) => {
                     <FiType />
                     <span style={{textTransform: 'capitalize'}}>{request.type}</span>
                 </div>
-                {request.type === 'monetary' && request.amount && (
+                {request.type === 'monetary' && typeof request.amount === 'number' && (
                     <div className="request-card-info-item">
                         <FiDollarSign />
                         <span>{request.amount.toFixed(2)}</span>
