@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import EmptyState from '../components/ui/EmptyState';
 import { FiBell } from 'react-icons/fi';
 import { Notification } from '../types';
-import '../styles/List.css';
+
 
 const NotificationCenter = () => {
     const { notifications, unreadCount, markAsRead, markAllAsRead, isLoading } = useNotifications();
