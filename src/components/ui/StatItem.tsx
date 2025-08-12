@@ -4,7 +4,7 @@ interface StatItemProps {
     title: string;
     value: string | number;
     icon: ReactNode;
-    color: 'purple' | 'yellow' | 'green' | 'red';
+    color: 'purple' | 'yellow' | 'green' | 'red' | 'info';
 }
 
 const StatItem = ({ title, value, icon, color }: StatItemProps) => {
@@ -13,6 +13,7 @@ const StatItem = ({ title, value, icon, color }: StatItemProps) => {
         yellow: { background: '#fef9c3', color: '#ca8a04' },
         green: { background: '#dcfce7', color: '#16a34a' },
         red: { background: '#fee2e2', color: '#dc2626' },
+        info: { background: '#dbeafe', color: '#3b82f6' },
     };
 
     return (

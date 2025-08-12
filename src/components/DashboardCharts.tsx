@@ -2,7 +2,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recha
 import { EmployeeStats, Stats } from '../types';
 
 interface DashboardChartsProps {
-  stats: EmployeeStats & Stats;
+  stats: Partial<EmployeeStats & Stats>;
   role: 'employee' | 'admin' | 'board_member';
 }
 

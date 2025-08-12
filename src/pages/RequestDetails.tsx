@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../api';
-import { Request as RequestType, Decision } from '../types';
+import { Request as RequestType } from '../types';
 import { useAuth } from '../hooks/useAuth';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
