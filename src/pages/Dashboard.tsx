@@ -12,7 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { EmployeeStats, Stats, Request } from '../types';
 import EmptyState from '../components/ui/EmptyState';
 import StatItemSkeleton from '../components/ui/StatItemSkeleton';
-import './Dashboard.css';
+
 
 const fetchDashboardData = async (isEmployee: boolean) => {
     const statsPromise = api.get('/requests/stats');

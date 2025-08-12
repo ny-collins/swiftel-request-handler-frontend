@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { FiUser, FiLogOut } from 'react-icons/fi';
-import './UserMenu.css';
+
 
 const UserMenu = () => {
     const { user, logout } = useAuth();
@@ -29,7 +29,7 @@ const UserMenu = () => {
     }, []);
 
     return (
-        <div className="user-menu" ref={dropdownRef}>
+        <div className={`user-menu ${isOpen ? 'open' : ''}`} ref={dropdownRef}>
             <button className="user-avatar-button" onClick={() => setIsOpen(!isOpen)} aria-label="Open user menu">
                 {getInitials(user?.username || '')}
             </button>

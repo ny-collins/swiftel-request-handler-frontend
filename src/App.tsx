@@ -16,7 +16,7 @@ import NotFound from './pages/NotFound';
 import NotificationCenter from './pages/NotificationCenter';
 import { useWebSocket } from './hooks/useWebSocket';
 import FullScreenLoader from './components/ui/FullScreenLoader';
-import './styles/App.css';
+
 
 function App() {
     useWebSocket();

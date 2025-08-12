@@ -120,12 +120,22 @@ const Users = () => {
             
             {renderContent()}
 
-            {isModalOpen && selectedUser && (
+            {isEditModalOpen && selectedUser && (
                 <EditUserModal 
                     user={selectedUser}
                     onClose={handleCloseModal}
                     onSave={handleSave}
-                    isSaving={mutation.isPending}
+                    isSaving={updateMutation.isPending}
+                />
+            )}
+
+            {isDeleteModalOpen && selectedUser && (
+                <ConfirmationModal
+                    title="Delete User"
+                    message={`Are you sure you want to delete the user "${selectedUser.username}"? This action cannot be undone.`}
+                    onConfirm={handleDeleteConfirm}
+                    onCancel={handleCloseModal}
+                    isConfirming={deleteMutation.isPending}
                 />
             )}
         </div>

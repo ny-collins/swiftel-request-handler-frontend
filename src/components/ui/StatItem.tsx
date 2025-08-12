@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import './StatItem.css';
+
 
 interface StatItemProps {
     title: string;

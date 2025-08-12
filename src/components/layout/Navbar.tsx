@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { FiGrid, FiPlusSquare, FiEye, FiUsers, FiUser, FiLogOut, FiSettings } from 'react-icons/fi';
-import './Navbar.css';
+
 
 interface NavItemProps {
     to: string;

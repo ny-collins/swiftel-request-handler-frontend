@@ -9,7 +9,7 @@ import { FiInbox, FiSearch } from 'react-icons/fi';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Request as RequestType } from '../types';
-import '../styles/Request.css';
+
 
 type StatusFilter = 'all' | 'pending' | 'approved' | 'rejected';
 

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Request } from '../types';
 import { format } from 'date-fns';
-import '../styles/Request.css';
+
 
 interface RequestCardProps {
   request: Request;

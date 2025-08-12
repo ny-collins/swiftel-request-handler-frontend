@@ -4,7 +4,7 @@ import { useNotifications } from '../../hooks/useNotifications';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate, Link } from 'react-router-dom';
 import { Notification } from '../../types';
-import './NotificationBell.css';
+
 
 const NotificationBell = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +42,7 @@ const NotificationBell = () => {
     }, []);
 
     return (
-        <div className="notification-bell" ref={dropdownRef}>
+        <div className={`notification-bell ${isOpen ? 'open' : ''}`} ref={dropdownRef}>
             <button onClick={handleToggle} className="notification-bell-button" aria-label={`Notifications (${unreadCount} unread)`}>
                 <FiBell />
                 {unreadCount > 0 && (

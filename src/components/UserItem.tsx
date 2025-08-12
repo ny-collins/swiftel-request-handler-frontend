@@ -33,10 +33,15 @@ const UserItem: React.FC<UserItemProps> = ({ user, onEdit }) => {
             <div className="user-item-footer">
                 <span className={`user-role-badge role-${user.role}`}>{role}</span>
                 {currentUser?.role === 'admin' && user.role !== 'admin' && (
-                    <button onClick={() => onEdit(user)} className="btn btn-secondary btn-sm edit-btn">
-                        <FiEdit />
-                        <span>Edit</span>
-                    </button>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button onClick={() => onEdit(user)} className="btn btn-secondary btn-sm edit-btn">
+                            <FiEdit />
+                            <span>Edit</span>
+                        </button>
+                        <button onClick={() => onDelete(user)} className="btn btn-danger btn-sm">
+                            <FiTrash2 />
+                        </button>
+                    </div>
                 )}
             </div>
         </div>

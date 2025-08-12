@@ -8,7 +8,7 @@ import { useAuth } from '../hooks/useAuth';
 import { FiCheck, FiX, FiClock, FiUser, FiTag, FiHash, FiCalendar, FiEdit, FiTrash2 } from 'react-icons/fi';
 import FullScreenLoader from '../components/ui/FullScreenLoader';
 import EditRequestModal from '../components/EditRequestModal';
-import '../styles/Request.css';
+
 
 const fetchRequestById = async (id: string) => {
     const { data } = await api.get<RequestType>(`/requests/${id}`);

@@ -1,6 +1,6 @@
 import { forwardRef, InputHTMLAttributes, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import './Input.css';
+
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(({ type, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
