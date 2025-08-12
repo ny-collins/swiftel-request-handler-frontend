@@ -3,7 +3,7 @@ import api from '../api';
 import { User } from '../types';
 import { useAuth } from '../hooks/useAuth';
 import { format } from 'date-fns';
-import { FiEdit, FiTrash2, FiUserPlus } from 'react-icons/fi';
+import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '../utils/error.utils';
 

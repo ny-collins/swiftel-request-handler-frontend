@@ -1,9 +1,9 @@
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
-import api from '../../api';
-import { Stats, EmployeeStats } from '../../types';
-import StatItem from '../../components/ui/StatItem';
-import DashboardCharts from '../../components/DashboardCharts';
+import api from '../api';
+import { Stats, EmployeeStats } from '../types';
+import StatItem from '../components/ui/StatItem';
+import DashboardCharts from '../components/DashboardCharts';
 import { FiUsers, FiClock, FiCheckCircle, FiXCircle, FiArchive } from 'react-icons/fi';
 
 const getDashboardStats = async () => {

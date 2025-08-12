@@ -1,6 +1,6 @@
-import { Request } from '../../types';
+import { Request } from '../types';
 import { format } from 'date-fns';
-import { FiClock, FiHash, FiType, FiDollarSign } from 'react-icons/fi';
+import { FiClock, FiType, FiDollarSign } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 interface RequestCardProps {

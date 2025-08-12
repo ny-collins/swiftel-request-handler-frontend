@@ -15,7 +15,7 @@ import NotificationCenter from './pages/NotificationCenter';
 import FullScreenLoader from './components/ui/FullScreenLoader';
 
 function App() {
-    const { user, isLoading } = useAuth();
+    const { isLoading } = useAuth();
 
     if (isLoading) {
         return <FullScreenLoader />;

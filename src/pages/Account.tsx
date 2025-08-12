@@ -23,7 +23,7 @@ const updateMyAccount = async (data: AccountUpdateForm) => {
 };
 
 const Account = () => {
-    const { user, login } = useAuth();
+    const { user } = useAuth();
     const queryClient = useQueryClient();
 
     const { data: account, isLoading, error } = useQuery({
@@ -32,25 +32,34 @@ const Account = () => {
     });
 
     const { register, handleSubmit, formState: { errors, isDirty }, reset } = useForm<AccountUpdateForm>({
-        values: {
+        defaultValues: {
             username: account?.username,
             email: account?.email,
             password: ''
+        },
+        resetOptions: {
+            keepDirtyValues: true,
         }
     });
+
+    useEffect(() => {
+        if (account) {
+            reset({
+                username: account.username,
+                email: account.email,
+                password: ''
+            });
+        }
+    }, [account, reset]);
 
     const mutation = useMutation({
         mutationFn: updateMyAccount,
         onSuccess: (data) => {
             toast.success('Account updated successfully!');
-            // If the user details are in the token, we might need to re-login to get a new token
-            // For now, just refetch the account data.
             queryClient.invalidateQueries({ queryKey: ['myAccount'] });
-            reset({
-                username: data.updatedUser?.username || account?.username,
-                email: data.updatedUser?.email || account?.email,
-                password: ''
-            });
+            if(data.updatedUser) {
+                reset(data.updatedUser);
+            }
         },
         onError: (error) => {
             toast.error(getErrorMessage(error));

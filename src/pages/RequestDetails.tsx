@@ -22,7 +22,7 @@ const RequestDetails = () => {
     const { user } = useAuth();
     const queryClient = useQueryClient();
 
-    const { data: request, isLoading, error, refetch } = useQuery({
+    const { data: request, isLoading, error } = useQuery({
         queryKey: ['request', id],
         queryFn: () => getRequestById(id!),
         enabled: !!id,
