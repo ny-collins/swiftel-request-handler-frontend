@@ -6,9 +6,10 @@ import { FiEdit } from 'react-icons/fi';
 interface UserItemProps {
     user: User;
     onEdit: (user: User) => void;
+    onDelete: (user: User) => void;
 }
 
-const UserItem: React.FC<UserItemProps> = ({ user, onEdit }) => {
+const UserItem: React.FC<UserItemProps> = ({ user, onEdit, onDelete }) => {
     const { user: currentUser } = useAuth();
     const role = user.role?.replace('_', ' ') || 'N/A';
 
