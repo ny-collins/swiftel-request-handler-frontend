@@ -1,12 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { FiGrid, FiPlusSquare, FiEye, FiUsers, FiUser, FiLogOut, FiSettings } from 'react-icons/fi';
+import { FiGrid, FiPlusSquare, FiEye, FiUsers, FiUser, FiLogOut, FiSettings, FiX } from 'react-icons/fi';
 
-interface NavbarProps {
+interface SidebarProps {
     isSidebarOpen: boolean;
+    toggleSidebar: () => void;
+    isMobile: boolean;
 }
 
-const Sidebar = ({ isSidebarOpen }: NavbarProps) => {
+const Sidebar = ({ isSidebarOpen, toggleSidebar, isMobile }: SidebarProps) => {
     const { user, logout } = useAuth();
 
     return (
@@ -14,6 +16,11 @@ const Sidebar = ({ isSidebarOpen }: NavbarProps) => {
             <div className="sidebar-header">
                 <FiSettings className="sidebar-logo-icon" />
                 <h1 className="sidebar-logo-text">Swiftel</h1>
+                {isMobile && (
+                    <button onClick={toggleSidebar} className="hamburger-menu" style={{color: 'var(--gray-500)', marginLeft: 'auto'}}>
+                        <FiX />
+                    </button>
+                )}
             </div>
             <nav className="sidebar-nav">
                 <ul>
