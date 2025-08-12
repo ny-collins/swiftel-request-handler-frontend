@@ -1,4 +1,4 @@
-import '../../styles/Skeleton.css';
+
 
 const StatItemSkeleton = () => {
   return (
