@@ -1,8 +1,7 @@
 import { FiMenu, FiX } from 'react-icons/fi';
 import NotificationBell from './NotificationBell';
-import Breadcrumbs from './Breadcrumbs';
 import UserMenu from './UserMenu';
-
+import Breadcrumbs from './Breadcrumbs';
 
 interface TopNavbarProps {
     toggleSidebar: () => void;

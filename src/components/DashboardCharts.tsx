@@ -1,4 +1,3 @@
-
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { EmployeeStats, Stats } from '../types';
 
@@ -48,7 +47,7 @@ const DashboardCharts = ({ stats, role }: DashboardChartsProps) => {
   return (
     <div className="card chart-container-card">
         <h3>Request Status Overview</h3>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={300}>
             <PieChart>
                 <Pie
                     data={filteredData}

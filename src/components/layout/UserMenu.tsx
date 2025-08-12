@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { FiUser, FiLogOut } from 'react-icons/fi';
 
-
 const UserMenu = () => {
     const { user, logout } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
@@ -34,31 +33,29 @@ const UserMenu = () => {
                 {getInitials(user?.username || '')}
             </button>
 
-            {isOpen && (
-                <div className="user-menu-dropdown">
-                    <div className="user-menu-header">
-                        <div className="user-avatar-large">{getInitials(user?.username || '')}</div>
-                        <div className="user-info">
-                            <strong>{user?.username}</strong>
-                            <small>{user?.role?.replace('_', ' ')}</small>
-                        </div>
+            <div className="user-menu-dropdown">
+                <div className="user-menu-header">
+                    <div className="user-avatar-large">{getInitials(user?.username || '')}</div>
+                    <div className="user-info">
+                        <strong>{user?.username}</strong>
+                        <small>{user?.role?.replace('_', ' ')}</small>
                     </div>
-                    <ul className="user-menu-list">
-                        <li>
-                            <Link to="/account" className="user-menu-item" onClick={() => setIsOpen(false)}>
-                                <FiUser />
-                                <span>My Account</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <button onClick={logout} className="user-menu-item">
-                                <FiLogOut />
-                                <span>Logout</span>
-                            </button>
-                        </li>
-                    </ul>
                 </div>
-            )}
+                <ul className="user-menu-list">
+                    <li>
+                        <Link to="/account" className="user-menu-item" onClick={() => setIsOpen(false)}>
+                            <FiUser />
+                            <span>My Account</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <button onClick={logout} className="user-menu-item">
+                            <FiLogOut />
+                            <span>Logout</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
     );
 };

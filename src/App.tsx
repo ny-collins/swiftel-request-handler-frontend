@@ -1,8 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
-import Navbar from './components/layout/Navbar';
-import TopNavbar from './components/layout/TopNavbar';
+import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,91 +12,47 @@ import Users from './pages/Users';
 import Account from './pages/Account';
 import NotFound from './pages/NotFound';
 import NotificationCenter from './pages/NotificationCenter';
-import { useWebSocket } from './hooks/useWebSocket';
 import FullScreenLoader from './components/ui/FullScreenLoader';
 
-
 function App() {
-    useWebSocket();
     const { user, isLoading } = useAuth();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
-
-    const toggleSidebar = useCallback(() => {
-        setIsSidebarOpen(prevState => !prevState);
-    }, []);
-
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth < 1024) {
-                setIsSidebarOpen(false);
-            } else {
-                setIsSidebarOpen(true);
-            }
-        };
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Initial check
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'b' && (e.metaKey || e.ctrlKey)) {
-                e.preventDefault();
-                toggleSidebar();
-            }
-        };
-        document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [toggleSidebar]);
 
     if (isLoading) {
         return <FullScreenLoader />;
     }
 
-    if (!user) {
-        return (
-            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="*" element={<Navigate to="/login" replace />} />
-            </Routes>
-        );
-    }
-
-    const isMobile = window.innerWidth < 1024;
-
     return (
-        <div className={`app-layout ${isSidebarOpen ? '' : 'sidebar-collapsed'}`}>
-            {isSidebarOpen && isMobile && (
-                <div className="mobile-overlay" onClick={toggleSidebar}></div>
-            )}
-            <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-            <div className="main-content-wrapper">
-                <TopNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-                <main className="main-content">
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                        <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+        <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route 
+                path="/*" 
+                element={
+                    <ProtectedRoute>
+                        <Layout>
+                            <Routes>
+                                {/* Common Routes */}
+                                <Route path="/dashboard" element={<Dashboard />} />
+                                <Route path="/account" element={<Account />} />
+                                <Route path="/notifications" element={<NotificationCenter />} />
 
-                        {/* Common Routes */}
-                        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                        <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
-                        <Route path="/notifications" element={<ProtectedRoute><NotificationCenter /></ProtectedRoute>} />
+                                {/* Employee Routes */}
+                                <Route path="/make-request" element={<ProtectedRoute roles={['employee']}><MakeRequest /></ProtectedRoute>} />
+                                <Route path="/my-requests" element={<ProtectedRoute roles={['employee']}><ViewRequests /></ProtectedRoute>} />
 
-                        {/* Employee Routes */}
-                        <Route path="/make-request" element={<ProtectedRoute roles={['employee']}><MakeRequest /></ProtectedRoute>} />
-                        <Route path="/my-requests" element={<ProtectedRoute roles={['employee']}><ViewRequests /></ProtectedRoute>} />
+                                {/* Board & Admin Routes */}
+                                <Route path="/requests" element={<ProtectedRoute roles={['admin', 'board_member']}><ViewRequests /></ProtectedRoute>} />
+                                <Route path="/requests/:id" element={<ProtectedRoute roles={['admin', 'board_member', 'employee']}><RequestDetails /></ProtectedRoute>} />
+                                <Route path="/users" element={<ProtectedRoute roles={['admin', 'board_member']}><Users /></ProtectedRoute>} />
 
-                        {/* Board & Admin Routes */}
-                        <Route path="/requests" element={<ProtectedRoute roles={['admin', 'board_member']}><ViewRequests /></ProtectedRoute>} />
-                        <Route path="/requests/:id" element={<ProtectedRoute roles={['admin', 'board_member', 'employee']}><RequestDetails /></ProtectedRoute>} />
-                        <Route path="/users" element={<ProtectedRoute roles={['admin', 'board_member']}><Users /></ProtectedRoute>} />
-
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
-                </main>
-            </div>
-        </div>
+                                <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                                <Route path="*" element={<NotFound />} />
+                            </Routes>
+                        </Layout>
+                    </ProtectedRoute>
+                }
+            />
+        </Routes>
     );
 }
 

@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 
-
 interface StatItemProps {
     title: string;
     value: string | number;

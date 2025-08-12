@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { getErrorMessage } from '../utils/error.utils';
-import { FiLoader } from 'react-icons/fi';
 
 interface LoginForm {
     email: string;
@@ -39,7 +38,7 @@ const Login = () => {
 
     return (
         <div className="form-container">
-            <div className="form-card">
+            <div className="card form-card">
                 <h2>Login to Swiftel</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group">
@@ -59,7 +58,6 @@ const Login = () => {
                        </label>
                     </div>
                     <button type="submit" className="btn btn-primary w-full" disabled={mutation.isPending}>
-                        {mutation.isPending && <FiLoader className="animate-spin" />}
                         {mutation.isPending ? 'Logging in...' : 'Login'}
                     </button>
                 </form>

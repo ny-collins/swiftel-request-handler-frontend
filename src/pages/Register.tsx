@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { getErrorMessage } from '../utils/error.utils';
-import { FiLoader } from 'react-icons/fi';
 
 interface RegisterForm {
     username: string;
@@ -38,7 +37,7 @@ const Register = () => {
 
     return (
         <div className="form-container">
-            <div className="form-card">
+            <div className="card form-card">
                 <h2>Create an Account</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group">
@@ -57,7 +56,6 @@ const Register = () => {
                         {errors.password && <p className="error-text">{errors.password.message}</p>}
                     </div>
                     <button type="submit" className="btn btn-primary w-full" disabled={mutation.isPending}>
-                        {mutation.isPending && <FiLoader className="animate-spin" />}
                         {mutation.isPending ? 'Registering...' : 'Register'}
                     </button>
                 </form>
