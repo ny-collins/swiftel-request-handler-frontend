@@ -93,17 +93,17 @@ const Account = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
-                        <input type="text" id="username" className="input-field" {...register("username", { required: "Username is required" })} />
+                        <input type="text" id="username" className="input-field" {...register("username", { required: "Username is required" })} autoComplete="username" />
                         {errors.username && <p className="error-text">{errors.username.message}</p>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="email">Email</label>
-                        <input type="email" id="email" className="input-field" {...register("email", { required: "Email is required" })} />
+                        <input type="email" id="email" className="input-field" {...register("email", { required: "Email is required" })} autoComplete="email" />
                         {errors.email && <p className="error-text">{errors.email.message}</p>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">New Password</label>
-                        <input type="password" id="password" className="input-field" {...register("password", { minLength: { value: 6, message: "Password must be at least 6 characters" } })} />
+                        <input type="password" id="password" className="input-field" {...register("password", { minLength: { value: 6, message: "Password must be at least 6 characters" } })} autoComplete="new-password" />
                         {errors.password && <p className="error-text">{errors.password.message}</p>}
                         <small className="text-color-secondary">Leave blank to keep your current password.</small>
                     </div>

@@ -67,7 +67,7 @@ const RequestDetails = () => {
                     <span>By: <strong>{request.employee_username}</strong></span>
                     <span>On: <strong>{format(new Date(request.created_at), 'PPP p')}</strong></span>
                     <span>Type: <strong style={{textTransform: 'capitalize'}}>{request.type}</strong></span>
-                    {request.type === 'monetary' && <span>Amount: <strong>${request.amount?.toFixed(2)}</strong></span>}
+                    {request.type === 'monetary' && request.amount != null && <span>Amount: <strong>${Number(request.amount).toFixed(2)}</strong></span>}
                 </div>
                 <div className="request-description">
                     <p>{request.description}</p>
