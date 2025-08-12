@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
+import './FilterDropdown.css';
 
 interface FilterDropdownProps {
   currentFilter: string;

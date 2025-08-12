@@ -4,6 +4,7 @@ import { useNotifications } from '../../hooks/useNotifications';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate, Link } from 'react-router-dom';
 import { Notification } from '../../types';
+import './NotificationBell.css';
 
 const NotificationBell = () => {
     const [isOpen, setIsOpen] = useState(false);

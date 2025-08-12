@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { FiUser, FiLogOut } from 'react-icons/fi';
+import './UserMenu.css';
 
 const UserMenu = () => {
     const { user, logout } = useAuth();

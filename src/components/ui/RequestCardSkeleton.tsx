@@ -1,3 +1,5 @@
+import '../../styles/Skeleton.css';
+
 const RequestCardSkeleton = () => {
   return (
     <div className="card request-card-skeleton">

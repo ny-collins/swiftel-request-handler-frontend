@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import './Button.css';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
@@ -6,16 +7,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = ({ children, variant = 'primary', className, ...props }: ButtonProps) => {
-    const baseClasses = 'btn';
-    const variantClasses = {
-        primary: 'btn-primary',
-        secondary: 'btn-secondary',
-        approve: 'btn-approve',
-        reject: 'btn-reject'
-    };
+    const variantClass = `btn-${variant}`;
     
     return (
-        <button className={`${baseClasses} ${variantClasses[variant]} ${className || ''}`} {...props}>
+        <button className={`btn ${variantClass} ${className || ''}`} {...props}>
             {children}
         </button>
     );

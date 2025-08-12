@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { FiGrid, FiPlusSquare, FiEye, FiUsers, FiUser, FiLogOut, FiSettings } from 'react-icons/fi';
+import './Navbar.css';
 
 interface NavItemProps {
     to: string;
@@ -11,7 +12,6 @@ interface NavItemProps {
 
 const NavItem = ({ to, icon, label, toggleSidebar }: NavItemProps) => {
     const handleLinkClick = () => {
-        // Close sidebar on item click only on mobile
         if (window.innerWidth < 1024) {
             toggleSidebar();
         }
@@ -36,10 +36,9 @@ interface NavbarProps {
 
 const Navbar = ({ isSidebarOpen, toggleSidebar }: NavbarProps) => {
     const { user, logout } = useAuth();
-    const sidebarClasses = `sidebar ${!isSidebarOpen ? 'collapsed' : 'open'}`;
 
     return (
-        <aside className={sidebarClasses}>
+        <aside className={`sidebar ${isSidebarOpen ? 'open' : 'collapsed'}`}>
             <div className="sidebar-header">
                 <FiSettings className="sidebar-logo-icon" />
                 <h1 className="sidebar-logo-text">Swiftel</h1>

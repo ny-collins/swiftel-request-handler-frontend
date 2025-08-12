@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Request } from '../types';
 import { FiInbox } from 'react-icons/fi';
 import EmptyState from './ui/EmptyState';
+import '../styles/List.css';
 
 interface RecentRequestsListProps {
   requests: Request[];

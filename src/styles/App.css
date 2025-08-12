@@ -1,0 +1,54 @@
+/* Main App Layout Styles */
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease-in-out;
+    width: 100%;
+    padding-top: var(--top-navbar-height);
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 2.5rem;
+}
+
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    backdrop-filter: blur(2px);
+}
+
+/* Responsive Design */
+@media (min-width: 1024px) {
+    .main-content-wrapper {
+        margin-left: var(--sidebar-width);
+    }
+
+    .app-layout.sidebar-collapsed .main-content-wrapper {
+        margin-left: var(--sidebar-width-collapsed);
+    }
+}
+
+@media (max-width: 1023px) {
+    .main-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .main-content {
+        padding: 1rem;
+        padding-top: calc(var(--top-navbar-height) + 1rem);
+    }
+}

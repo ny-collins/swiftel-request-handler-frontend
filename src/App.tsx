@@ -16,33 +16,30 @@ import NotFound from './pages/NotFound';
 import NotificationCenter from './pages/NotificationCenter';
 import { useWebSocket } from './hooks/useWebSocket';
 import FullScreenLoader from './components/ui/FullScreenLoader';
+import './styles/App.css';
 
 function App() {
     useWebSocket();
     const { user, isLoading } = useAuth();
-    // Default sidebar to open on large screens, closed on smaller screens
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
 
     const toggleSidebar = useCallback(() => {
         setIsSidebarOpen(prevState => !prevState);
     }, []);
 
-    // Adjust sidebar visibility on resize
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth >= 1024) {
-                setIsSidebarOpen(true);
-            } else {
+            if (window.innerWidth < 1024) {
                 setIsSidebarOpen(false);
+            } else {
+                setIsSidebarOpen(true);
             }
         };
         window.addEventListener('resize', handleResize);
-        // Initial check
-        handleResize();
+        handleResize(); // Initial check
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Keyboard shortcut for sidebar toggle
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'b' && (e.metaKey || e.ctrlKey)) {
@@ -71,7 +68,7 @@ function App() {
     const isMobile = window.innerWidth < 1024;
 
     return (
-        <div className={`app-layout ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+        <div className={`app-layout ${isSidebarOpen ? '' : 'sidebar-collapsed'}`}>
             {isSidebarOpen && isMobile && (
                 <div className="mobile-overlay" onClick={toggleSidebar}></div>
             )}
@@ -94,7 +91,7 @@ function App() {
 
                         {/* Board & Admin Routes */}
                         <Route path="/requests" element={<ProtectedRoute roles={['admin', 'board_member']}><ViewRequests /></ProtectedRoute>} />
-                        <Route path="/requests/:id" element={<ProtectedRoute roles={['admin', 'board_member']}><RequestDetails /></ProtectedRoute>} />
+                        <Route path="/requests/:id" element={<ProtectedRoute roles={['admin', 'board_member', 'employee']}><RequestDetails /></ProtectedRoute>} />
                         <Route path="/users" element={<ProtectedRoute roles={['admin', 'board_member']}><Users /></ProtectedRoute>} />
 
                         <Route path="*" element={<NotFound />} />

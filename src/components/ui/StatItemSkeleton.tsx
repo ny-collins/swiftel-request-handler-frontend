@@ -1,3 +1,5 @@
+import '../../styles/Skeleton.css';
+
 const StatItemSkeleton = () => {
   return (
     <div className="stat-item-skeleton">
