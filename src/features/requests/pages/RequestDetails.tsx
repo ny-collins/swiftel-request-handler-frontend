@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '../api';
-import { Request as RequestType } from '../types';
-import { useAuth } from '../hooks/useAuth';
+import api from '../../../api';
+import { Request as RequestType } from '../../../types';
+import { useAuth } from '../../../hooks/useAuth';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
-import { getErrorMessage } from '../utils/error.utils';
+import { getErrorMessage } from '../../../lib/utils';
 
 const getRequestById = async (id: string) => {
     const { data } = await api.get<RequestType>(`/requests/${id}`);
@@ -45,8 +45,6 @@ const RequestDetails = () => {
         if (!id) return;
         decisionMutation.mutate({ id: Number(id), decision });
     };
-
-    const userDecision = request?.decisions?.find(d => d.board_member_id === user?.id)?.decision;
 
     if (isLoading) return <p>Loading request details...</p>;
     if (error) return <p className="error-text">Failed to load request details.</p>;
@@ -95,11 +93,6 @@ const RequestDetails = () => {
             {canMakeDecision && (
                 <div className="card decision-actions-card">
                     <h3>Your Decision</h3>
-                    {userDecision ? (
-                        <p>You have already decided: <strong className={`decision-text decision-${userDecision}`}>{userDecision}</strong>. You can change your decision until the request is finalized.</p>
-                    ) : (
-                        <p>You have not made a decision on this request yet.</p>
-                    )}
                     <div className="decision-buttons">
                         <button 
                             className="btn btn-success" 

@@ -1,5 +1,5 @@
-import { useNotifications } from '../hooks/useNotifications';
-import { Notification } from '../types';
+import { useNotifications } from '../../hooks/useNotifications';
+import { Notification } from '../../types';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { FiCheck, FiMail } from 'react-icons/fi';

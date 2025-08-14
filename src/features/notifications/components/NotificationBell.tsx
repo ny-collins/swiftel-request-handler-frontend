@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { FiBell, FiCheck } from 'react-icons/fi';
-import { useNotifications } from '../../hooks/useNotifications';
+import { useNotifications } from '../../../hooks/useNotifications';
 import { formatDistanceToNow } from 'date-fns';
 import { useNavigate, Link } from 'react-router-dom';
-import { Notification } from '../../types';
+import { Notification } from '../../../types';
 
 const NotificationBell = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -70,7 +70,7 @@ const NotificationBell = () => {
                         <ul className="notification-list">
                             {notifications.slice(0, 5).map(notif => (
                                 <li 
-                                    key={notif.id} 
+                                    key={notif.id}
                                     className={`notification-item ${notif.is_read ? 'read' : 'unread'}`}
                                     onClick={() => handleNotificationClick(notif)}
                                 >

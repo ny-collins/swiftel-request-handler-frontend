@@ -1,14 +1,10 @@
 import { ReactNode, useState, useEffect, useCallback } from 'react';
 import Sidebar from './Sidebar';
-import TopNavbar from './TopNavbar';
+import Topbar from './Topbar';
+import { Outlet } from 'react-router-dom';
 
-interface LayoutProps {
-    children: ReactNode;
-}
-
-const Layout = ({ children }: LayoutProps) => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+const Layout = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
 
     const toggleSidebar = useCallback(() => {
         setIsSidebarOpen(prevState => !prevState);
@@ -16,41 +12,22 @@ const Layout = ({ children }: LayoutProps) => {
 
     useEffect(() => {
         const handleResize = () => {
-            const mobile = window.innerWidth < 1024;
-            setIsMobile(mobile);
-            if (!mobile) {
-                setIsSidebarOpen(true);
+            if (window.innerWidth < 768) {
+                setIsSidebarOpen(false);
             }
         };
         window.addEventListener('resize', handleResize);
-        handleResize();
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'b' && (e.metaKey || e.ctrlKey)) {
-                e.preventDefault();
-                if (!isMobile) { // Only allow toggle via shortcut on desktop
-                    toggleSidebar();
-                }
-            }
-        };
-        document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [toggleSidebar, isMobile]);
-
     return (
         <div className={`app-layout ${isSidebarOpen ? '' : 'sidebar-collapsed'}`}>
-            {isSidebarOpen && isMobile && (
-                <div className="mobile-overlay" onClick={toggleSidebar}></div>
-            )}
-            <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} isMobile={isMobile} />
+            <Sidebar isSidebarOpen={isSidebarOpen} />
             <div className="main-content-wrapper">
-                <TopNavbar toggleSidebar={toggleSidebar} />
+                <Topbar toggleSidebar={toggleSidebar} />
                 <main className="main-content">
                     <div className="page-container">
-                        {children}
+                        <Outlet />
                     </div>
                 </main>
             </div>

@@ -1,11 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '../api';
-import { User } from '../types';
-import { useAuth } from '../hooks/useAuth';
+import api from '../../api';
+import { User } from '../../types';
+import { useAuth } from '../../hooks/useAuth';
 import { format } from 'date-fns';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
-import { getErrorMessage } from '../utils/error.utils';
+import { getErrorMessage } from '../../lib/utils';
 
 const getUsers = async () => {
     const { data } = await api.get<User[]>('/users');

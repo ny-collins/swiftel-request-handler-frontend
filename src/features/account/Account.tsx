@@ -1,10 +1,10 @@
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import api from '../api';
+import api from '../../api';
 import toast from 'react-hot-toast';
-import { getErrorMessage } from '../utils/error.utils';
-import { User } from '../types';
+import { getErrorMessage } from '../../lib/utils';
+import { User } from '../../types';
 import { useEffect } from 'react';
 
 interface AccountUpdateForm {

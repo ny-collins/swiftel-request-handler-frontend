@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 interface ProtectedRouteProps {
-    children: ReactNode;
+    children?: ReactNode;
     roles?: string[];
 }
 
@@ -19,11 +19,10 @@ const ProtectedRoute = ({ children, roles }: ProtectedRouteProps) => {
     }
 
     if (roles && (!user.role || !roles.includes(user.role))) {
-        // User is logged in but doesn't have the required role
         return <Navigate to="/dashboard" replace />; // Or a dedicated "Access Denied" page
     }
 
-    return <>{children}</>;
+    return children ? <>{children}</> : <Outlet />;
 };
 
 export default ProtectedRoute;

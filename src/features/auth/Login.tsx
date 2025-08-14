@@ -1,10 +1,10 @@
-import { useAuth } from '../hooks/useAuth';
-import api from '../api';
+import { useAuth } from '../../hooks/useAuth';
+import api from '../../api';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
-import { getErrorMessage } from '../utils/error.utils';
+import { getErrorMessage } from '../../lib/utils';
 
 interface LoginForm {
     email: string;

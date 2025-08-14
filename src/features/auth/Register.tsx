@@ -1,9 +1,9 @@
-import api from '../api';
+import api from '../../api';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
-import { getErrorMessage } from '../utils/error.utils';
+import { getErrorMessage } from '../../lib/utils';
 
 interface RegisterForm {
     username: string;

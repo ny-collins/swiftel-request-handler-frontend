@@ -1,8 +1,9 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import api from '../api';
+import api from '../../api';
 import { useNavigate } from 'react-router-dom';
-import { User } from '../types'; // Import User from types
+import { User } from '../../types';
+import { QueryClient } from '@tanstack/react-query';
 
 interface DecodedToken extends User {
     username: string;
@@ -16,8 +17,6 @@ interface AuthContextType {
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
-
-import { QueryClient } from '@tanstack/react-query';
 
 interface AuthProviderProps {
     children: ReactNode;
