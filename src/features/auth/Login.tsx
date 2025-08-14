@@ -17,6 +17,8 @@ const loginUser = async (credentials: LoginForm) => {
     return data;
 };
 
+import { FiSettings } from 'react-icons/fi';
+
 const Login = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -41,7 +43,10 @@ const Login = () => {
     return (
         <div className="form-container">
             <div className="card form-card">
-                <h2>Login to Swiftel</h2>
+                <div className="form-header">
+                    <FiSettings className="form-logo-icon" />
+                    <h2>Login to Swiftel</h2>
+                </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group">
                         <label htmlFor="email">Email</label>

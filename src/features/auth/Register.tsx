@@ -16,6 +16,8 @@ const registerUser = async (userData: RegisterForm) => {
     return data;
 };
 
+import { FiSettings } from 'react-icons/fi';
+
 const Register = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>();
@@ -38,7 +40,10 @@ const Register = () => {
     return (
         <div className="form-container">
             <div className="card form-card">
-                <h2>Create an Account</h2>
+                <div className="form-header">
+                    <FiSettings className="form-logo-icon" />
+                    <h2>Create an Account</h2>
+                </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group">
                         <label htmlFor="username">Name</label>

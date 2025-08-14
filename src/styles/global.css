@@ -316,6 +316,47 @@ p {
 }
 
 /* =================================================================
+   BREADCRUMBS
+   ================================================================= */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    flex-grow: 1;
+    padding: 0 1.5rem;
+}
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.breadcrumb-item a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+.breadcrumb-item a:hover {
+    color: var(--primary-color);
+}
+.breadcrumb-item span[aria-current="page"] {
+    font-weight: 500;
+    color: var(--heading-color);
+}
+.breadcrumb-item .home {
+  font-size: 1.125rem;
+}
+.dark .breadcrumb-item a {
+    color: var(--text-color);
+}
+.dark .breadcrumb-item a:hover {
+    color: var(--primary-color);
+}
+.dark .breadcrumb-item span[aria-current="page"] {
+    color: var(--heading-color);
+}
+
+/* =================================================================
    CARD & WIDGETS
    ================================================================= */
 .card {
@@ -444,6 +485,24 @@ p {
   margin-top: 0.5rem;
 }
 
+.form-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form-logo-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.form-card h2 {
+    margin: 0;
+}
+
 /* =================================================================
    TABLES
    ================================================================= */
@@ -537,6 +596,251 @@ p {
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--text-color);
+}
+
+/* =================================================================
+   DASHBOARD
+   ================================================================= */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.stat-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.stat-card-icon.primary {
+    background-color: var(--primary-color-light);
+    color: var(--primary-color);
+}
+.stat-card-icon.success {
+    background-color: var(--success-color-light);
+    color: var(--success-color);
+}
+.stat-card-icon.danger {
+    background-color: var(--danger-color-light);
+    color: var(--danger-color);
+}
+.stat-card-icon.warning {
+    background-color: var(--warning-color-light);
+    color: var(--warning-color);
+}
+.stat-card-icon.gray {
+    background-color: var(--gray-100);
+    color: var(--gray-600);
+}
+
+.dark .stat-card-icon.gray {
+    background-color: var(--gray-700);
+    color: var(--gray-300);
+}
+
+.stat-card-info h4 {
+    font-size: 0.875rem;
+    color: var(--text-color);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+.stat-card-info p {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin: 0;
+}
+
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.chart-card {
+    height: 400px;
+    padding: 1.5rem;
+}
+
+.chart-card h3 {
+    margin-bottom: 1.5rem;
+}
+
+/* =================================================================
+   REQUEST CARD
+   ================================================================= */
+.requests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.request-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-fast);
+    border: 1px solid var(--border-color);
+}
+.request-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+.request-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+.request-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--heading-color);
+}
+.request-card-description {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+    flex-grow: 1;
+}
+.request-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+.request-card-info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* =================================================================
+   REQUEST DETAILS
+   ================================================================= */
+.request-details-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.request-main-card .request-card-title {
+    font-size: 1.5rem;
+}
+
+.request-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 1rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.875rem;
+}
+
+.request-meta span strong {
+    color: var(--heading-color);
+    font-weight: 600;
+}
+
+.request-description {
+    line-height: 1.7;
+    color: var(--text-color);
+}
+
+.decisions-card h3 {
+    margin-bottom: 1rem;
+}
+
+.decision-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.decision-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius);
+}
+
+.dark .decision-item {
+    background-color: var(--gray-700);
+}
+
+.decision-pill {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.decision-approved {
+    background-color: var(--success-color-light);
+    color: var(--success-color);
+}
+
+.decision-rejected {
+    background-color: var(--danger-color-light);
+    color: var(--danger-color);
+}
+
+.decision-actions-card h3 {
+    margin-bottom: 0.5rem;
+}
+
+.decision-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.status-chip-lg {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+/* =================================================================
+   CHARTS
+   ================================================================= */
+.chart-tooltip-dark {
+    background-color: var(--gray-800) !important;
+    border-color: var(--gray-700) !important;
+}
+.chart-tooltip-dark .recharts-tooltip-label {
+    color: var(--gray-100) !important;
 }
 
 /* =================================================================

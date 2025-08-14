@@ -4,6 +4,7 @@ import api from '../../api';
 import { Stats, EmployeeStats } from '../../types';
 import { FiArchive, FiCheckCircle, FiXCircle, FiClock, FiUsers } from 'react-icons/fi';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useTheme } from '../../context/ThemeContext';
 
 const getDashboardStats = async () => {
     const { data } = await api.get<Stats & EmployeeStats>('/requests/stats');
@@ -24,6 +25,7 @@ const StatCard = ({ title, value, icon, colorClass }: { title: string, value: nu
 
 const Dashboard = () => {
     const { user } = useAuth();
+    const { theme } = useTheme();
     const { data: stats, isLoading, error } = useQuery({
         queryKey: ['dashboardStats'],
         queryFn: getDashboardStats,
@@ -41,7 +43,8 @@ const Dashboard = () => {
         { name: 'Rejected', value: stats.rejectedRequests || 0 },
     ] : [];
 
-    const COLORS = ['#10b981', '#ef4444', '#f59e0b'];
+    const PIE_COLORS = ['#16a34a', '#dc2626', '#f59e0b']; // Success, Danger, Warning
+    const barFillColor = theme === 'dark' ? '#818cf8' : '#4f46e5'; // Indigo 400, Indigo 600
 
     return (
         <>
@@ -79,10 +82,10 @@ const Dashboard = () => {
                                     <PieChart>
                                         <Pie data={employeePieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
                                             {employeePieData.map((_, index) => (
-                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                                             ))}
                                         </Pie>
-                                        <Tooltip />
+                                        <Tooltip wrapperClassName={theme === 'dark' ? 'chart-tooltip-dark' : ''} />
                                         <Legend />
                                     </PieChart>
                                 </ResponsiveContainer>
@@ -93,12 +96,12 @@ const Dashboard = () => {
                                 <h3>Overall Request Statuses</h3>
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={adminBarData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="name" />
-                                        <YAxis allowDecimals={false} />
-                                        <Tooltip />
+                                        <CartesianGrid strokeDasharray="3 3" stroke={theme === 'dark' ? '#334155' : '#e2e8f0'} />
+                                        <XAxis dataKey="name" tick={{ fill: theme === 'dark' ? '#94a3b8' : '#475569' }} />
+                                        <YAxis allowDecimals={false} tick={{ fill: theme === 'dark' ? '#94a3b8' : '#475569' }} />
+                                        <Tooltip wrapperClassName={theme === 'dark' ? 'chart-tooltip-dark' : ''} cursor={{fill: 'rgba(129, 140, 248, 0.1)'}} />
                                         <Legend />
-                                        <Bar dataKey="value" fill="var(--primary-color)" />
+                                        <Bar dataKey="value" fill={barFillColor} />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
