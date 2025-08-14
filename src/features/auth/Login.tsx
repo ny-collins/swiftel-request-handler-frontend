@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../api';
 import toast from 'react-hot-toast';
@@ -5,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { getErrorMessage } from '../../lib/utils';
+import { FiSettings, FiEye, FiEyeOff } from 'react-icons/fi';
 
 interface LoginForm {
     email: string;
@@ -17,17 +19,20 @@ const loginUser = async (credentials: LoginForm) => {
     return data;
 };
 
-import { FiSettings } from 'react-icons/fi';
-
 const Login = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>();
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const mutation = useMutation({
         mutationFn: loginUser,
-        onSuccess: (data) => {
-            login(data.token);
+        onSuccess: (data, variables) => {
+            login(data.token, variables.rememberMe);
             toast.success('Logged in successfully!');
             navigate('/dashboard');
         },
@@ -55,7 +60,18 @@ const Login = () => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" id="password" className="input-field" {...register("password", { required: "Password is required" })} autoComplete="current-password" />
+                        <div className="password-input-wrapper">
+                            <input 
+                                type={showPassword ? "text" : "password"} 
+                                id="password" 
+                                className="input-field" 
+                                {...register("password", { required: "Password is required" })} 
+                                autoComplete="current-password" 
+                            />
+                            <button type="button" onClick={togglePasswordVisibility} className="password-toggle-btn">
+                                {showPassword ? <FiEyeOff /> : <FiEye />}
+                            </button>
+                        </div>
                         {errors.password && <p className="error-text">{errors.password.message}</p>}
                     </div>
                     <div className="form-group">

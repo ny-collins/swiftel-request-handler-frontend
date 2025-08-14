@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api';
 import { User } from '../../types';
@@ -6,6 +7,8 @@ import { format } from 'date-fns';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '../../lib/utils';
+import Modal from '../../components/ui/Modal';
+import EditUserForm from './components/EditUserForm';
 
 const getUsers = async () => {
     const { data } = await api.get<User[]>('/users');
@@ -19,6 +22,8 @@ const deleteUser = async (userId: number) => {
 const Users = () => {
     const { user: currentUser } = useAuth();
     const queryClient = useQueryClient();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingUser, setEditingUser] = useState<User | null>(null);
 
     const { data: users, isLoading, error } = useQuery({
         queryKey: ['users'],
@@ -35,6 +40,16 @@ const Users = () => {
             toast.error(getErrorMessage(err));
         }
     });
+
+    const handleEditClick = (user: User) => {
+        setEditingUser(user);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setEditingUser(null);
+    };
 
     const handleDelete = (userId: number) => {
         if (window.confirm('Are you sure you want to delete this user?')) {
@@ -73,7 +88,11 @@ const Users = () => {
                                     {currentUser?.role === 'admin' && (
                                         <td>
                                             <div className="table-actions">
-                                                <button className="btn-icon" disabled={user.role === 'admin'}>
+                                                <button 
+                                                    className="btn-icon" 
+                                                    onClick={() => handleEditClick(user)}
+                                                    disabled={user.role === 'admin'}
+                                                >
                                                     <FiEdit />
                                                 </button>
                                                 <button 
@@ -92,6 +111,12 @@ const Users = () => {
                     </table>
                 </div>
             </div>
+
+            {editingUser && (
+                <Modal isOpen={isModalOpen} onClose={handleCloseModal} title="Edit User">
+                    <EditUserForm user={editingUser} onClose={handleCloseModal} />
+                </Modal>
+            )}
         </>
     );
 };

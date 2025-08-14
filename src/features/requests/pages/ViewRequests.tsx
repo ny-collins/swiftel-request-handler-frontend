@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../../api';
 import { useAuth } from '../../../hooks/useAuth';
 import { Request } from '../../../types';
 import { Link } from 'react-router-dom';
 import RequestCard from '../components/RequestCard';
+import FilterDropdown from '../components/FilterDropdown';
 
 interface Filters {
     status: string;
@@ -37,6 +38,15 @@ const ViewRequests = () => {
 
     const [filters, setFilters] = useState<Filters>({ status: '', type: '' });
     const [sort, setSort] = useState<Sort>({ sortBy: 'created_at', sortOrder: 'DESC' });
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const { data: requests, isLoading, error } = useQuery({
         queryKey: ['requests', role, filters, sort],
@@ -53,7 +63,45 @@ const ViewRequests = () => {
         setSort({ sortBy, sortOrder });
     };
 
+    const clearFilters = () => {
+        setFilters({ status: '', type: '' });
+        setSort({ sortBy: 'created_at', sortOrder: 'DESC' });
+    };
+
     const showFilters = role === 'admin' || role === 'board_member';
+    const filterCount = Object.values(filters).filter(Boolean).length;
+
+    const filterControls = (
+        <>
+            <div className="filter-group">
+                <label htmlFor="status-filter">Status</label>
+                <select id="status-filter" name="status" className="select-field" onChange={handleFilterChange} value={filters.status}>
+                    <option value="">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+            <div className="filter-group">
+                <label htmlFor="type-filter">Type</label>
+                <select id="type-filter" name="type" className="select-field" onChange={handleFilterChange} value={filters.type}>
+                    <option value="">All</option>
+                    <option value="monetary">Monetary</option>
+                    <option value="non-monetary">Non-Monetary</option>
+                </select>
+            </div>
+            <div className="filter-group">
+                <label htmlFor="sort-filter">Sort By</label>
+                <select id="sort-filter" className="select-field" onChange={handleSortChange} value={`${sort.sortBy},${sort.sortOrder}`}>
+                    <option value="created_at,DESC">Newest First</option>
+                    <option value="created_at,ASC">Oldest First</option>
+                    <option value="title,ASC">Title (A-Z)</option>
+                    <option value="title,DESC">Title (Z-A)</option>
+                    <option value="status,ASC">Status</option>
+                </select>
+            </div>
+        </>
+    );
 
     return (
         <>
@@ -63,35 +111,15 @@ const ViewRequests = () => {
             </div>
 
             {showFilters && (
-                <div className="card filter-bar">
-                    <div className="filter-group">
-                        <label htmlFor="status-filter">Status</label>
-                        <select id="status-filter" name="status" className="select-field" onChange={handleFilterChange} value={filters.status}>
-                            <option value="">All</option>
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
-                        </select>
+                isMobile ? (
+                    <FilterDropdown filterCount={filterCount} onClear={clearFilters}>
+                        {filterControls}
+                    </FilterDropdown>
+                ) : (
+                    <div className="card filter-bar">
+                        {filterControls}
                     </div>
-                    <div className="filter-group">
-                        <label htmlFor="type-filter">Type</label>
-                        <select id="type-filter" name="type" className="select-field" onChange={handleFilterChange} value={filters.type}>
-                            <option value="">All</option>
-                            <option value="monetary">Monetary</option>
-                            <option value="non-monetary">Non-Monetary</option>
-                        </select>
-                    </div>
-                    <div className="filter-group">
-                        <label htmlFor="sort-filter">Sort By</label>
-                        <select id="sort-filter" className="select-field" onChange={handleSortChange} value={`${sort.sortBy},${sort.sortOrder}`}>
-                            <option value="created_at,DESC">Newest First</option>
-                            <option value="created_at,ASC">Oldest First</option>
-                            <option value="title,ASC">Title (A-Z)</option>
-                            <option value="title,DESC">Title (Z-A)</option>
-                            <option value="status,ASC">Status</option>
-                        </select>
-                    </div>
-                </div>
+                )
             )}
 
             {isLoading && <p>Loading requests...</p>}

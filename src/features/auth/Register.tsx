@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import api from '../../api';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { getErrorMessage } from '../../lib/utils';
+import { FiSettings, FiEye, FiEyeOff } from 'react-icons/fi';
 
 interface RegisterForm {
     username: string;
@@ -16,11 +18,14 @@ const registerUser = async (userData: RegisterForm) => {
     return data;
 };
 
-import { FiSettings } from 'react-icons/fi';
-
 const Register = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>();
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const mutation = useMutation({
         mutationFn: registerUser,
@@ -57,7 +62,17 @@ const Register = () => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" id="password" className="input-field" {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })} />
+                        <div className="password-input-wrapper">
+                            <input 
+                                type={showPassword ? "text" : "password"} 
+                                id="password" 
+                                className="input-field" 
+                                {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })} 
+                            />
+                            <button type="button" onClick={togglePasswordVisibility} className="password-toggle-btn">
+                                {showPassword ? <FiEyeOff /> : <FiEye />}
+                            </button>
+                        </div>
                         {errors.password && <p className="error-text">{errors.password.message}</p>}
                     </div>
                     <button type="submit" className="btn btn-primary w-full" disabled={mutation.isPending}>
