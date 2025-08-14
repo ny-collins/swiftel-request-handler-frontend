@@ -357,6 +357,253 @@ p {
 }
 
 /* =================================================================
+   NOTIFICATION BELL & USER MENU
+   ================================================================= */
+.notification-bell, .user-menu {
+    position: relative;
+}
+
+.notification-bell-button, .user-avatar-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 1.25rem;
+    position: relative;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: var(--transition-fast);
+}
+.notification-bell-button:hover, .user-avatar-button:hover {
+    color: var(--primary-color);
+    background-color: var(--primary-color-light);
+}
+.dark .notification-bell-button:hover, .dark .user-avatar-button:hover {
+    background-color: hsl(var(--primary-hue) var(--primary-saturation) var(--primary-lightness) / 0.1);
+}
+
+.notification-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: var(--danger-color);
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 0.625rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--card-background);
+}
+
+.user-avatar-button {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.notification-dropdown, .user-menu-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    width: 320px;
+    max-width: calc(100vw - 2rem);
+    z-index: 1010;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    visibility: hidden;
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s 0.15s;
+    transform-origin: top right;
+}
+
+.notification-bell.open .notification-dropdown,
+.user-menu.open .user-menu-dropdown {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.notification-dropdown-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.notification-dropdown-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+.mark-all-read-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+.notification-dropdown-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+.notification-empty-state {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-color);
+}
+.notification-empty-state svg {
+    margin-bottom: 0.5rem;
+    color: var(--gray-400);
+}
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.notification-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    position: relative;
+}
+.notification-item:last-child {
+    border-bottom: none;
+}
+.notification-item:hover {
+    background-color: var(--gray-100);
+}
+.dark .notification-item:hover {
+    background-color: var(--gray-700);
+}
+.notification-item.unread {
+    background-color: var(--primary-color-light);
+}
+.dark .notification-item.unread {
+    background-color: hsl(var(--primary-hue) var(--primary-saturation) var(--primary-lightness) / 0.1);
+}
+.unread-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    flex-shrink: 0;
+}
+.notification-message p {
+    margin: 0;
+    font-weight: 500;
+    color: var(--heading-color);
+    font-size: 0.9375rem;
+}
+.notification-message small {
+    color: var(--text-color);
+    font-size: 0.8125rem;
+}
+.notification-footer {
+    padding: 0.75rem;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--gray-50);
+}
+.dark .notification-footer {
+    background-color: var(--gray-900);
+}
+.notification-footer a {
+    font-weight: 600;
+}
+
+.user-menu-dropdown {
+    width: 240px;
+}
+.user-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.user-avatar-large {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--primary-color-light);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+.dark .user-avatar-large {
+    background-color: hsl(var(--primary-hue) var(--primary-saturation) var(--primary-lightness) / 0.1);
+}
+.user-menu-header .user-info {
+  line-height: 1.4;
+}
+.user-menu-header .user-info strong {
+    font-weight: 600;
+    color: var(--heading-color);
+    display: block;
+}
+.user-menu-header .user-info small {
+    color: var(--text-color);
+    text-transform: capitalize;
+    font-size: 0.8125rem;
+}
+.user-menu-list {
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+}
+.user-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    font-weight: 500;
+    transition: var(--transition-fast);
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.9375rem;
+}
+.user-menu-item:hover {
+    background-color: var(--gray-100);
+    color: var(--heading-color);
+    text-decoration: none;
+}
+.dark .user-menu-item:hover {
+    background-color: var(--gray-700);
+}
+.user-menu-item svg {
+  font-size: 1.125rem;
+  color: var(--gray-400);
+}
+
+/* =================================================================
    CARD & WIDGETS
    ================================================================= */
 .card {
@@ -892,5 +1139,9 @@ p {
   }
   .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+  .notification-dropdown, .user-menu-dropdown {
+    right: -1rem;
+    width: calc(100vw - 2rem);
   }
 }
