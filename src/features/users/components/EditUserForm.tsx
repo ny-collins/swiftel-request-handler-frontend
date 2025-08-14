@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import api from '../../api';
+import api from '../../../api';
 import toast from 'react-hot-toast';
-import { getErrorMessage } from '../../lib/utils';
-import { User } from '../../types';
+import { getErrorMessage } from '../../../lib/utils';
+import { User } from '../../../types';
 
 interface EditUserFormProps {
     user: User;
