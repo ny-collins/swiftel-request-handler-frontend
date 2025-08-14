@@ -1,4 +1,4 @@
-import { useQuery } from '../../../hooks/useQuery';
+import { useQuery } from '@tanstack/react-query';
 import api from '../../../api';
 import { useAuth } from '../../../hooks/useAuth';
 import { Request } from '../../../types';
@@ -41,7 +41,7 @@ const ViewRequests = () => {
 
             {requests && requests.length > 0 && (
                 <div className="requests-grid">
-                    {requests.map(request => (
+                    {requests.map((request: Request) => (
                         <RequestCard key={request.id} request={request} role={role} />
                     ))}
                 </div>
