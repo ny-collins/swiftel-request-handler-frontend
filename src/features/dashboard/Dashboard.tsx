@@ -78,7 +78,7 @@ const Dashboard = () => {
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
                                         <Pie data={employeePieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
-                                            {employeePieData.map((entry, index) => (
+                                            {employeePieData.map((_, index) => (
                                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                             ))}
                                         </Pie>
