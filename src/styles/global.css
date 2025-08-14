@@ -1,37 +1,38 @@
 /* =================================================================
-   MODERN DESIGN SYSTEM & CSS VARIABLES
+   NEW MODERN DESIGN SYSTEM & CSS VARIABLES
    ================================================================= */
 :root {
-  /* Color Palette - A slightly more modern and softer blue */
-  --primary-hue: 210;
-  --primary-saturation: 80%;
-  --primary-color: hsl(var(--primary-hue), var(--primary-saturation), 50%); /* hsl(210, 80%, 50%) */
-  --primary-color-dark: hsl(var(--primary-hue), var(--primary-saturation), 40%);
+  /* Color Palette - A fresh, modern blue */
+  --primary-hue: 220;
+  --primary-saturation: 85%;
+  --primary-lightness: 55%;
+  --primary-color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+  --primary-color-dark: hsl(var(--primary-hue), var(--primary-saturation), 45%);
   --primary-color-light: hsl(var(--primary-hue), var(--primary-saturation), 95%);
   --primary-color-subtle: hsl(var(--primary-hue), var(--primary-saturation), 98%);
 
   /* Grayscale Palette */
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
 
-  --success-color: #10b981; /* Emerald 500 */
+  --success-color: #16a34a; /* Green 600 */
   --warning-color: #f59e0b; /* Amber 500 */
-  --danger-color: #ef4444;  /* Red 500 */
+  --danger-color: #dc2626;  /* Red 600 */
 
-  --success-color-light: #ecfdf5;
+  --success-color-light: #f0fdf4;
   --warning-color-light: #fffbeb;
   --danger-color-light: #fef2f2;
 
   /* Semantic Colors */
-  --background-color: var(--gray-50);
+  --background-color: var(--gray-100);
   --text-color: var(--gray-600);
   --heading-color: var(--gray-800);
   --border-color: var(--gray-200);
@@ -49,8 +50,8 @@
   --spacing-unit: 4px;
   --border-radius: 8px;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
   /* Layout */
   --sidebar-width: 260px;
@@ -113,7 +114,6 @@ p {
 .app-layout {
   display: flex;
   min-height: 100vh;
-  background-color: var(--background-color);
 }
 
 .main-content-wrapper {
@@ -121,6 +121,7 @@ p {
   display: flex;
   flex-direction: column;
   transition: margin-left var(--transition-slow);
+  width: 100%;
 }
 
 .main-content {
@@ -131,6 +132,7 @@ p {
 .page-container {
   max-width: var(--page-max-width);
   margin: 0 auto;
+  width: 100%;
 }
 
 .page-header {
@@ -677,14 +679,14 @@ p {
   color: white;
 }
 .btn-danger:hover:not(:disabled) {
-  background-color: #be123c; /* Red 700 */
+  background-color: #b91c1c; /* Red 700 */
 }
 .btn-success {
     background-color: var(--success-color);
     color: white;
 }
 .btn-success:hover:not(:disabled) {
-    background-color: #059669; /* Emerald 600 */
+    background-color: #15803d; /* Green 700 */
 }
 
 /* =================================================================
@@ -1102,6 +1104,11 @@ p {
 
 .chart-card {
     height: 400px;
+    padding: 1.5rem;
+}
+
+.chart-card h3 {
+    margin-bottom: 1.5rem;
 }
 
 /* =================================================================
@@ -1133,16 +1140,6 @@ p {
   .top-navbar {
     padding: 0 1.5rem;
   }
-  .notification-dropdown, .user-menu-dropdown {
-    right: 0;
-    left: auto;
-    transform: translateX(0) translateY(-10px) scale(0.95);
-    transform-origin: top right;
-  }
-  .notification-bell.open .notification-dropdown,
-  .user-menu.open .user-menu-dropdown {
-    transform: translateX(0) translateY(0) scale(1);
-  }
 }
 
 @media (max-width: 767px) {
@@ -1162,11 +1159,13 @@ p {
     grid-template-columns: 1fr;
   }
   .notification-dropdown, .user-menu-dropdown {
+    right: -1rem;
     width: calc(100vw - 2rem);
-    left: 1rem;
-    right: 1rem;
   }
   .dashboard-charts {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-grid {
     grid-template-columns: 1fr;
   }
 }

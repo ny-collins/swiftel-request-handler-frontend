@@ -11,15 +11,11 @@ import Users from '../features/users/Users';
 import Account from '../features/account/Account';
 import NotFound from '../components/layout/NotFound';
 import NotificationCenter from '../features/notifications/NotificationCenter';
-import { AuthProvider } from '../features/auth/AuthContext';
-import { QueryClient } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <AuthProvider queryClient={queryClient}><ProtectedRoute /></AuthProvider>,
+        element: <ProtectedRoute />,
         children: [
             {
                 element: <Layout />,

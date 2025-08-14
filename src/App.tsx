@@ -3,6 +3,7 @@ import router from './router';
 import { AuthProvider } from './features/auth/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+// Create a single instance of QueryClient
 const queryClient = new QueryClient();
 
 function App() {
