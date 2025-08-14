@@ -2,6 +2,7 @@ import { FiMenu } from 'react-icons/fi';
 import NotificationBell from '../../features/notifications/components/NotificationBell';
 import UserMenu from '../../features/account/components/UserMenu';
 import Breadcrumbs from './Breadcrumbs';
+import ThemeToggle from '../ui/ThemeToggle';
 
 interface TopbarProps {
     toggleSidebar: () => void;
@@ -15,6 +16,7 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
             </button>
             <Breadcrumbs />
             <div className="top-navbar-right-section">
+                <ThemeToggle />
                 <NotificationBell />
                 <UserMenu />
             </div>
