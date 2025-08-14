@@ -41,7 +41,7 @@ const RequestCard = ({ request, role }: RequestCardProps) => {
                 {request.type === 'monetary' && request.amount != null && (
                     <div className="request-card-info-item">
                         <FiDollarSign />
-                        <span>{Number(request.amount).toFixed(2)}</span>
+                        <span>KES {Number(request.amount).toFixed(2)}</span>
                     </div>
                 )}
                 {role !== 'employee' && (

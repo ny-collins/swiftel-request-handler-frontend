@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import FullScreenLoader from '../ui/FullScreenLoader';
 
 interface ProtectedRouteProps {
     children?: ReactNode;
@@ -11,7 +12,7 @@ const ProtectedRoute = ({ children, roles }: ProtectedRouteProps) => {
     const { user, isLoading } = useAuth();
 
     if (isLoading) {
-        return <div>Loading...</div>; // Or a spinner component
+        return <FullScreenLoader />;
     }
 
     if (!user) {
@@ -19,7 +20,7 @@ const ProtectedRoute = ({ children, roles }: ProtectedRouteProps) => {
     }
 
     if (roles && (!user.role || !roles.includes(user.role))) {
-        return <Navigate to="/dashboard" replace />; // Or a dedicated "Access Denied" page
+        return <Navigate to="/dashboard" replace />;
     }
 
     return children ? <>{children}</> : <Outlet />;

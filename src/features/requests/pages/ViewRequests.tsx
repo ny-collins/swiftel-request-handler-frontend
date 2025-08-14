@@ -1,8 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from '../../../hooks/useQuery';
 import api from '../../../api';
 import { useAuth } from '../../../hooks/useAuth';
 import { Request } from '../../../types';
 import { Link } from 'react-router-dom';
+import RequestCard from '../components/RequestCard';
 
 const getRequests = async (role: string) => {
     const url = role === 'employee' ? '/requests/my-requests' : '/requests';
@@ -40,7 +41,9 @@ const ViewRequests = () => {
 
             {requests && requests.length > 0 && (
                 <div className="requests-grid">
-                    {/* Request cards will go here */}
+                    {requests.map(request => (
+                        <RequestCard key={request.id} request={request} role={role} />
+                    ))}
                 </div>
             )}
         </>

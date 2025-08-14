@@ -88,7 +88,7 @@ const MakeRequest = () => {
 
                     {requestType === 'monetary' && (
                         <div className="form-group">
-                            <label htmlFor="amount">Amount (USD)</label>
+                            <label htmlFor="amount">Amount (KES)</label>
                             <input 
                                 type="number" 
                                 id="amount" 
