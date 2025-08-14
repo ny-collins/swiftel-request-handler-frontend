@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import api from '../../api';
-import { useNavigate } from 'react-router-dom';
 import { User } from '../../types';
 import { QueryClient } from '@tanstack/react-query';
 
@@ -26,7 +25,6 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children, queryClient }: AuthProviderProps) => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -46,7 +44,6 @@ export const AuthProvider = ({ children, queryClient }: AuthProviderProps) => {
         const decodedUser: DecodedToken = jwtDecode(token);
         setUser(decodedUser);
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        navigate('/dashboard');
     };
 
     const logout = () => {
@@ -54,7 +51,6 @@ export const AuthProvider = ({ children, queryClient }: AuthProviderProps) => {
         setUser(null);
         delete api.defaults.headers.common['Authorization'];
         queryClient.clear();
-        navigate('/login');
     };
 
     return (

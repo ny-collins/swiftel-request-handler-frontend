@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { FiGrid, FiPlusSquare, FiEye, FiUsers, FiUser, FiLogOut, FiSettings } from 'react-icons/fi';
 
@@ -8,6 +8,12 @@ interface SidebarProps {
 
 const Sidebar = ({ isSidebarOpen }: SidebarProps) => {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
     return (
         <aside className={`sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
@@ -37,7 +43,7 @@ const Sidebar = ({ isSidebarOpen }: SidebarProps) => {
                 </ul>
             </nav>
             <div className="sidebar-footer">
-                 <button onClick={logout} className="nav-item logout-btn">
+                 <button onClick={handleLogout} className="nav-item logout-btn">
                     <span className="nav-item-icon"><FiLogOut /></span>
                     <span className="nav-item-label">Logout</span>
                 </button>

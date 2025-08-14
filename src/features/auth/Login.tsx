@@ -1,7 +1,7 @@
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../api';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { getErrorMessage } from '../../lib/utils';
@@ -18,6 +18,7 @@ const loginUser = async (credentials: LoginForm) => {
 };
 
 const Login = () => {
+    const navigate = useNavigate();
     const { login } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>();
 
@@ -26,6 +27,7 @@ const Login = () => {
         onSuccess: (data) => {
             login(data.token);
             toast.success('Logged in successfully!');
+            navigate('/dashboard');
         },
         onError: (error) => {
             toast.error(getErrorMessage(error));
