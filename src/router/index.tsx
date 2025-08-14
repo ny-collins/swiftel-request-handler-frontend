@@ -9,7 +9,7 @@ import ViewRequests from '../features/requests/pages/ViewRequests';
 import RequestDetails from '../features/requests/pages/RequestDetails';
 import Users from '../features/users/Users';
 import Account from '../features/account/Account';
-import NotFound from '../pages/NotFound';
+import NotFound from '../components/layout/NotFound';
 import NotificationCenter from '../features/notifications/NotificationCenter';
 
 const router = createBrowserRouter([
