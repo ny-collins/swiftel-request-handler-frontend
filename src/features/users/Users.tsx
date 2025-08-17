@@ -91,14 +91,14 @@ const Users = () => {
                                                 <button 
                                                     className="btn-icon" 
                                                     onClick={() => handleEditClick(user)}
-                                                    disabled={user.role === 'admin'}
+                                                    disabled={user.id === currentUser?.id}
                                                 >
                                                     <FiEdit />
                                                 </button>
                                                 <button 
                                                     className="btn-icon btn-icon-danger" 
                                                     onClick={() => handleDelete(user.id)}
-                                                    disabled={user.role === 'admin' || deleteMutation.isPending}
+                                                    disabled={user.id === currentUser?.id || deleteMutation.isPending}
                                                 >
                                                     <FiTrash2 />
                                                 </button>
